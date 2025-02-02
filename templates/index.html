@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Request an account on {{ homeserver }}</title>
+  <link rel="icon" href="/static/favicon.ico">
+  <link rel="stylesheet" href="/static/styles.css">
+<script>
+  function updateClock() {
+    const now = new Date();
+    const utcHours = String(now.getUTCHours()).padStart(2, '0');
+    const utcMinutes = String(now.getUTCMinutes()).padStart(2, '0');
+    const utcSeconds = String(now.getUTCSeconds()).padStart(2, '0');
+    document.getElementById("clock").innerText = 
+      `${utcHours}:${utcMinutes}:${utcSeconds}`;
+  }
+
+  // Wait for DOM to be ready before starting the clock
+  document.addEventListener('DOMContentLoaded', function() {
+    updateClock();
+    setInterval(updateClock, 1000);
+  });
+</script>
+</head>
+<body>
+  <div class="main-container">
+    <div class="logo-container">
+      <img src="/static/logo.png" alt="{{ homeserver }} logo" class="logo">
+    </div>
+    
+    <header>
+      <h1>Request an account on {{ homeserver }}</h1>
+    </header>
+    
+    <div id="clock" class="clock">--:--:--</div>
+    
+    <div class="status-message">
+      {{ message }}
+    </div>
+
+    {% if registration_closed %}
+      <!-- Registration is closed -->
+    {% else %}
+      <form action="/register" method="post">
+        <input type="text" name="requested_username" placeholder="Requested Username" required>
+        <input type="email" name="email" placeholder="Valid Email Address" required>
+        <input type="submit" value="Submit">
+      </form>
+    {% endif %}
+    
+    <div class="footer-spacer"></div>
+    <footer>
+      <p>Matrix Homeserver: {{ homeserver }}</p>
+    </footer>
+  </div>
+</body>
+</html>

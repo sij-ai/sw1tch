@@ -1,0 +1,35 @@
+port: 6626
+homeserver: "we2.ee"
+
+# Token reset configuration
+token_reset_time_utc: 0          # 00:00 UTC
+downtime_before_token_reset: 30  # 30 minutes before that time, registration is closed
+
+# Email rate limiting and multiple account settings
+email_cooldown: 3600            # 1 hour cooldown between requests for the same email
+multiple_users_per_email: false  # If false, each email can only be used once
+
+# SMTP configuration
+smtp:
+  host: "smtp.protonmail.ch"
+  port: 587
+  username: "email@pm.me"
+  password: "YourPassword"
+  use_tls: true
+
+# Email templates
+email_subject: "Your Registration Token for {homeserver}"
+
+email_body: |
+  Hello,
+
+  Thank you for your interest in {homeserver}, {requested_username}.
+
+  The registration token today is: {registration_token}
+
+  This registration token is valid for {time_until_reset}. If you do not register in that period, you will need to request the new registration token.
+
+  Please ensure you use the username {requested_username} when you register. Using a different username may result in your account being deleted at a later time without forewarning.
+
+  Regards,
+  {homeserver} registration team

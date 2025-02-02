@@ -1,0 +1,56 @@
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual environment directories
+venv/
+.env/
+env/
+.venv/
+ENV/
+
+# Log files
+*.log
+logs/
+
+# IDE or OS-specific files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+Thumbs.db
+.project
+.settings/
+.classpath
+
+# Project-specific sensitive files
+.registration_token
+config.yaml
+registrations.json
+banned_emails.txt
+banned_ips.txt
+banned_usernames.txt
+
+# Backup directories
+backup/
+*_backup/
+*.bak
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Dependency management
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment variables
+.env*
+!.env.example
