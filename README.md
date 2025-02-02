@@ -16,26 +16,29 @@ Currently in use for the [We2.ee](https://we2.ee/about) homeserver, at [join.we2
 
 ## Setup
 
-1. Install dependencies:
+2. Install dependencies:
 ```bash
 pip install fastapi uvicorn jinja2 httpx pyyaml python-multipart
 ```
 
-2. Configure your settings:
+3. Configure your settings:
 ```bash
-cp config.yaml.example config.yaml
-# Edit config.yaml with your settings
+cp example-config.yaml config.yaml
+nano config.yaml
 ```
 
-3. Create required files:
+4. Create required files:
 ```bash
 touch banned_ips.txt banned_emails.txt banned_usernames.txt
-mkdir static
-# Add your logo.png to static/
-# Add favicon.ico to static/
+
+# Optionally, copy the anti-CSAM example-banned_usernames.txt
+cp example-banned_usernames.txt banned_usernames.txt
 ```
 
-4. Generate initial registration token:
+Add your logo.png to `static/logo.png`
+Add favicon.ico to `static/favicon.ico`
+
+5. Generate initial registration token:
 ```bash
 openssl rand -base64 32 | tr -d '/+=' | head -c 32 > .registration_token
 ```
@@ -59,6 +62,8 @@ smtp:
   password: "yourpassword"
   use_tls: true
 ```
+
+You can also customize the subject and body of the email that is sent.
 
 ## Token Rotation
 
@@ -97,7 +102,7 @@ Consider running in a `tmux` session, or creating a system service for it.
 docker run -d \
   -p 127.0.0.1:8448:6167 \
   -v db:/var/lib/conduwuit/ \
-  -v /path/to/.registration_token:/registration_token:ro \
+  -v /path/to/hand_of_morpheus/.registration_token:/registration_token:ro \
   -e CONDUWUIT_SERVER_NAME="your.domain" \
   -e CONDUWUIT_DATABASE_PATH="/var/lib/conduwuit/conduwuit.db" \
   -e CONDUWUIT_DATABASE_BACKUP_PATH="/var/lib/conduwuit/backup" \
