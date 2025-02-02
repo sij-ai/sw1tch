@@ -16,6 +16,12 @@ Currently in use for the [We2.ee](https://we2.ee/about) homeserver, at [join.we2
 
 ## Setup
 
+1. Clone the repo
+```bash
+git clone https://sij.ai/sij/hand_of_morpheus
+cd hand_of_morpheus
+```
+
 2. Install dependencies:
 ```bash
 pip install fastapi uvicorn jinja2 httpx pyyaml python-multipart
