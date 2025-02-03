@@ -12,8 +12,8 @@ log() {
 # Generate new token (32 random hex characters)
 NEW_TOKEN=$(openssl rand -hex 16)
 
-# Write new token to file
-echo "$NEW_TOKEN" > "$TOKEN_FILE"
+# Write new token to file without newline
+echo -n "$NEW_TOKEN" > "$TOKEN_FILE"
 if [ $? -ne 0 ]; then
     log "ERROR: Failed to write new token to $TOKEN_FILE"
     exit 1
@@ -28,12 +28,12 @@ docker rm conduwuit
 docker run -d \
   -p 127.0.0.1:8448:6167 \
   -v db:/var/lib/conduwuit/ \
-  -v /path/to/hand_of_morpheus/.registration_token:/registration_token:ro \
+  -v "${TOKEN_FILE}:/.registration_token:ro" \
   -e CONDUWUIT_SERVER_NAME="your.domain" \
   -e CONDUWUIT_DATABASE_PATH="/var/lib/conduwuit/conduwuit.db" \
   -e CONDUWUIT_DATABASE_BACKUP_PATH="/var/lib/conduwuit/backup" \
   -e CONDUWUIT_ALLOW_REGISTRATION=true \
-  -e CONDUWUIT_REGISTRATION_TOKEN_FILE="/registration_token" \
+  -e CONDUWUIT_REGISTRATION_TOKEN_FILE="/.registration_token" \
   -e CONDUWUIT_PORT=6167 \
   -e CONDUWUIT_ADDRESS="0.0.0.0" \
   -e CONDUWUIT_NEW_USER_DISPLAYNAME_SUFFIX="" \
