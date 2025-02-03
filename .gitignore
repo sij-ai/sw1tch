@@ -34,7 +34,7 @@ config.yaml
 registrations.json
 banned_emails.txt
 banned_ips.txt
-banned_usernames.txt
+refresh_token.shbanned_usernames.txt
 
 # Backup directories
 backup/
