@@ -28,18 +28,18 @@ body {
 
 /* Logo styling */
 .logo-container {
-  width: 320px;
+  width: 480px;
   height: auto;
   margin: 1rem 0 2rem 0;
   display: flex;
   justify-content: center;
-  background: transparent; /* Explicitly set transparent background */
+  background: transparent;
 }
 
 .logo {
   max-width: 100%;
   height: auto;
-  background: transparent; /* Explicitly set transparent background */
+  background: transparent;
 }
 
 /* Header styling */
