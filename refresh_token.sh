@@ -1,20 +1,20 @@
 #!/bin/bash
 
-# File paths - adjust these to your system
-BASE_PATH="/path/to/hand_of_morpheus"          # Base directory for token and logs
-TOKEN_FILE="$BASE_PATH/.registration_token"     # Where the token will be stored
-LOG_FILE="$BASE_PATH/token_refresh.log"         # Where script logs will be written
-BACKUP_PATH="/path/to/conduwuit_backup"         # Where database backups will be stored
+# File paths
+BASE_PATH="/home/sij/hand_of_morpheus"
+TOKEN_FILE="$BASE_PATH/.registration_token"
+LOG_FILE="$BASE_PATH/token_refresh.log"
+BACKUP_PATH="/home/sij/conduwuit_backup"
 
 # Server configuration
-SERVER_DOMAIN="your.domain"                     # Your Matrix server's domain
-HOST_PORT=8448                                  # Port on your host machine
-CONTAINER_PORT=6167                             # Port inside the container
-CONTAINER_NAME="conduwuit"                      # Name for the Docker container
+SERVER_DOMAIN="we2.ee"
+HOST_PORT=8448
+CONTAINER_PORT=6167
+CONTAINER_NAME="conduwuit"
 CONTAINER_IMAGE="ghcr.io/girlbossceo/conduwuit:v0.5.0-rc2-e5049cae4a3890dc5f61ead53281f23b36bf4c97"
 
-# Auto-join room configuration - rooms users automatically join upon registration
-AUTO_JOIN_ROOMS="[\"#community:$SERVER_DOMAIN\",\"#welcome:$SERVER_DOMAIN\"]"
+# Auto-join room configuration
+AUTO_JOIN_ROOMS="[\"#pub:$SERVER_DOMAIN\",\"#home:$SERVER_DOMAIN\"]"
 
 # Function to log with timestamp
 log() {
