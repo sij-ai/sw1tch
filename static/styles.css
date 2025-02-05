@@ -7,6 +7,8 @@
     --accent: #14b8a6;
     --accent-hover: #2dd4bf;
     --border-color: #52525b;
+    --success-color: #22c55e;
+    --error-color: #ef4444;
 }
 
 * {
@@ -46,6 +48,7 @@ body {
     width: auto;
 }
 
+/* Form styles */
 form {
     display: flex;
     flex-direction: column;
@@ -68,7 +71,7 @@ input:focus {
     border-color: var(--accent);
 }
 
-button {
+button, .button {
     width: 100%;
     padding: 0.5rem 1rem;
     background-color: var(--accent);
@@ -79,9 +82,12 @@ button {
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.15s ease;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
 }
 
-button:hover {
+button:hover, .button:hover {
     background-color: var(--accent-hover);
 }
 
@@ -99,6 +105,34 @@ button:hover {
 
 .registration-closed {
     text-align: center;
-    color: #ef4444;
+    color: var(--error-color);
     padding: 1rem 0;
+}
+
+/* Status indicators */
+.status-indicator {
+    font-size: 4rem;
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: bold;
+}
+
+.status-indicator.success {
+    color: var(--success-color);
+}
+
+.status-indicator.error {
+    color: var(--error-color);
+}
+
+/* Message styles */
+.message {
+    text-align: center;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.message p {
+    margin: 0.5rem 0;
 }
