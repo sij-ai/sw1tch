@@ -3,7 +3,7 @@ homeserver: "we2.ee"
 
 # Token reset configuration
 token_reset_time_utc: 0          # 00:00 UTC
-downtime_before_token_reset: 30  # 30 minutes before that time, registration is closed
+downtime_before_token_reset: 10  # 10 minutes before that time, registration is closed
 
 # Email rate limiting and multiple account settings
 email_cooldown: 3600            # 1 hour cooldown between requests for the same email
