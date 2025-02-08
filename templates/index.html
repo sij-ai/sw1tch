@@ -21,38 +21,57 @@
         </div>
 
         <div id="registration-closed" class="registration-closed" style="display: none;">
-            {{ message }}
+            Registration is currently closed
         </div>
 
         <p class="info-text">
             <span id="info-message">A registration token will be emailed to you.</span><br>
-            <span id="countdown" class="countdown">--:--:--</span>
+            Token resets in: <span id="countdown" class="countdown">--:--:--</span>
         </p>
     </div>
 
     <script>
-        function updateStatus() {
-            fetch('/api/time')
-                .then(response => response.json())
-                .then(data => {
-                    const now = new Date();
-                    const registrationClosed = {{ registration_closed|tojson }};
-                    
-                    document.getElementById('registration-form').style.display = 
-                        registrationClosed ? 'none' : 'block';
-                    document.getElementById('registration-closed').style.display = 
-                        registrationClosed ? 'block' : 'none';
-                    
-                    const infoMessage = document.getElementById('info-message');
-                    infoMessage.textContent = registrationClosed 
-                        ? 'Please come back after the token resets.'
-                        : 'A registration token will be emailed to you.';
-                });
+        function updateCountdown() {
+            const now = new Date();
+            const resetHour = {{ token_reset_time_utc }};
+            const downtimeMinutes = {{ downtime_before_token_reset }};
+            
+            // Calculate next reset time
+            const resetTime = new Date();
+            resetTime.setUTCHours(resetHour, 0, 0, 0);
+            if (now > resetTime) {
+                resetTime.setDate(resetTime.getDate() + 1);
+            }
+            
+            // Calculate when registration should close
+            const downtimeStart = new Date(resetTime);
+            downtimeStart.setMinutes(downtimeStart.getMinutes() - downtimeMinutes);
+            
+            // Update form visibility based on whether we're in downtime
+            const isRegistrationOpen = now < downtimeStart;
+            document.getElementById('registration-form').style.display = 
+                isRegistrationOpen ? 'block' : 'none';
+            document.getElementById('registration-closed').style.display = 
+                isRegistrationOpen ? 'none' : 'block';
+            
+            // Update info message based on status
+            const infoMessage = document.getElementById('info-message');
+            infoMessage.textContent = isRegistrationOpen 
+                ? 'A registration token will be emailed to you.'
+                : 'Please come back after the token resets.';
+            
+            // Always show countdown to reset time, not downtime
+            const timeUntilReset = resetTime - now;
+            const hours = String(Math.floor(timeUntilReset / (1000 * 60 * 60))).padStart(2, '0');
+            const minutes = String(Math.floor((timeUntilReset % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            const seconds = String(Math.floor((timeUntilReset % (1000 * 60)) / 1000)).padStart(2, '0');
+            
+            document.getElementById('countdown').textContent = `${hours}:${minutes}:${seconds}`;
         }
 
         // Update immediately and then every second
-        updateStatus();
-        setInterval(updateStatus, 1000);
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
