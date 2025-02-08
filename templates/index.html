@@ -35,12 +35,15 @@
             const now = new Date();
             const resetTime = new Date();
             
-            // Set to next occurrence of midnight UTC
-            resetTime.setUTCHours(24, 0, 0, 0);
+            // Set to next occurrence of configured reset time
+            resetTime.setUTCHours({{ reset_hour }}, {{ reset_minute }}, 0, 0);
+            if (now > resetTime) {
+                resetTime.setDate(resetTime.getDate() + 1);
+            }
             
             // Calculate when registration should close
             const downtimeStart = new Date(resetTime);
-            downtimeStart.setMinutes(downtimeStart.getMinutes() - 15);
+            downtimeStart.setMinutes(downtimeStart.getMinutes() - {{ downtime_minutes }});
             
             const timeUntilReset = resetTime - now;
             const isRegistrationOpen = now < downtimeStart;
