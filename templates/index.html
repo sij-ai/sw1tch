@@ -25,23 +25,31 @@
         </div>
 
         <p class="info-text">
-            A registration token will be emailed to you.<br>
-            Token resets in: <span id="countdown" class="countdown">--:--:--</span>
+            <span id="info-message">A registration token will be emailed to you.</span><br>
+            Token resets at: <span id="countdown" class="countdown">--:--:--</span> UTC
         </p>
     </div>
 
     <script>
+        // Configuration values provided by the server
+        const TOKEN_RESET_HOUR = {{ token_reset_time_utc }};  // e.g., 0 for midnight UTC
+        const DOWNTIME_MINUTES = {{ downtime_before_token_reset }};  // e.g., 30 minutes
+
         function updateCountdown() {
             const now = new Date();
-            const tomorrow = new Date();
-            tomorrow.setUTCHours(24, 0, 0, 0);
+            const resetTime = new Date();
             
-            // Registration closes 15 minutes before midnight UTC
-            const registrationCloseTime = new Date(tomorrow);
-            registrationCloseTime.setUTCMinutes(-15);
+            // Set to next occurrence of the reset time
+            resetTime.setUTCHours(TOKEN_RESET_HOUR, 0, 0, 0);
+            if (now > resetTime) {
+                resetTime.setDate(resetTime.getDate() + 1);
+            }
             
-            const timeUntilClose = registrationCloseTime - now;
-            const isRegistrationOpen = timeUntilClose > 0;
+            // Calculate downtime start
+            const downtimeStart = new Date(resetTime);
+            downtimeStart.setMinutes(downtimeStart.getMinutes() - DOWNTIME_MINUTES);
+            
+            const isRegistrationOpen = now < downtimeStart;
             
             // Update UI based on registration status
             document.getElementById('registration-form').style.display = 
@@ -49,10 +57,17 @@
             document.getElementById('registration-closed').style.display = 
                 isRegistrationOpen ? 'none' : 'block';
             
-            // Format time remaining
-            const hours = String(Math.floor(timeUntilClose / (1000 * 60 * 60))).padStart(2, '0');
-            const minutes = String(Math.floor((timeUntilClose % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            const seconds = String(Math.floor((timeUntilClose % (1000 * 60)) / 1000)).padStart(2, '0');
+            // Update info message based on status
+            const infoMessage = document.getElementById('info-message');
+            infoMessage.textContent = isRegistrationOpen 
+                ? 'A registration token will be emailed to you.'
+                : 'Please come back after the token resets.';
+            
+            // Format time until reset (not until downtime)
+            const timeUntilReset = resetTime - now;
+            const hours = String(Math.floor(timeUntilReset / (1000 * 60 * 60))).padStart(2, '0');
+            const minutes = String(Math.floor((timeUntilReset % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            const seconds = String(Math.floor((timeUntilReset % (1000 * 60)) / 1000)).padStart(2, '0');
             
             document.getElementById('countdown').textContent = `${hours}:${minutes}:${seconds}`;
         }
