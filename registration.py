@@ -257,7 +257,10 @@ async def index(request: Request):
             "request": request,
             "registration_closed": closed,
             "homeserver": config["homeserver"],
-            "message": message
+            "message": message,
+            "reset_hour": config["token_reset_time_utc"] // 100,
+            "reset_minute": config["token_reset_time_utc"] % 100,
+            "downtime_minutes": config["downtime_before_token_reset"]
         }
     )
 
