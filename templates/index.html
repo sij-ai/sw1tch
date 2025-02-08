@@ -33,22 +33,19 @@
     <script>
         function updateCountdown() {
             const now = new Date();
-            const resetHour = {{ token_reset_time_utc }};
-            const downtimeMinutes = {{ downtime_before_token_reset }};
-            
-            // Calculate next reset time
             const resetTime = new Date();
-            resetTime.setUTCHours(resetHour, 0, 0, 0);
-            if (now > resetTime) {
-                resetTime.setDate(resetTime.getDate() + 1);
-            }
+            
+            // Set to next occurrence of midnight UTC
+            resetTime.setUTCHours(24, 0, 0, 0);
             
             // Calculate when registration should close
             const downtimeStart = new Date(resetTime);
-            downtimeStart.setMinutes(downtimeStart.getMinutes() - downtimeMinutes);
+            downtimeStart.setMinutes(downtimeStart.getMinutes() - 15);
             
-            // Update form visibility based on whether we're in downtime
+            const timeUntilReset = resetTime - now;
             const isRegistrationOpen = now < downtimeStart;
+            
+            // Update UI based on registration status
             document.getElementById('registration-form').style.display = 
                 isRegistrationOpen ? 'block' : 'none';
             document.getElementById('registration-closed').style.display = 
@@ -60,8 +57,7 @@
                 ? 'A registration token will be emailed to you.'
                 : 'Please come back after the token resets.';
             
-            // Always show countdown to reset time, not downtime
-            const timeUntilReset = resetTime - now;
+            // Format time remaining until reset
             const hours = String(Math.floor(timeUntilReset / (1000 * 60 * 60))).padStart(2, '0');
             const minutes = String(Math.floor((timeUntilReset % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
             const seconds = String(Math.floor((timeUntilReset % (1000 * 60)) / 1000)).padStart(2, '0');
