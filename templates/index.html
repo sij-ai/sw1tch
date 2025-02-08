@@ -32,8 +32,8 @@
 
     <script>
         // Configuration values provided by the server
-        const TOKEN_RESET_HOUR = {{ config.token_reset_time_utc }};  // e.g., 0 for midnight UTC
-        const DOWNTIME_MINUTES = {{ config.downtime_before_token_reset }};  // e.g., 30 minutes
+        const TOKEN_RESET_HOUR = {{ token_reset_time_utc }};  // e.g., 0 for midnight UTC
+        const DOWNTIME_MINUTES = {{ downtime_before_token_reset }};  // e.g., 30 minutes
 
         function updateCountdown() {
             const now = new Date();
