@@ -5,14 +5,16 @@ import json
 import smtplib
 import httpx
 import logging
+import ipaddress
 from datetime import datetime, timedelta
 from email.message import EmailMessage
-from typing import List, Dict, Optional, Tuple, Set, Pattern
+from typing import List, Dict, Optional, Tuple, Set, Pattern, Union
 from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.base import BaseHTTPMiddleware
+from ipaddress import IPv4Network, IPv4Address
 
 # ---------------------------------------------------------
 # 1. Load configuration and setup paths
@@ -37,14 +39,7 @@ def save_registration(data: Dict):
     with open(REGISTRATIONS_PATH, "w") as f:
         json.dump(registrations, f, indent=2)
 
-# Load banned IPs and emails
-def load_banned_list(filename: str) -> Set[str]:
-    try:
-        with open(os.path.join(BASE_DIR, filename), "r") as f:
-            return {line.strip() for line in f if line.strip()}
-    except FileNotFoundError:
-        return set()
-
+# Functions to check banned entries
 def load_banned_usernames() -> List[Pattern]:
     """Load banned usernames file and compile regex patterns."""
     patterns = []
@@ -61,9 +56,55 @@ def load_banned_usernames() -> List[Pattern]:
         pass
     return patterns
 
-banned_ips = load_banned_list("banned_ips.txt")
-banned_emails = load_banned_list("banned_emails.txt")
-banned_username_patterns = load_banned_usernames()
+def is_ip_banned(ip: str) -> bool:
+    """Check if an IP is banned, supporting both individual IPs and CIDR ranges."""
+    try:
+        check_ip = IPv4Address(ip)
+        try:
+            with open(os.path.join(BASE_DIR, "banned_ips.txt"), "r") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        if '/' in line:  # CIDR notation
+                            if check_ip in IPv4Network(line):
+                                return True
+                        else:  # Individual IP
+                            if check_ip == IPv4Address(line):
+                                return True
+                    except ValueError:
+                        logging.error(f"Invalid IP/CIDR in banned_ips.txt: {line}")
+        except FileNotFoundError:
+            return False
+    except ValueError:
+        logging.error(f"Invalid IP address to check: {ip}")
+    return False
+
+def is_email_banned(email: str) -> bool:
+    """Check if an email matches any banned patterns."""
+    try:
+        with open(os.path.join(BASE_DIR, "banned_emails.txt"), "r") as f:
+            for line in f:
+                pattern = line.strip()
+                if not pattern:
+                    continue
+                # Convert email patterns to regex
+                # Replace * with .* and escape dots
+                regex_pattern = pattern.replace(".", "\\.").replace("*", ".*")
+                try:
+                    if re.match(regex_pattern, email, re.IGNORECASE):
+                        return True
+                except re.error:
+                    logging.error(f"Invalid email pattern in banned_emails.txt: {pattern}")
+    except FileNotFoundError:
+        pass
+    return False
+
+def is_username_banned(username: str) -> bool:
+    """Check if username matches any banned patterns."""
+    patterns = load_banned_usernames()
+    return any(pattern.search(username) for pattern in patterns)
 
 # Read the registration token
 def read_registration_token():
@@ -77,24 +118,20 @@ def read_registration_token():
 # ---------------------------------------------------------
 # 2. Logging Configuration
 # ---------------------------------------------------------
-# Set up logging format
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-# Configure loggers
 logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
 logging.getLogger("uvicorn.error").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 class CustomLoggingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
-        # Don't process /api/time or favicon requests at all
         if request.url.path == "/api/time" or request.url.path.endswith('favicon.ico'):
             return await call_next(request)
             
-        # For all other requests, log them
         response = await call_next(request)
         logger.info(f"Request: {request.method} {request.url.path} - Status: {response.status_code}")
         return response
@@ -180,10 +217,6 @@ def is_registration_closed(now: datetime) -> Tuple[bool, str]:
 # ---------------------------------------------------------
 # 4. Registration Validation
 # ---------------------------------------------------------
-def is_username_banned(username: str) -> bool:
-    """Check if username matches any banned patterns."""
-    return any(pattern.search(username) for pattern in banned_username_patterns)
-
 def check_email_cooldown(email: str) -> Optional[str]:
     """Check if email is allowed to register based on cooldown and multiple account rules."""
     registrations = load_registrations()
@@ -209,18 +242,15 @@ def check_email_cooldown(email: str) -> Optional[str]:
 
 async def check_username_availability(username: str) -> bool:
     """Check if username is available on Matrix and in our registration records."""
-    # Check banned usernames first
     if is_username_banned(username):
         logger.info(f"[USERNAME CHECK] {username}: Banned by pattern")
         return False
 
-    # Check local registrations
     registrations = load_registrations()
     if any(r["requested_name"] == username for r in registrations):
         logger.info(f"[USERNAME CHECK] {username}: Already requested")
         return False
         
-    # Check Matrix homeserver
     url = f"https://{config['homeserver']}/_matrix/client/v3/register/available?username={username}"
     async with httpx.AsyncClient() as client:
         try:
@@ -280,7 +310,6 @@ async def register(
     
     logger.info(f"Registration attempt - Username: {requested_username}, Email: {email}, IP: {client_ip}")
     
-    # Check if registration is closed
     closed, message = is_registration_closed(now)
     if closed:
         logger.info("Registration rejected: Registration is closed")
@@ -292,8 +321,7 @@ async def register(
             }
         )
 
-    # Check bans
-    if client_ip in banned_ips:
+    if is_ip_banned(client_ip):
         logger.info(f"Registration rejected: Banned IP {client_ip}")
         return templates.TemplateResponse(
             "error.html",
@@ -303,7 +331,7 @@ async def register(
             }
         )
     
-    if email in banned_emails:
+    if is_email_banned(email):
         logger.info(f"Registration rejected: Banned email {email}")
         return templates.TemplateResponse(
             "error.html",
@@ -313,7 +341,6 @@ async def register(
             }
         )
     
-    # Check email cooldown
     if error_message := check_email_cooldown(email):
         logger.info(f"Registration rejected: Email cooldown - {email}")
         return templates.TemplateResponse(
@@ -324,7 +351,6 @@ async def register(
             }
         )
 
-    # Check username availability
     available = await check_username_availability(requested_username)
     if not available:
         logger.info(f"Registration rejected: Username unavailable - {requested_username}")
@@ -336,7 +362,6 @@ async def register(
             }
         )
 
-    # Read token and prepare email
     token = read_registration_token()
     if token is None:
         logger.error("Registration token file not found")
@@ -357,7 +382,6 @@ async def register(
     msg["From"] = config["smtp"]["username"]
     msg["To"] = email
 
-    # Send email
     try:
         smtp_conf = config["smtp"]
         with smtplib.SMTP(smtp_conf["host"], smtp_conf["port"]) as server:
@@ -370,7 +394,6 @@ async def register(
         logger.error(f"Failed to send email: {ex}")
         raise HTTPException(status_code=500, detail=f"Error sending email: {ex}")
 
-    # Log registration
     registration_data = {
         "requested_name": requested_username,
         "email": email,

@@ -11,7 +11,17 @@ SERVER_DOMAIN="we2.ee"
 HOST_PORT=8448
 CONTAINER_PORT=6167
 CONTAINER_NAME="conduwuit"
-CONTAINER_IMAGE="ghcr.io/girlbossceo/conduwuit:v0.5.0-rc2-e5049cae4a3890dc5f61ead53281f23b36bf4c97"
+CONTAINER_IMAGE="ghcr.io/girlbossceo/conduwuit:v0.5.0-rc3-b6e9dc3d98704c56027219d3775336910a0136c6"
+
+# Performance tuning
+DB_READ_CACHE_MB=16384        # 16GB for read cache
+DB_WRITE_BUFFER_MB=2048       # 2GB write buffer
+CACHE_MODIFIER=4.0            # 4x default LRU caches
+DB_POOL_WORKERS=128           # Optimized for NVMe
+STREAM_WIDTH_SCALE=2.0        # Concurrent operations scaling
+STREAM_AMPLIFICATION=4096     # Batch size for operations
+MAX_REQUEST_SIZE=104857600    # 100MB uploads
+BLURHASH_MAX_SIZE=134217728   # 128MB for blurhash processing
 
 # Auto-join room configuration
 AUTO_JOIN_ROOMS="[\"#pub:$SERVER_DOMAIN\",\"#home:$SERVER_DOMAIN\"]"
@@ -38,7 +48,7 @@ docker stop $CONTAINER_NAME
 docker rm $CONTAINER_NAME
 
 docker run -d \
-  -p 127.0.0.1:${HOST_PORT}:${CONTAINER_PORT} \
+  -p 0.0.0.0:${HOST_PORT}:${CONTAINER_PORT} \
   -v db:/var/lib/conduwuit/ \
   -v "${TOKEN_FILE}:/.registration_token:ro" \
   -v "${BACKUP_PATH}:/backup" \
@@ -54,6 +64,14 @@ docker run -d \
   -e CONDUWUIT_ALLOW_PUBLIC_ROOM_DIRECTORY_WITHOUT_AUTH=true \
   -e CONDUWUIT_ALLOW_FEDERATION=true \
   -e CONDUWUIT_AUTO_JOIN_ROOMS="$AUTO_JOIN_ROOMS" \
+  -e CONDUWUIT_DB_CACHE_CAPACITY_MB=$DB_READ_CACHE_MB \
+  -e CONDUWUIT_DB_WRITE_BUFFER_CAPACITY_MB=$DB_WRITE_BUFFER_MB \
+  -e CONDUWUIT_CACHE_CAPACITY_MODIFIER=$CACHE_MODIFIER \
+  -e CONDUWUIT_DB_POOL_WORKERS=$DB_POOL_WORKERS \
+  -e CONDUWUIT_STREAM_WIDTH_SCALE=$STREAM_WIDTH_SCALE \
+  -e CONDUWUIT_STREAM_AMPLIFICATION=$STREAM_AMPLIFICATION \
+  -e CONDUWUIT_MAX_REQUEST_SIZE=$MAX_REQUEST_SIZE \
+  -e CONDUWUIT_BLURHASH_MAX_RAW_SIZE=$BLURHASH_MAX_SIZE \
   --name $CONTAINER_NAME \
   --restart unless-stopped \
   $CONTAINER_IMAGE
