@@ -29,14 +29,12 @@ Thumbs.db
 .classpath
 
 # Project-specific sensitive files
-*.txt
 .registration_token
 config.yaml
 registrations.json
-banned_emails.txt
 banned_ips.txt
 refresh_token.sh
-banned_usernames.txt
+canary.txt
 testbench/
 
 # Backup directories
