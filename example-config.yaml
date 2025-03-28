@@ -9,11 +9,23 @@ downtime_before_token_reset: 10  # 10 minutes before that time, registration is 
 email_cooldown: 3600            # 1 hour cooldown between requests for the same email
 multiple_users_per_email: false  # If false, each email can only be used once
 
+# Matrix admin credentials
+matrix:
+  enabled: true
+  homeserver: "https://we2.ee"
+  room_id: "!Announcements_Room_ID:we2.ee"
+  username: "@canary:we2.ee"
+  password: "Password_of_canary"
+
+# GPG Configuration
+gpg:
+  key_id: "Your_GPG_Key_ID"
+
 # SMTP configuration
 smtp:
   host: "smtp.protonmail.ch"
   port: 587
-  username: "email@pm.me"
+  username: "admin@we2.ee"
   password: "YourPassword"
   use_tls: true
 
