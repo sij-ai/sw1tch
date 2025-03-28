@@ -1,0 +1,34 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+We2.ee Warrant Canary
+Date: 2025-03-27
+
+1. We have not received any National Security Letters.
+2. We have not received any court orders under the Foreign Intelligence Surveillance Act.
+3. We have not received any gag orders that prevent us from stating we have received legal process.
+4. We have not been required to modify our systems to facilitate surveillance.
+5. We have not been subject to any searches or seizures of our servers.
+
+Proofs:
+NIST time: 2025-03-27T00:32:57.229589 UTC
+Democracy Now! headline: "1,400+ Arrested in Turkey as Erdoğan Jails Istanbul Mayor & Intensifies Authoritarian Crackdown"
+Bitcoin block #889596 hash: 000000000000000000018c38ea9043fd8710fa40d1cf90d5e541d050cd22b89d
+Bitcoin block time: 2025-03-26 23:49:42 UTC
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmfknNcACgkQU1smWu2+
+W0RrlxAAinoE3ZsIKAEpt/qzKygQyUx06VozLL82wzLPQrICia+jOkzo6UHuYGmY
+to4sj4SIOBaEyrdIhLvPG7Q6QRnrbn7NVasawRD484KsiO1+caPrnROFKJWyW/II
+UNlAnmOCxGttu14SlKYPpgp/a6LnLQtciNTHEsj6A0i/JgP1kAPRjqOiM0UCXTKf
+2MnNgwHHdjJt3f7AVJewzw5EPsW9ouh7VcIiIu9kZeuGotf0Gux5R8iTg9j2Cpum
+FrsHhdfwgyFFasTtp+sTnsWvmtw86OpIYuqPpopkIe70e3w4m/+C7ybejqNiNlWh
+1HCcFSyP17B6d516BCAKDJlrmCEKEQVz9MkTrqjpEKpZrVzo6Rl9bxQgN0QrohjV
+buUQO9Zyu6Xl7BZSD4qPqGgGeTzRt8pi4BTWtrMMs+JKTel4TimzPONqLh8exYBa
+Go5uDsbOAwnzbK/0VF9KIYqHc2t9pP5IgtUF3HGVZ0IputxTeDCF3uYJMiwO52cK
+XWaSvSlXB+Nc6OIjHHxG35hflk4ch8ZSEchp8OmXIYiy0zC640YwnnAnosg1WCOA
+UAeEvTO+QGyN7uP4rzGn9rtZgyoj5WT9GYGaiHFxrToCo9o3npOOQBAumcXLvP+B
+6Wkd0RKajppKCVEtEKH0/aH57YGC9V5XdZ9o0aa1yDLpWXw7Ag8=
+=5ZtT
+-----END PGP SIGNATURE-----

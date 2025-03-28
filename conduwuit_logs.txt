@@ -1,0 +1,74 @@
+[2m2025-03-24T04:11:24.174302Z[0m [33m WARN[0m [2mconduwuit_core::config::check[0m[2m:[0m Config parameter "log_level" is unknown to conduwuit, ignoring.
+[2m2025-03-24T04:11:24.174516Z[0m [32m INFO[0m [2mconduwuit::server[0m[2m:[0m 0.5.0 (b6e9dc3) [3mserver_name[0m[2m=[0mwe2.ee [3mdatabase_path[0m[2m=[0m"/var/lib/conduwuit/conduwuit.db" [3mlog_levels[0m[2m=[0minfo
+[2m2025-03-24T04:11:24.999106Z[0m [32m INFO[0m [1mmain[0m[2m:[0m[1mstart[0m[2m:[0m[1mopen[0m[2m:[0m [2mconduwuit_database::engine::open[0m[2m:[0m Opened database. [3mcolumns[0m[2m=[0m87 [3msequence[0m[2m=[0m1216675526 [3mtime[0m[2m=[0m788.193091ms
+[2m2025-03-24T04:11:25.232053Z[0m [32m INFO[0m [1mmain[0m[2m:[0m[1mstart[0m[2m:[0m [2mconduwuit_service::migrations[0m[2m:[0m Loaded RocksDB database with schema version 17
+[2m2025-03-24T04:11:25.625176Z[0m [32m INFO[0m [2mconduwuit_router::serve::plain[0m[2m:[0m Listening on [0.0.0.0:8008]
+  [2m2025-03-24T04:11:25.690807Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@sij:we2.ee", [1;31mpushkey[0m[31m: "SlcxERw6XkNKx6Vu2GR4F4U1cvf98nyBM/Q6MIZ9TJg="[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(3)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@sij:we2.ee" [3mpushkey[0m[2m=[0m"SlcxERw6XkNKx6Vu2GR4F4U1cvf98nyBM/Q6MIZ9TJg=" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:25.696119Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.schildi.chat/up66QHbupxHL1u?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(7)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.schildi.chat/up66QHbupxHL1u?up=1" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:25.724057Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.schildi.chat/upd06nnOhELBFx?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(14)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.schildi.chat/upd06nnOhELBFx?up=1" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:25.806002Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.schildi.chat/upclfCDJ0va5d9?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(7)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.schildi.chat/upclfCDJ0va5d9?up=1" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:25.835727Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@sij:we2.ee", [1;31mpushkey[0m[31m: "M8ltVIFwxX/M1kKNuCGB7tQWAYppEJO6dkdY0JHJEvg="[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(14)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@sij:we2.ee" [3mpushkey[0m[2m=[0m"M8ltVIFwxX/M1kKNuCGB7tQWAYppEJO6dkdY0JHJEvg=" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:25.910755Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.schildi.chat/upkzMxi8WiQ5U5?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(14)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.schildi.chat/upkzMxi8WiQ5U5?up=1" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:25.912156Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@sij:we2.ee", [1;31mpushkey[0m[31m: "ly2ipat4bxsv/fQ0TRswYlU9zD5yhVb9mnrQ2NZ5e1A="[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(14)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@sij:we2.ee" [3mpushkey[0m[2m=[0m"ly2ipat4bxsv/fQ0TRswYlU9zD5yhVb9mnrQ2NZ5e1A=" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:25.933229Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.schildi.chat/upfxUUwV0ecpTR?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(7)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.schildi.chat/upfxUUwV0ecpTR?up=1" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:26.118584Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.schildi.chat/upxH2vJWhUrLsD?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(14)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.schildi.chat/upxH2vJWhUrLsD?up=1" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:26.206792Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.sh/up4KrJgOMfmGxD?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(7)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.sh/up4KrJgOMfmGxD?up=1" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:26.488520Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.schildi.chat/up2nJSKdtIoisj?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(14)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.schildi.chat/up2nJSKdtIoisj?up=1" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:26.528252Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@sij:we2.ee", [1;31mpushkey[0m[31m: "TjhzIT+QrIPqAAdaxzmfxtraX3xlYN9CRx3T8snGJsY="[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(14)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@sij:we2.ee" [3mpushkey[0m[2m=[0m"TjhzIT+QrIPqAAdaxzmfxtraX3xlYN9CRx3T8snGJsY=" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:26.898903Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@sij:we2.ee", [1;31mpushkey[0m[31m: "kVAJHyqTY6nD3fXuMOz5uFQy11KF6nNw9jzZT9vH8lc="[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(2)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@sij:we2.ee" [3mpushkey[0m[2m=[0m"kVAJHyqTY6nD3fXuMOz5uFQy11KF6nNw9jzZT9vH8lc=" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:26.905588Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@oddlid:we2.ee", [1;31mpushkey[0m[31m: "oUT1KtxnLMQxuG7otnPxZlY28ZFP7dyC0B3LQlQJm70="[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(7)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@oddlid:we2.ee" [3mpushkey[0m[2m=[0m"oUT1KtxnLMQxuG7otnPxZlY28ZFP7dyC0B3LQlQJm70=" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:27.008417Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@sij:we2.ee", [1;31mpushkey[0m[31m: "yBBcAp+lJHry3qIkOnjtuXQ+fvXsmOqIJT3s+723Wf0="[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(7)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@sij:we2.ee" [3mpushkey[0m[2m=[0m"yBBcAp+lJHry3qIkOnjtuXQ+fvXsmOqIJT3s+723Wf0=" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:27.111117Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@coldsideofyourpillow:we2.ee", [1;31mpushkey[0m[31m: "https://updates.push.services.mozilla.com/wpush/v1/gAAAAABngkOarCdQHaOOcbWvEq2NRTaqanvveX2x7tORFgnhjomYiTMOjaPw9zTrQVe8ConiPBHKvNAMd96-jLQURG5Q83zk1d3lT2mPW6ek6MatC7-f3ipoxJC-8hwiXLtARI5WfNl-"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(2)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@coldsideofyourpillow:we2.ee" [3mpushkey[0m[2m=[0m"https://updates.push.services.mozilla.com/wpush/v1/gAAAAABngkOarCdQHaOOcbWvEq2NRTaqanvveX2x7tORFgnhjomYiTMOjaPw9zTrQVe8ConiPBHKvNAMd96-jLQURG5Q83zk1d3lT2mPW6ek6MatC7-f3ipoxJC-8hwiXLtARI5WfNl-" [3mevents[0m[2m=[0m1
+
+  [2m2025-03-24T04:11:27.141576Z[0m [31mERROR[0m [1;31mconduwuit_service::sending::sender[0m[31m: [31mMissing pusher, [1;31muser_id[0m[31m: "@tomasz:we2.ee", [1;31mpushkey[0m[31m: "https://ntfy.schildi.chat/upqkpYOQT8t3jd?up=1"[0m
+    [2;3mat[0m src/service/sending/sender.rs:761 [2;3mon[0m conduwuit:worker ThreadId(14)
+    [2;3min[0m conduwuit_service::sending::sender::[1mpush[0m [2;3mwith[0m [3muser_id[0m[2m=[0m"@tomasz:we2.ee" [3mpushkey[0m[2m=[0m"https://ntfy.schildi.chat/upqkpYOQT8t3jd?up=1" [3mevents[0m[2m=[0m1
+
+[2m2025-03-24T04:11:36.014821Z[0m [33m WARN[0m [2mhickory_proto::udp::udp_client_stream[0m[2m:[0m expected message id: 35283 got: 31381, dropped

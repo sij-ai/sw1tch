@@ -368,7 +368,18 @@ async def register(
         raise HTTPException(status_code=500, detail="Registration token file not found.")
 
     time_until_reset = get_time_until_reset_str(now)
+    
+    # Plain text email body
     email_body = config["email_body"].format(
+        homeserver=config["homeserver"],
+        registration_token=token,
+        requested_username=requested_username,
+        utc_time=now.strftime("%H:%M:%S"),
+        time_until_reset=time_until_reset
+    )
+    
+    # HTML email body
+    email_body_html = config.get("email_body_html", "").format(
         homeserver=config["homeserver"],
         registration_token=token,
         requested_username=requested_username,
@@ -378,6 +389,11 @@ async def register(
 
     msg = EmailMessage()
     msg.set_content(email_body)
+    
+    # Add HTML version if configured
+    if email_body_html:
+        msg.add_alternative(email_body_html, subtype='html')
+        
     msg["Subject"] = config["email_subject"].format(homeserver=config["homeserver"])
     msg["From"] = config["smtp"]["username"]
     msg["To"] = email
