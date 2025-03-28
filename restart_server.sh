@@ -23,18 +23,6 @@ log() {
     echo "$message"  # Print to terminal
 }
 
-# Generate new token (6 random hex characters)
-NEW_TOKEN=$(openssl rand -hex 3)
-
-# Write new token to file without newline
-echo -n "$NEW_TOKEN" > "$TOKEN_FILE"
-if [ $? -ne 0 ]; then
-    log "ERROR: Failed to write new token to $TOKEN_FILE"
-    exit 1
-fi
-
-log "Generated new registration token"
-
 # Stop and remove existing container
 docker stop "$CONTAINER_NAME" 2>/dev/null
 docker rm "$CONTAINER_NAME" 2>/dev/null

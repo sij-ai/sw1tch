@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Navigate to the repository directory
-cd "$HOME/conduwuit" || exit
+cd "$HOME/workshop/conduwuit" || exit
 
 # Pull the latest changes
 git pull
@@ -9,8 +9,8 @@ git pull
 # Build the Docker image using Nix
 nix build -L --extra-experimental-features "nix-command flakes" .#oci-image-x86_64-linux-musl-all-features
 
-# Extract the image tarball path from the build result
-IMAGE_TAR_PATH=$(nix path-info -r .#oci-image-x86_64-linux-musl-all-features)/image.tar.gz
+# Use the result symlink to find the image tarball
+IMAGE_TAR_PATH=$(readlink -f result)
 
 # Load the image into Docker and tag it
 docker load < "$IMAGE_TAR_PATH" | awk '/Loaded image:/ { print $3 }' | xargs -I {} docker tag {} conduwuit:custom
