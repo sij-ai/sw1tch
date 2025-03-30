@@ -34,7 +34,6 @@ config.yaml
 registrations.json
 banned_ips.txt
 refresh_token.sh
-canary.txt
 testbench/
 
 # Backup directories
