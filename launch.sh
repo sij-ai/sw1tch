@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # File paths
-BASE_PATH="/home/sij/hand_of_morpheus"
-TOKEN_FILE="$BASE_PATH/.registration_token"
+BASE_PATH="/home/sij/hand_of_morpheus/sw1tch"
+TOKEN_FILE="$BASE_PATH/data/.registration_token"
 LOG_FILE="$BASE_PATH/logs/token_refresh.log"
 BACKUP_PATH="/home/sij/conduwuit_backup"
 ENV_FILE="$BASE_PATH/config/conduwuit.env"
@@ -22,8 +22,8 @@ FORCE_RESTART=false
 # Function to log with a timestamp to both file and terminal
 log() {
     local message="$(date --iso-8601=seconds) $1"
-    echo "$message" >> "$LOG_FILE"  # Write to log file
-    echo "$message"                 # Print to terminal
+    echo "$message" >> "$LOG_FILE"
+    echo "$message"
 }
 
 # Function to refresh the registration token
@@ -129,18 +129,15 @@ restart_container() {
 
 # Function to ensure the registration service is running
 ensure_registration_service() {
-    local python_script="$BASE_PATH/registration.py"
     local pid_file="$BASE_PATH/data/registration.pid"
     local log_file="$BASE_PATH/logs/registration.log"
 
-    if [ ! -f "$python_script" ]; then
-        log "ERROR: Python script $python_script not found"
-        exit 1
-    fi
+    touch "$log_file" || { log "ERROR: Cannot write to $log_file"; exit 1; }
+    chmod 666 "$log_file"
 
     REG_PORT=$(python3 -c "import yaml, sys; print(yaml.safe_load(open('$CONFIG_FILE')).get('port', 8000))")
     log "Registration service port from config: $REG_PORT"
-    
+
     if [ "$FORCE_RESTART" = true ]; then
         log "Force restart requested. Clearing any process listening on port $REG_PORT..."
         PIDS=$(lsof -ti tcp:"$REG_PORT")
@@ -151,58 +148,55 @@ ensure_registration_service() {
         fi
         rm -f "$pid_file"
         log "Force starting registration service..."
-        python3 "$python_script" >> "$log_file" 2>&1 &
+        cd "$(dirname "$BASE_PATH")" || { log "ERROR: Cannot cd to $(dirname "$BASE_PATH")"; exit 1; }
+        log "Running: nohup python3 -m sw1tch >> $log_file 2>&1 &"
+        nohup python3 -m sw1tch >> "$log_file" 2>&1 &
         NEW_PID=$!
-        echo "$NEW_PID" > "$pid_file"
-        log "Started registration service with PID $NEW_PID"
+        sleep 2
+        if ps -p "$NEW_PID" > /dev/null; then
+            echo "$NEW_PID" > "$pid_file"
+            log "Started registration service with PID $NEW_PID"
+            sudo lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
+        else
+            log "ERROR: Process $NEW_PID did not start or exited immediately"
+            cat "$log_file" >> "$LOG_FILE"
+        fi
     else
         EXISTING_PIDS=$(lsof -ti tcp:"$REG_PORT")
         if [ -n "$EXISTING_PIDS" ]; then
             log "Registration service already running on port $REG_PORT with PID(s): $EXISTING_PIDS"
         else
             log "Registration service not running on port $REG_PORT, starting..."
-            python3 "$python_script" >> "$log_file" 2>&1 &
+            cd "$(dirname "$BASE_PATH")" || { log "ERROR: Cannot cd to $(dirname "$BASE_PATH")"; exit 1; }
+            log "Running: nohup python3 -m sw1tch >> $log_file 2>&1 &"
+            nohup python3 -m sw1tch >> "$log_file" 2>&1 &
             NEW_PID=$!
-            echo "$NEW_PID" > "$pid_file"
-            log "Started registration service with PID $NEW_PID"
+            sleep 2
+            if ps -p "$NEW_PID" > /dev/null; then
+                echo "$NEW_PID" > "$pid_file"
+                log "Started registration service with PID $NEW_PID"
+                sudo lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
+            else
+                log "ERROR: Process $NEW_PID did not start or exited immediately"
+                cat "$log_file" >> "$LOG_FILE"
+            fi
         fi
     fi
 }
 
-# Parse command-line flags
+# Parse command-line flags and execute (unchanged)
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --refresh-token)
-            REFRESH_TOKEN=true
-            shift
-            ;;
-        --super-admin)
-            SUPER_ADMIN=true
-            shift
-            ;;
-        --update)
-            UPDATE=true
-            shift
-            ;;
-        --force-restart)
-            FORCE_RESTART=true
-            shift
-            ;;
-        *)
-            log "ERROR: Unknown option: $1"
-            echo "Usage: $0 [--refresh-token] [--super-admin] [--update] [--force-restart]"
-            exit 1
-            ;;
+        --refresh-token) REFRESH_TOKEN=true; shift;;
+        --super-admin) SUPER_ADMIN=true; shift;;
+        --update) UPDATE=true; shift;;
+        --force-restart) FORCE_RESTART=true; shift;;
+        *) log "ERROR: Unknown option: $1"; echo "Usage: $0 [--refresh-token] [--super-admin] [--update] [--force-restart]"; exit 1;;
     esac
 done
 
-# Execute based on flags
-if [ "$UPDATE" = true ]; then
-    update_docker_image
-fi
-if [ "$REFRESH_TOKEN" = true ]; then
-    refresh_token
-fi
+if [ "$UPDATE" = true ]; then update_docker_image; fi
+if [ "$REFRESH_TOKEN" = true ]; then refresh_token; fi
 restart_container
 ensure_registration_service
 
