@@ -1,34 +1,30 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary
-Date: 2025-03-30
+We2.ee Warrant Canary · 2025-03-30T11:43:29.0985236 UTC
+I, 〄, the server administrator of We2.ee, state this 30th day of March, 2025:
+  1. We2.ee has not received any National Security Letters or FISA court orders.
+  2. We2.ee has not been subject to any searches or seizures of our servers.
+  3. We2.ee has not been required to modify our systems to facilitate surveillance.
+  4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
-1. We have not received any National Security Letters.
-2. We have not received any court orders under the Foreign Intelligence Surveillance Act.
-3. We have not received any gag orders that prevent us from stating we have received legal process.
-4. We have not been required to modify our systems to facilitate surveillance.
-5. We have not been subject to any searches or seizures of our servers.
-
-Proofs:
-NIST time: 2025-03-30T03:15:24.5369625 UTC
-Democracy Now! headline: ""The Encampments": New Film on Mahmoud Khalil & Columbia Students Who Sparked Gaza Campus Protests"
-Bitcoin block #890061 hash: 000000000000000000022c41b8bf19607d604f9b77d0403439bbf6ee60215332
-Bitcoin block time: 2025-03-30 03:10:49 UTC
-
+Datestamp Proof:
+  Daily News:  ""The Encampments": New Film on Mahmoud Khalil & Columbia Students Who Sparked Gaza Campus Protests"
+  Source URL:  http://www.democracynow.org/2025/3/28/the_encampments_columbia_university_documentary
+  BTC block:   #890107, 2025-03-30 11:39:28 UTC
+  Block hash:  362a1d72055578b915f653a99da326bee7c664d8b158
 -----BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmfot2QACgkQU1smWu2+
-W0SHBRAAhYrE5ZaBU+J/ixjK1GATqEqgV20weirjnUvlfqyvH6lhBF8xE7EclR/K
-7lNvaZlgqF3ks6NcMs02h74wrXhQeWfJ9QUDMjcsQkz1OZAHylG7T6dzzizz0MXM
-ldxL2D8sXFVLN78wNxDFpKc7PnWkbEsAqD/OXLDQUDDwphufsvZAvXhBuGvPxYvF
-I7J69LPO2nZfgTnxmxP/xtsiAFQ2HB5WjNzyt1JuK5Jnx/cZ8+plUa2+2GhdQ9Me
-8bMFVrsHiTRGZH3uCW+ndETJEGNpXbA50iE0trLvsb3BZXSS9YN9vmd9O+psFEI4
-zDlZKbiuqJ/s2A00zTNb0/ZVfd3C4OwjSX6SKghq7ABt4W38FmbqPipExsNqCMpa
-NrTPQCuSRZ1Lpfvt4QtqIGRdFVtcO+RCMbeTQpdsuy/3rm1Wu1PDbO6EMdCFo4/I
-7b+QnW6CFQZlKe/Tt2aTc/3cKb50LZO9+Zd5eKfkX2lXlcNuUHc9+Qts1OTf58nk
-sRdl2WdGpjXFlC5dnQ8+BvRl7m3QROl44bo/jx1krfCtzZj8YQkFQQnwdj3cWXMk
-Pkz9bMMZ6IbyDEKy/y/8GHblvNBzcuSfSY8aoEc2mdESh7uURKQBkpkDpFg6dYS3
-b0lkabVcMXUj8nVJEtnAXcjkVWblGM0OYNSg+EpxGhvGQ25Gy8w=
-=ElP1
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmfpLpUACgkQU1smWu2+
+W0StRw/8Cp6zZVvoVfyyWEmGyTbXbbYCmpHcHyyB+17ZZQPu3ZVHCrS58e0JTcb/
+x+NF/0QfBpwsmNJk5qWqwNkdoZLc26tW47XcyzLAs1f9OoKsFf/OIFkggL2AUtoS
+t+vZ/e2pW/5YTud9L4K2CrKReuEb/yzXE5PVqqN/OYwYXUzb0LvNub7o+DtVWckD
+tJueplKr9jmDgxRXZ/9RBDvsJtsnQynYkFnPxHodBNCaMClshIr/XrPKT7uB97k2
+n/Q3JNAMlwGSO2cKRGIhBlTshnNOeNZo+7cOA/zKbUhpZxOIb3OeQvt4exhcM4WE
+ezubOMJMfd9h4IgtPY7/ZxbP+k1OFzHV6hP39xFbmgpsdPK9mnWRlvPR3Hhfzo/B
+DNh0fn4JS8GLCO9SujGqJ81Pj6l3g0HzMbsdu8zDxfz2CiV4FGpOWJ1r/Gw8rKtX
+J5ptp0iUbpmznDDZwHLlq9nLdYOcnbZX5PHKksbZ86H//1AMvYN9GWaT56PwCJbK
+eH5o23u8HnZom0mmDS0OPOAmImNoQKkhVnnECqyrg6lPsgXGc6B7+e+fkeoQz6vy
+taiq7yaumyKT8mQ3YmRiGQ4pI9wTFFQsHt5p4jZ02RAWZGMTolurlLVHhVFWEsyc
+03Xm5Zzb1yfh/kWcHxu5r4uVdhCDx2W1gjE9eUKQW3EJPDS+Kn0=
+=fj1f
 -----END PGP SIGNATURE-----

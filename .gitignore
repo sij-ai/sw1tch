@@ -35,6 +35,7 @@ registrations.json
 banned_ips.txt
 refresh_token.sh
 testbench/
+registration.pid
 
 # Backup directories
 backup/

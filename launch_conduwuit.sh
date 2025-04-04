@@ -7,6 +7,7 @@ LOG_FILE="$BASE_PATH/token_refresh.log"
 BACKUP_PATH="/home/sij/conduwuit_backup"
 ENV_FILE="$BASE_PATH/conduwuit.env"
 REPO_PATH="$HOME/workshop/conduwuit"
+CONFIG_FILE="$BASE_PATH/config.yaml"
 
 # Static container settings
 CONTAINER_NAME="conduwuit"
@@ -16,8 +17,9 @@ CONTAINER_IMAGE="conduwuit:custom"
 REFRESH_TOKEN=false
 SUPER_ADMIN=false
 UPDATE=false
+FORCE_RESTART=false
 
-# Function to log with timestamp to both file and terminal
+# Function to log with a timestamp to both file and terminal
 log() {
     local message="$(date --iso-8601=seconds) $1"
     echo "$message" >> "$LOG_FILE"  # Write to log file
@@ -142,9 +144,10 @@ restart_container() {
     fi
 }
 
-# Function to start the Python registration service
-start_registration_service() {
-    local python_script="$BASE_PATH/registration.py"  # Adjust name if different
+# Function to ensure the registration service is running.
+# If --force-restart is passed, it will forcefully kill any process listening on the registration port.
+ensure_registration_service() {
+    local python_script="$BASE_PATH/registration.py"  # Adjust name if needed
     local pid_file="$BASE_PATH/registration.pid"
     local log_file="$BASE_PATH/registration.log"
 
@@ -153,15 +156,36 @@ start_registration_service() {
         exit 1
     fi
 
-    # Check if it's already running
-    if [ -f "$pid_file" ] && ps -p "$(cat "$pid_file")" > /dev/null 2>&1; then
-        log "Registration service already running with PID $(cat "$pid_file")"
-    else
-        # Start it in the background, redirecting output to a log file
+    # Retrieve the port from the config file (default to 8000 if not specified)
+    REG_PORT=$(python3 -c "import yaml, sys; print(yaml.safe_load(open('$CONFIG_FILE')).get('port', 8000))")
+    log "Registration service port from config: $REG_PORT"
+    
+    if [ "$FORCE_RESTART" = true ]; then
+        log "Force restart requested. Clearing any process listening on port $REG_PORT..."
+        PIDS=$(lsof -ti tcp:"$REG_PORT")
+        if [ -n "$PIDS" ]; then
+            kill -9 $PIDS && log "Killed processes: $PIDS" || log "Failed to kill process(es) on port $REG_PORT"
+        else
+            log "No process found running on port $REG_PORT"
+        fi
+        rm -f "$pid_file"
+        log "Force starting registration service..."
         python3 "$python_script" >> "$log_file" 2>&1 &
-        local pid=$!
-        echo "$pid" > "$pid_file"
-        log "Started registration service with PID $pid"
+        NEW_PID=$!
+        echo "$NEW_PID" > "$pid_file"
+        log "Started registration service with PID $NEW_PID"
+    else
+        # Check if there is any process already listening on the port
+        EXISTING_PIDS=$(lsof -ti tcp:"$REG_PORT")
+        if [ -n "$EXISTING_PIDS" ]; then
+            log "Registration service already running on port $REG_PORT with PID(s): $EXISTING_PIDS"
+        else
+            log "Registration service not running on port $REG_PORT, starting..."
+            python3 "$python_script" >> "$log_file" 2>&1 &
+            NEW_PID=$!
+            echo "$NEW_PID" > "$pid_file"
+            log "Started registration service with PID $NEW_PID"
+        fi
     fi
 }
 
@@ -180,13 +204,13 @@ while [[ $# -gt 0 ]]; do
             UPDATE=true
             shift
             ;;
-        --start-service)
-            START_SERVICE=true
+        --force-restart)
+            FORCE_RESTART=true
             shift
             ;;
         *)
             log "ERROR: Unknown option: $1"
-            echo "Usage: $0 [--refresh-token] [--super-admin] [--update]"
+            echo "Usage: $0 [--refresh-token] [--super-admin] [--update] [--force-restart]"
             exit 1
             ;;
     esac
@@ -200,8 +224,8 @@ if [ "$REFRESH_TOKEN" = true ]; then
     refresh_token
 fi
 restart_container
-if [ "$START_SERVICE" = true ] || [ "$1" = "@reboot" ]; then  # Run on explicit flag or cron @reboot
-    start_registration_service
-fi
+
+# Always ensure the registration service is running.
+ensure_registration_service
 
 exit 0

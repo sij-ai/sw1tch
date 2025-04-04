@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import re
 import yaml
@@ -228,7 +229,8 @@ def check_email_cooldown(email: str) -> Optional[str]:
     if not config.get("multiple_users_per_email", True):
         return "This email address has already been used to register an account."
         
-    if email_cooldown := config.get("email_cooldown"):
+    email_cooldown = config.get("email_cooldown")
+    if email_cooldown:
         latest_registration = max(
             datetime.fromisoformat(e["datetime"]) 
             for e in email_entries
@@ -269,7 +271,68 @@ async def check_username_availability(username: str) -> bool:
     return False
 
 # ---------------------------------------------------------
-# 5. FastAPI Setup and Routes
+# 5. Email Helper Functions
+# ---------------------------------------------------------
+def build_email_message(token: str, requested_username: str, now: datetime, recipient_email: str) -> EmailMessage:
+    """
+    Build and return an EmailMessage for registration.
+    """
+    time_until_reset = get_time_until_reset_str(now)
+    
+    # Format bodies using config templates
+    plain_body = config["email_body"].format(
+        homeserver=config["homeserver"],
+        registration_token=token,
+        requested_username=requested_username,
+        utc_time=now.strftime("%H:%M:%S"),
+        time_until_reset=time_until_reset
+    )
+    html_body = config.get("email_body_html", "").format(
+        homeserver=config["homeserver"],
+        registration_token=token,
+        requested_username=requested_username,
+        utc_time=now.strftime("%H:%M:%S"),
+        time_until_reset=time_until_reset
+    )
+    
+    msg = EmailMessage()
+    msg.set_content(plain_body)
+    
+    if html_body:
+        msg.add_alternative(html_body, subtype="html")
+    
+    msg["Subject"] = config["email_subject"].format(homeserver=config["homeserver"])
+    
+    # Get the sender value from configuration.
+    # Ensure it's fully-qualified: it must contain an "@".
+    from_value = config["smtp"].get("from")
+    if not from_value or "@" not in from_value:
+        logger.warning(f"Sender address '{from_value}' is not fully-qualified. Falling back to {config['smtp']['username']}.")
+        from_value = config["smtp"]["username"]
+    
+    msg["From"] = from_value
+    
+    msg["To"] = recipient_email
+    return msg
+
+def send_email_message(msg: EmailMessage) -> None:
+    """
+    Send an email message using SMTP configuration.
+    """
+    smtp_conf = config["smtp"]
+    try:
+        with smtplib.SMTP(smtp_conf["host"], smtp_conf["port"]) as server:
+            if smtp_conf.get("use_tls", True):
+                server.starttls()
+            server.login(smtp_conf["username"], smtp_conf["password"])
+            server.send_message(msg)
+            logger.info(f"Registration email sent successfully to {msg['To']}")
+    except Exception as ex:
+        logger.error(f"Failed to send email: {ex}")
+        raise HTTPException(status_code=500, detail=f"Error sending email: {ex}")
+
+# ---------------------------------------------------------
+# 6. FastAPI Setup and Routes
 # ---------------------------------------------------------
 app = FastAPI()
 app.add_middleware(CustomLoggingMiddleware)
@@ -307,109 +370,41 @@ async def register(
 ):
     now = get_current_utc()
     client_ip = request.client.host
-    
+
     logger.info(f"Registration attempt - Username: {requested_username}, Email: {email}, IP: {client_ip}")
     
     closed, message = is_registration_closed(now)
     if closed:
         logger.info("Registration rejected: Registration is closed")
-        return templates.TemplateResponse(
-            "error.html",
-            {
-                "request": request,
-                "message": message
-            }
-        )
-
+        return templates.TemplateResponse("error.html", {"request": request, "message": message})
+    
     if is_ip_banned(client_ip):
         logger.info(f"Registration rejected: Banned IP {client_ip}")
-        return templates.TemplateResponse(
-            "error.html",
-            {
-                "request": request,
-                "message": "Registration not allowed from your IP address."
-            }
-        )
+        return templates.TemplateResponse("error.html", {"request": request, "message": "Registration not allowed from your IP address."})
     
     if is_email_banned(email):
         logger.info(f"Registration rejected: Banned email {email}")
-        return templates.TemplateResponse(
-            "error.html",
-            {
-                "request": request,
-                "message": "Registration not allowed for this email address."
-            }
-        )
+        return templates.TemplateResponse("error.html", {"request": request, "message": "Registration not allowed for this email address."})
     
     if error_message := check_email_cooldown(email):
         logger.info(f"Registration rejected: Email cooldown - {email}")
-        return templates.TemplateResponse(
-            "error.html",
-            {
-                "request": request,
-                "message": error_message
-            }
-        )
-
+        return templates.TemplateResponse("error.html", {"request": request, "message": error_message})
+    
     available = await check_username_availability(requested_username)
     if not available:
         logger.info(f"Registration rejected: Username unavailable - {requested_username}")
-        return templates.TemplateResponse(
-            "error.html",
-            {
-                "request": request,
-                "message": f"The username '{requested_username}' is not available."
-            }
-        )
-
+        return templates.TemplateResponse("error.html", {"request": request, "message": f"The username '{requested_username}' is not available."})
+    
     token = read_registration_token()
     if token is None:
         logger.error("Registration token file not found")
         raise HTTPException(status_code=500, detail="Registration token file not found.")
-
-    time_until_reset = get_time_until_reset_str(now)
     
-    # Plain text email body
-    email_body = config["email_body"].format(
-        homeserver=config["homeserver"],
-        registration_token=token,
-        requested_username=requested_username,
-        utc_time=now.strftime("%H:%M:%S"),
-        time_until_reset=time_until_reset
-    )
+    # Build and send registration email
+    email_message = build_email_message(token, requested_username, now, email)
+    send_email_message(email_message)
     
-    # HTML email body
-    email_body_html = config.get("email_body_html", "").format(
-        homeserver=config["homeserver"],
-        registration_token=token,
-        requested_username=requested_username,
-        utc_time=now.strftime("%H:%M:%S"),
-        time_until_reset=time_until_reset
-    )
-
-    msg = EmailMessage()
-    msg.set_content(email_body)
-    
-    # Add HTML version if configured
-    if email_body_html:
-        msg.add_alternative(email_body_html, subtype='html')
-        
-    msg["Subject"] = config["email_subject"].format(homeserver=config["homeserver"])
-    msg["From"] = config["smtp"]["username"]
-    msg["To"] = email
-
-    try:
-        smtp_conf = config["smtp"]
-        with smtplib.SMTP(smtp_conf["host"], smtp_conf["port"]) as server:
-            if smtp_conf.get("use_tls", True):
-                server.starttls()
-            server.login(smtp_conf["username"], smtp_conf["password"])
-            server.send_message(msg)
-            logger.info(f"Registration email sent successfully to {email}")
-    except Exception as ex:
-        logger.error(f"Failed to send email: {ex}")
-        raise HTTPException(status_code=500, detail=f"Error sending email: {ex}")
-
+    # Save registration data and log success
     registration_data = {
         "requested_name": requested_username,
         "email": email,
@@ -417,16 +412,9 @@ async def register(
         "ip_address": client_ip
     }
     save_registration(registration_data)
-    
     logger.info(f"Registration successful - Username: {requested_username}, Email: {email}")
-
-    return templates.TemplateResponse(
-        "success.html",
-        {
-            "request": request,
-            "homeserver": config["homeserver"]
-        }
-    )
+    
+    return templates.TemplateResponse("success.html", {"request": request, "homeserver": config["homeserver"]})
 
 if __name__ == "__main__":
     import uvicorn
