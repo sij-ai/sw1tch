@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warrant Canary Signed</title>
+</head>
+<body>
+    <h1>Warrant Canary Signed</h1>
+    <pre>{{ signed_message }}</pre>
+    <form method="post" action="/_admin/warrant_canary/post">
+        <input type="hidden" name="signed_message" value="{{ signed_message|escape }}">
+        <input type="hidden" name="auth_token" value="{{ request.query_params.auth_token }}">
+        <button type="submit">Post to Matrix</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warrant Canary Form</title>
+</head>
+<body>
+    <h1>Create Warrant Canary</h1>
+    <form method="post" action="/_admin/warrant_canary/preview">
+        {% for attestation in attestations %}
+            <input type="checkbox" name="attestations" value="{{ attestation }}"> {{ organization }} {{ attestation }}<br>
+        {% endfor %}
+        <textarea name="note" placeholder="Optional note"></textarea><br>
+        <input type="hidden" name="auth_token" value="{{ request.query_params.auth_token }}">
+        <button type="submit">Preview</button>
+    </form>
+</body>
+</html>

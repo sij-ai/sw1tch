@@ -14,7 +14,7 @@ ENV/
 
 # Log files
 *.log
-logs/
+sw1tch/logs/
 
 # IDE or OS-specific files
 .DS_Store
@@ -29,28 +29,14 @@ Thumbs.db
 .classpath
 
 # Project-specific sensitive files
-.registration_token
-config.yaml
-registrations.json
-banned_ips.txt
-refresh_token.sh
-testbench/
-registration.pid
-
-# Backup directories
-backup/
-*_backup/
-*.bak
+sw1tch/data/*
+sw1tch/config/*
 
 # Test cache
 .pytest_cache/
 .coverage
 htmlcov/
 .tox/
-
-# Dependency management
-pip-log.txt
-pip-delete-this-directory.txt
 
 # Environment variables
 .env*

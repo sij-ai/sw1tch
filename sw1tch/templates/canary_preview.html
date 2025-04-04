@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warrant Canary Preview</title>
+</head>
+<body>
+    <h1>Warrant Canary Preview</h1>
+    <pre>{{ message }}</pre>
+    <form method="post" action="/_admin/warrant_canary/sign">
+        <input type="hidden" name="message" value="{{ message|escape }}">
+        <input type="password" name="passphrase" placeholder="GPG Passphrase" required>
+        <input type="hidden" name="auth_token" value="{{ request.query_params.auth_token }}">
+        <button type="submit">Sign</button>
+    </form>
+</body>
+</html>
