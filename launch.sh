@@ -1,25 +1,25 @@
 #!/bin/bash
 
-# File paths
-BASE_PATH="/home/sij/hand_of_morpheus/sw1tch"
-TOKEN_FILE="$BASE_PATH/data/.registration_token"
-LOG_FILE="$BASE_PATH/logs/token_refresh.log"
-BACKUP_PATH="/home/sij/conduwuit_backup"
-ENV_FILE="$BASE_PATH/config/conduwuit.env"
-REPO_PATH="$HOME/workshop/conduwuit"
-CONFIG_FILE="$BASE_PATH/config/config.yaml"
+# File paths for sw1tch and conduwuit integration
+BASE_PATH="/home/sij/hand_of_morpheus/sw1tch"        # Base directory for sw1tch package
+TOKEN_FILE="$BASE_PATH/data/.registration_token"     # File storing the current registration token
+LOG_FILE="$BASE_PATH/logs/token_refresh.log"         # Log file for token refresh and script actions
+BACKUP_PATH="/home/sij/conduwuit_backup"             # Directory for conduwuit backups
+ENV_FILE="$BASE_PATH/config/conduwuit.env"           # Environment file for conduwuit settings
+REPO_PATH="$HOME/workshop/conduwuit"                 # Path to conduwuit source repository
+CONFIG_FILE="$BASE_PATH/config/config.yaml"          # sw1tch configuration file
 
-# Static container settings
-CONTAINER_NAME="conduwuit"
-CONTAINER_IMAGE="conduwuit:custom"
+# Static container settings for conduwuit
+CONTAINER_NAME="conduwuit"                           # Name of the conduwuit Docker container
+CONTAINER_IMAGE="conduwuit:custom"                   # Custom Docker image tag for conduwuit
 
-# Flags
-REFRESH_TOKEN=false
-SUPER_ADMIN=false
-UPDATE=false
-FORCE_RESTART=false
+# Flags to control script behavior (default to false)
+REFRESH_TOKEN=false  # --refresh-token: Generates a new registration token
+SUPER_ADMIN=false    # --super-admin: Sets an emergency password for @conduit user
+UPDATE=false         # --update: Pulls and rebuilds the conduwuit Docker image
+FORCE_RESTART=false  # --force-restart: Forces a restart of the sw1tch service
 
-# Function to log with a timestamp to both file and terminal
+# Function to log messages with a timestamp to both file and terminal
 log() {
     local message="$(date --iso-8601=seconds) $1"
     echo "$message" >> "$LOG_FILE"
@@ -27,8 +27,10 @@ log() {
 }
 
 # Function to refresh the registration token
+# Triggered by --refresh-token flag
+# Generates a new 6-character hex token and writes it to TOKEN_FILE
 refresh_token() {
-    NEW_TOKEN=$(openssl rand -hex 3)
+    NEW_TOKEN=$(openssl rand -hex 3)  # Short token for simplicity
     echo -n "$NEW_TOKEN" > "$TOKEN_FILE"
     if [ $? -ne 0 ]; then
         log "ERROR: Failed to write new token to $TOKEN_FILE"
@@ -37,31 +39,28 @@ refresh_token() {
     log "Generated new registration token: $NEW_TOKEN"
 }
 
-# Function to update the Docker image
+# Function to update the conduwuit Docker image
+# Triggered by --update flag
+# Pulls latest conduwuit source, builds it with Nix, and tags the Docker image
 update_docker_image() {
     log "Updating Conduwuit Docker image..."
-
     cd "$REPO_PATH" || {
         log "ERROR: Failed to cd into $REPO_PATH"
         exit 1
     }
-
     git pull origin main || {
         log "ERROR: git pull failed"
         exit 1
     }
-
     nix build -L --extra-experimental-features "nix-command flakes" .#oci-image-x86_64-linux-musl-all-features || {
         log "ERROR: nix build failed"
         exit 1
     }
-
     IMAGE_TAR_PATH=$(readlink -f result)
     if [ ! -f "$IMAGE_TAR_PATH" ]; then
         log "ERROR: No image tarball found at $IMAGE_TAR_PATH"
         exit 1
     fi
-
     docker load < "$IMAGE_TAR_PATH" | awk '/Loaded image:/ { print $3 }' | xargs -I {} docker tag {} "$CONTAINER_IMAGE"
     if [ $? -ne 0 ]; then
         log "ERROR: Failed to load and tag Docker image"
@@ -70,20 +69,24 @@ update_docker_image() {
     log "Docker image tagged as $CONTAINER_IMAGE"
 }
 
-# Function to restart the container
+# Function to restart the conduwuit container
+# Always runs unless script exits earlier
+# Stops and removes the existing container, then starts a new one with updated settings
 restart_container() {
-    docker stop "$CONTAINER_NAME" 2>/dev/null
-    docker rm "$CONTAINER_NAME" 2>/dev/null
+    docker stop "$CONTAINER_NAME" 2>/dev/null  # Silently stop if running
+    docker rm "$CONTAINER_NAME" 2>/dev/null    # Silently remove if exists
 
+    # Base Docker command with volume mounts and network settings
     DOCKER_CMD=(docker run -d
-        -v "db:/var/lib/conduwuit/"
-        -v "${TOKEN_FILE}:/.registration_token:ro"
-        -v "${BACKUP_PATH}:/backup"
-        --network host
-        --name "$CONTAINER_NAME"
-        --restart unless-stopped
+        -v "db:/var/lib/conduwuit/"            # Persistent conduwuit data
+        -v "${TOKEN_FILE}:/.registration_token:ro"  # Mount token file read-only
+        -v "${BACKUP_PATH}:/backup"            # Backup directory
+        --network host                         # Use host networking
+        --name "$CONTAINER_NAME"               # Container name
+        --restart unless-stopped               # Restart policy
     )
 
+    # Load environment variables from conduwuit.env
     if [ -f "$ENV_FILE" ]; then
         while IFS='=' read -r key value; do
             [[ -z "$key" || "$key" =~ ^# ]] && continue
@@ -99,15 +102,17 @@ restart_container() {
         exit 1
     fi
 
+    # Set detailed logging for debugging
     DOCKER_CMD+=(-e RUST_LOG="conduwuit=trace,reqwest=trace,hickory_proto=trace")
 
+    # If --super-admin is set, generate and apply an emergency password for @conduit
     if [ "$SUPER_ADMIN" = true ]; then
-        EMERGENCY_PASSWORD=$(openssl rand -hex 8)
+        EMERGENCY_PASSWORD=$(openssl rand -hex 8)  # 16-character hex password
         log "Setting emergency password to: $EMERGENCY_PASSWORD"
         DOCKER_CMD+=(-e CONDUWUIT_EMERGENCY_PASSWORD="$EMERGENCY_PASSWORD")
     fi
 
-    DOCKER_CMD+=("$CONTAINER_IMAGE")
+    DOCKER_CMD+=("$CONTAINER_IMAGE")  # Append the image name
 
     log "Docker command: ${DOCKER_CMD[*]}"
     "${DOCKER_CMD[@]}"
@@ -119,6 +124,7 @@ restart_container() {
     log "Successfully recreated container \"$CONTAINER_NAME\" with image \"$CONTAINER_IMAGE\"."
     log " - Configuration loaded from $ENV_FILE"
     
+    # Provide login instructions if --super-admin was used
     if [ "$SUPER_ADMIN" = true ]; then
         log "Use the following credentials to log in as the @conduit server user:"
         log "  Username: @conduit:we2.ee"
@@ -127,18 +133,21 @@ restart_container() {
     fi
 }
 
-# Function to ensure the registration service is running
+# Function to ensure the sw1tch registration service is running
+# Always runs unless script exits earlier
+# Checks port, restarts if --force-restart is set, or starts if not running
 ensure_registration_service() {
     local pid_file="$BASE_PATH/data/registration.pid"
     local log_file="$BASE_PATH/logs/registration.log"
 
     touch "$log_file" || { log "ERROR: Cannot write to $log_file"; exit 1; }
-    chmod 666 "$log_file"
+    chmod 666 "$log_file"  # Ensure log file is writable by all (adjust as needed)
 
     REG_PORT=$(python3 -c "import yaml, sys; print(yaml.safe_load(open('$CONFIG_FILE')).get('port', 8000))")
     log "Registration service port from config: $REG_PORT"
 
     if [ "$FORCE_RESTART" = true ]; then
+        # --force-restart: Kills any process on the port and starts sw1tch anew
         log "Force restart requested. Clearing any process listening on port $REG_PORT..."
         PIDS=$(lsof -ti tcp:"$REG_PORT")
         if [ -n "$PIDS" ]; then
@@ -146,22 +155,23 @@ ensure_registration_service() {
         else
             log "No process found running on port $REG_PORT"
         fi
-        rm -f "$pid_file"
+        rm -f "$pid_file"  # Clear old PID file
         log "Force starting registration service..."
         cd "$(dirname "$BASE_PATH")" || { log "ERROR: Cannot cd to $(dirname "$BASE_PATH")"; exit 1; }
         log "Running: nohup python3 -m sw1tch >> $log_file 2>&1 &"
-        nohup python3 -m sw1tch >> "$log_file" 2>&1 &
+        nohup python3 -m sw1tch >> "$log_file" 2>&1 &  # Run detached
         NEW_PID=$!
-        sleep 2
+        sleep 2  # Wait for process to start
         if ps -p "$NEW_PID" > /dev/null; then
             echo "$NEW_PID" > "$pid_file"
             log "Started registration service with PID $NEW_PID"
             sudo lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
         else
             log "ERROR: Process $NEW_PID did not start or exited immediately"
-            cat "$log_file" >> "$LOG_FILE"
+            cat "$log_file" >> "$LOG_FILE"  # Append service logs for debugging
         fi
     else
+        # Normal mode: Start sw1tch only if not already running
         EXISTING_PIDS=$(lsof -ti tcp:"$REG_PORT")
         if [ -n "$EXISTING_PIDS" ]; then
             log "Registration service already running on port $REG_PORT with PID(s): $EXISTING_PIDS"
@@ -184,20 +194,33 @@ ensure_registration_service() {
     fi
 }
 
-# Parse command-line flags and execute (unchanged)
+# Parse command-line flags to determine script actions
 while [[ $# -gt 0 ]]; do
     case "$1" in
+        # --refresh-token: Regenerate the registration token
+        # Use: When you need a new token (e.g., daily via cron or after a security concern)
         --refresh-token) REFRESH_TOKEN=true; shift;;
+        
+        # --super-admin: Set an emergency password for @conduit user in conduwuit
+        # Use: For initial setup or if admin access is lost; logs credentials for manual login
         --super-admin) SUPER_ADMIN=true; shift;;
+        
+        # --update: Update the conduwuit Docker image from source
+        # Use: To apply the latest conduwuit changes (e.g., weekly via cron)
         --update) UPDATE=true; shift;;
+        
+        # --force-restart: Forcefully restart the sw1tch service, killing any existing process
+        # Use: After updates, config changes, or if the service is unresponsive
         --force-restart) FORCE_RESTART=true; shift;;
+        
         *) log "ERROR: Unknown option: $1"; echo "Usage: $0 [--refresh-token] [--super-admin] [--update] [--force-restart]"; exit 1;;
     esac
 done
 
+# Execute functions based on flags (order matters: update image before restarting)
 if [ "$UPDATE" = true ]; then update_docker_image; fi
 if [ "$REFRESH_TOKEN" = true ]; then refresh_token; fi
-restart_container
-ensure_registration_service
+restart_container  # Always restart container to apply token or image changes
+ensure_registration_service  # Always ensure sw1tch is running
 
 exit 0

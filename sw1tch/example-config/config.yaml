@@ -1,0 +1,124 @@
+# The port on which the registration service will listen
+port: 6626
+
+# The domain name of the Matrix homeserver
+homeserver: "server.net"
+
+# The base URL for Matrix API endpoints (typically https://<homeserver>)
+base_url: "https://server.net"
+
+registration:
+  # Time (in UTC, HHMM format) when the registration token resets daily
+  # Example: 2330 means 11:30 PM UTC
+  token_reset_time_utc: 2330
+
+  # Minutes before token reset when registration closes
+  # Ensures a buffer period; 5 minutes means closure at 23:25 UTC in this case
+  downtime_before_token_reset: 5
+
+  # Cooldown period (in seconds) before an email can request another registration
+  # 300 seconds = 5 minutes
+  email_cooldown: 300
+
+  # Allow multiple registrations per email address
+  # Set to false to restrict to one user per email
+  multiple_users_per_email: true
+
+matrix_admin:
+  # Matrix user ID of the admin account for managing the server
+  username: "@admin:server.net"
+
+  # Password for the admin Matrix account
+  # Keep this secure and avoid committing to version control in production
+  password: "MyAdminPassword"
+
+  # Room ID of the admin room where commands are sent and responses received
+  room: "!123AdminRoom:server.net"
+
+  # Matrix user ID of the super admin (e.g., @conduit) that responds to admin commands
+  super_admin: "@conduit:server.net"
+
+canary:
+  # Room ID where the warrant canary will be posted
+  room: "!AnnouncementRoom:server.net"
+
+  credentials:
+    # Matrix user ID for posting the warrant canary
+    username: "@canary:server.net"
+
+    # Password for the canary Matrix account
+    # Keep secure, similar to matrix_admin password
+    password: "MyCanaryPassword"
+
+  # Name of the organization issuing the warrant canary
+  organization: "Another Matrix Homeserver"
+
+  # Name of the admin signing the canary
+  admin_name: "Homedog"
+
+  # Title of the admin signing the canary
+  admin_title: "server administrator"
+
+  # Path to the file containing canary attestations
+  # Relative to BASE_DIR (sw1tch/), so this points to sw1tch/config/attestations.txt
+  attestations: "config/attestations.txt"
+
+  # GPG key ID used to sign the warrant canary
+  # Must match a key in your GPG keyring
+  gpg_key_id: "123456abcdef"
+
+  rss:
+    # Name of the RSS feed source for datestamp proof
+    name: "Democracy Now!"
+
+    # URL of the RSS feed to fetch the latest headline
+    url: "https://www.democracynow.org/democracynow.rss"
+
+email:
+  smtp:
+    # SMTP server hostname for sending registration emails
+    host: "mail.server.net"
+
+    # SMTP server port (587 is common for TLS)
+    port: 587
+
+    # Username for SMTP authentication
+    username: "admin@server.net"
+
+    # Password for SMTP authentication
+    # Keep secure and avoid exposing in version control
+    password: "MySMTPPassword"
+
+    # Email address that appears in the "From" field of sent emails
+    from: "Registration Team <no-reply@server.net>"
+
+    # Enable TLS for secure email transmission
+    # Set to false if your SMTP server doesn’t support TLS (rare)
+    use_tls: true
+
+  templates:
+    registration_token:
+      # Subject line for registration token emails
+      # {homeserver} is replaced with the homeserver value above
+      subject: "{homeserver} registration token"
+
+      # Path to the plaintext email template
+      # Relative to BASE_DIR (sw1tch/), points to sw1tch/templates/emails/registration_token.txt
+      body: "templates/emails/registration_token.txt"
+
+      # Path to the HTML email template
+      # Relative to BASE_DIR, points to sw1tch/templates/emails/registration_token.html
+      body_html: "templates/emails/registration_token.html"
+
+    deactivation_notice:
+      # Subject line for account deactivation emails
+      # {homeserver} is replaced with the homeserver value
+      subject: "{homeserver} account deactivation notice"
+
+      # Path to the plaintext deactivation notice template
+      # Relative to BASE_DIR, points to sw1tch/templates/emails/account_deactivation.txt
+      body: "templates/emails/account_deactivation.txt"
+
+      # Path to the HTML deactivation notice template
+      # Relative to BASE_DIR, points to sw1tch/templates/emails/account_deactivation.html
+      body_html: "templates/emails/account_deactivation.html"
