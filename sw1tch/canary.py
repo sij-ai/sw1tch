@@ -12,12 +12,19 @@ from pathlib import Path
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
+<<<<<<< HEAD
 # File paths relative to the sw1tch/ directory
 BASE_DIR = Path(__file__).parent
 CONFIG_FILE = BASE_DIR / "config" / "config.yaml"
 ATTESTATIONS_FILE = BASE_DIR / "config" / "attestations.txt"
 OUTPUT_FILE = BASE_DIR / "data" / "canary.txt"
 TEMP_MESSAGE_FILE = BASE_DIR / "data" / "temp_canary_message.txt"
+=======
+# File paths
+CONFIG_FILE = "config/config.yaml"
+OUTPUT_FILE = "data/canary.txt"
+TEMP_MESSAGE_FILE = "temp_canary_message.txt"
+>>>>>>> f419c8f88cefbb352adc3c15f846d05ec588c595
 
 def load_config():
     """Load configuration from YAML file."""
