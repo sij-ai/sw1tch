@@ -1,0 +1,21 @@
+<div class="list-container">
+    <h2>Undocumented Users</h2>
+    {% if users %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="message">No undocumented users found.</p>
+    {% endif %}
+</div>

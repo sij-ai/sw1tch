@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Warrant Canary Preview</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Warrant Canary</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h1>Warrant Canary Preview</h1>
-    <pre>{{ message }}</pre>
-    <form method="post" action="/_admin/warrant_canary/sign">
-        <input type="hidden" name="message" value="{{ message|escape }}">
-        <input type="password" name="passphrase" placeholder="GPG Passphrase" required>
-        <input type="hidden" name="auth_token" value="{{ request.query_params.auth_token }}">
-        <button type="submit">Sign</button>
-    </form>
+    <div class="card">
+        <div class="logo-container">
+            <img src="/static/logo.png" alt="Logo" class="logo">
+        </div>
+        <h2>Preview Warrant Canary</h2>
+        <pre class="canary-preview">{{ message }}</pre>
+        <form method="post" action="/_admin/canary/sign?auth_token={{ request.query_params.auth_token }}">
+            <input type="hidden" name="message" value="{{ message | escape }}">
+            <label for="passphrase">GPG Passphrase:</label>
+            <input type="password" id="passphrase" name="passphrase" required>
+            <button type="submit">Sign and Save</button>
+        </form>
+        <p class="info-text"><a href="/_admin/canary/?auth_token={{ request.query_params.auth_token }}">Back to Form</a></p>
+    </div>
 </body>
 </html>

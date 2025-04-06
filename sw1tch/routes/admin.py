@@ -1,16 +1,73 @@
-from fastapi import APIRouter, Form, Depends
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Form, Depends, Request, HTTPException
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.templating import Jinja2Templates
 from datetime import datetime, timedelta
 import httpx
 import re
+import os
+import hashlib
 
-from sw1tch import config, logger, load_registrations, save_registrations, verify_admin_auth
+from sw1tch import BASE_DIR, config, logger, load_registrations, save_registrations, verify_admin_auth
 from sw1tch.utilities.matrix import get_matrix_users, deactivate_user
 
-router = APIRouter(prefix="/_admin", dependencies=[Depends(verify_admin_auth)])
+router = APIRouter(prefix="/_admin")
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+
+@router.get("/", response_class=HTMLResponse)
+async def admin_panel(request: Request, auth_token: str = Depends(verify_admin_auth)):
+    return templates.TemplateResponse("admin.html", {"request": request, "authenticated": True})
+
+@router.get("/login", response_class=HTMLResponse)
+async def admin_login_page(request: Request):
+    return templates.TemplateResponse("admin.html", {"request": request, "authenticated": False})
+
+@router.post("/login", response_class=HTMLResponse)
+async def admin_login(request: Request, password: str = Form(...)):
+    expected_password = config["matrix_admin"].get("password", "")
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    if hashed_password == hashlib.sha256(expected_password.encode()).hexdigest():
+        return HTMLResponse(
+            content=f"""
+            <html>
+                <head>
+                    <meta http-equiv="refresh" content="0;url=/_admin/?auth_token={hashed_password}">
+                </head>
+                <body>
+                    <p>Redirecting to admin panel...</p>
+                </body>
+            </html>
+            """
+        )
+    else:
+        return templates.TemplateResponse("admin.html", {"request": request, "authenticated": False, "error": "Invalid password"})
+
+@router.get("/view_unfulfilled", response_class=HTMLResponse)
+async def view_unfulfilled_registrations(request: Request, auth_token: str = Depends(verify_admin_auth)):
+    registrations = load_registrations()
+    unfulfilled = []
+    if registrations:
+        current_time = datetime.utcnow()
+        async with httpx.AsyncClient() as client:
+            for entry in registrations:
+                username = entry["requested_name"]
+                reg_date = datetime.fromisoformat(entry["datetime"])
+                age = current_time - reg_date
+                url = f"{config['base_url']}/_matrix/client/v3/register/available?username={username}"
+                try:
+                    response = await client.get(url, timeout=5)
+                    if response.status_code == 200 and response.json().get("available", False):
+                        unfulfilled.append({
+                            "username": username,
+                            "email": entry["email"],
+                            "registration_date": entry["datetime"],
+                            "age_hours": age.total_seconds() / 3600
+                        })
+                except httpx.RequestError as ex:
+                    logger.error(f"Error checking username {username}: {ex}")
+    return templates.TemplateResponse("unfulfilled_registrations.html", {"request": request, "registrations": unfulfilled})
 
 @router.post("/purge_unfulfilled_registrations", response_class=JSONResponse)
-async def purge_unfulfilled_registrations(min_age_hours: int = Form(default=24)):
+async def purge_unfulfilled_registrations(min_age_hours: int = Form(default=24), auth_token: str = Depends(verify_admin_auth)):
     registrations = load_registrations()
     if not registrations:
         return JSONResponse({"message": "No registrations found to clean up"})
@@ -62,8 +119,21 @@ async def purge_unfulfilled_registrations(min_age_hours: int = Form(default=24))
     logger.info(f"Cleanup complete: {result}")
     return JSONResponse(result)
 
+@router.get("/view_undocumented", response_class=HTMLResponse)
+async def view_undocumented_users(request: Request, auth_token: str = Depends(verify_admin_auth)):
+    registrations = load_registrations()
+    matrix_users = await get_matrix_users()
+    registered_usernames = {entry["requested_name"].lower() for entry in registrations}
+    homeserver = config["homeserver"].lower()
+    undocumented_users = [
+        user for user in matrix_users
+        if user.lower().startswith("@") and user[1:].lower().split(":", 1)[1] == homeserver
+        and user[1:].lower().split(":", 1)[0] not in registered_usernames
+    ]
+    return templates.TemplateResponse("undocumented_users.html", {"request": request, "users": undocumented_users})
+
 @router.post("/deactivate_undocumented_users", response_class=JSONResponse)
-async def deactivate_undocumented_users():
+async def deactivate_undocumented_users(auth_token: str = Depends(verify_admin_auth)):
     registrations = load_registrations()
     matrix_users = await get_matrix_users()
     registered_usernames = {entry["requested_name"].lower() for entry in registrations}
@@ -93,7 +163,7 @@ async def deactivate_undocumented_users():
     return JSONResponse(result)
 
 @router.post("/retroactively_document_users", response_class=JSONResponse)
-async def retroactively_document_users():
+async def retroactively_document_users(auth_token: str = Depends(verify_admin_auth)):
     registrations = load_registrations()
     matrix_users = await get_matrix_users()
     registered_usernames = {entry["requested_name"].lower() for entry in registrations}

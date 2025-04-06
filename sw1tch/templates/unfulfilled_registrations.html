@@ -1,0 +1,27 @@
+<div class="list-container">
+    <h2>Unfulfilled Registrations</h2>
+    {% if registrations %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Registration Date</th>
+                <th>Age (Hours)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reg in registrations %}
+            <tr>
+                <td>{{ reg.username }}</td>
+                <td>{{ reg.email }}</td>
+                <td>{{ reg.registration_date }}</td>
+                <td>{{ reg.age_hours | round(1) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="message">No unfulfilled registrations found.</p>
+    {% endif %}
+</div>

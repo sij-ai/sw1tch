@@ -1,15 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warrant Canary Signed</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h1>Warrant Canary Signed</h1>
-    <pre>{{ signed_message }}</pre>
-    <form method="post" action="/_admin/warrant_canary/post">
-        <input type="hidden" name="signed_message" value="{{ signed_message|escape }}">
-        <input type="hidden" name="auth_token" value="{{ request.query_params.auth_token }}">
-        <button type="submit">Post to Matrix</button>
-    </form>
+    <div class="card">
+        <div class="logo-container">
+            <img src="/static/logo.png" alt="Logo" class="logo">
+        </div>
+        <h2>Warrant Canary Signed</h2>
+        <pre class="canary-preview">{{ signed_message }}</pre>
+        <button onclick="postToMatrix('{{ signed_message | escape }}', '{{ request.query_params.auth_token }}')">Post to Matrix</button>
+        <p id="post-result" class="message"></p>
+        <p class="info-text"><a href="/_admin/?auth_token={{ request.query_params.auth_token }}">Back to Admin Panel</a></p>
+    </div>
+    <script>
+        async function postToMatrix(signed_message, auth_token) {
+            const response = await fetch(`/_admin/canary/post?auth_token=${auth_token}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `signed_message=${encodeURIComponent(signed_message)}`
+            });
+            const result = await response.json();
+            document.getElementById("post-result").textContent = result.message;
+            document.getElementById("post-result").style.color = result.success ? "var(--success-color)" : "var(--error-color)";
+        }
+    </script>
 </body>
 </html>

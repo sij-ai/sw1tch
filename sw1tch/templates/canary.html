@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warrant Canary</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="card">
+        <div class="logo-container">
+            <img src="/static/logo.png" alt="Logo" class="logo">
+        </div>
+        <h2>Create Warrant Canary</h2>
+        <form method="post" action="/_admin/canary/preview?auth_token={{ request.query_params.auth_token }}">
+            <fieldset>
+                <legend>Select Attestations for {{ organization }}</legend>
+                {% for attestation in attestations %}
+                <label class="checkbox-label">
+                    <input type="checkbox" name="selected_attestations" value="{{ attestation }}">
+                    {{ organization }} {{ attestation }}
+                </label>
+                {% endfor %}
+            </fieldset>
+            <label for="note">Optional Note:</label>
+            <textarea id="note" name="note" rows="3" placeholder="Add an optional note"></textarea>
+            <button type="submit">Preview Canary</button>
+        </form>
+        <p class="info-text"><a href="/_admin/?auth_token={{ request.query_params.auth_token }}">Back to Admin Panel</a></p>
+    </div>
+</body>
+</html>

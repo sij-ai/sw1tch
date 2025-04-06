@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .admin-button {
+            padding: 1rem;
+            font-size: 1rem;
+        }
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .results-container {
+            width: 80%;
+            margin: 0 auto 2rem auto;
+            max-height: none; /* Allow height to adjust to content */
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo-container">
+            <img src="/static/logo.png" alt="Logo" class="logo">
+        </div>
+
+        {% if not authenticated %}
+        <div class="login-container">
+            <form id="login-form" method="post" action="/_admin/login">
+                <input type="password" name="password" placeholder="Admin Password" required>
+                <button type="submit">Login</button>
+            </form>
+            {% if error %}
+            <p class="message" style="color: var(--error-color);">{{ error }}</p>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="grid-container">
+            <button onclick="viewUnfulfilled('{{ request.query_params.auth_token }}')" class="admin-button">View Unfulfilled Registrations</button>
+            <button onclick="viewUndocumented('{{ request.query_params.auth_token }}')" class="admin-button">View Undocumented Users</button>
+        </div>
+        <div id="results" class="results-container"></div>
+        <div class="grid-container">
+            <button onclick="purgeUnfulfilled('{{ request.query_params.auth_token }}')" class="admin-button">Purge Unfulfilled Registrations</button>
+            <button onclick="deactivateUndocumented('{{ request.query_params.auth_token }}')" class="admin-button">Deactivate Undocumented Users</button>
+        </div>
+        <p class="info-text">Logged in as admin</p>
+        {% endif %}
+    </div>
+
+    <script>
+        async function viewUnfulfilled(auth_token) {
+            const response = await fetch(`/_admin/view_unfulfilled?auth_token=${auth_token}`);
+            const html = await response.text();
+            document.getElementById('results').innerHTML = html;
+        }
+
+        async function purgeUnfulfilled(auth_token) {
+            if (confirm("Are you sure you want to purge unfulfilled registrations?")) {
+                const response = await fetch(`/_admin/purge_unfulfilled_registrations?auth_token=${auth_token}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "min_age_hours=24"
+                });
+                const result = await response.json();
+                alert(`Cleanup complete:\nKept existing: ${result.kept_existing}\nKept recent: ${result.kept_recent}\nRemoved: ${result.removed}`);
+                viewUnfulfilled(auth_token); // Refresh the list
+            }
+        }
+
+        async function viewUndocumented(auth_token) {
+            const response = await fetch(`/_admin/view_undocumented?auth_token=${auth_token}`);
+            const html = await response.text();
+            document.getElementById('results').innerHTML = html;
+        }
+
+        async function deactivateUndocumented(auth_token) {
+            if (confirm("Are you sure you want to deactivate undocumented users?")) {
+                const response = await fetch(`/_admin/deactivate_undocumented_users?auth_token=${auth_token}`, {
+                    method: "POST"
+                });
+                const result = await response.json();
+                alert(`${result.message}\nFailed deactivations: ${result.failed_deactivations || 'None'}`);
+                viewUndocumented(auth_token); // Refresh the list
+            }
+        }
+    </script>
+</body>
+</html>

@@ -13,7 +13,7 @@ from urllib3.util.retry import Retry
 from sw1tch import BASE_DIR, config, logger, verify_admin_auth
 from sw1tch.utilities.matrix import AsyncClient
 
-router = APIRouter(prefix="/_admin/warrant_canary", dependencies=[Depends(verify_admin_auth)])
+router = APIRouter(prefix="/_admin/canary")
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 ATTESTATIONS_FILE = os.path.join(BASE_DIR, "config", "attestations.txt")
@@ -45,8 +45,8 @@ def get_nist_time():
                 return data["dateTime"] + " UTC"
             elif "utc_datetime" in data:
                 return data["utc_datetime"] + " UTC"
-        except requests.RequestException:
-            pass
+        except requests.RequestException as e:
+            logger.error(f"Failed to fetch NIST time from {url}: {e}")
     raise HTTPException(status_code=500, detail="Failed to fetch NIST time")
 
 def get_rss_headline():
@@ -60,18 +60,19 @@ def get_rss_headline():
 def get_bitcoin_latest_block():
     try:
         response = requests.get("https://blockchain.info/latestblock", timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            block_response = requests.get(f"https://blockchain.info/rawblock/{data['hash']}", timeout=10)
-            if block_response.status_code == 200:
-                block_data = block_response.json()
-                hash_str = data["hash"].lstrip("0") or "0"
-                return {
-                    "height": data["height"],
-                    "hash": hash_str,
-                    "time": datetime.datetime.fromtimestamp(block_data["time"]).strftime("%Y-%m-%d %H:%M:%S UTC")
-                }
-    except Exception:
+        response.raise_for_status()
+        data = response.json()
+        block_response = requests.get(f"https://blockchain.info/rawblock/{data['hash']}", timeout=10)
+        block_response.raise_for_status()
+        block_data = block_response.json()
+        hash_str = data["hash"].lstrip("0") or "0"
+        return {
+            "height": data["height"],
+            "hash": hash_str,
+            "time": datetime.datetime.fromtimestamp(block_data["time"]).strftime("%Y-%m-%d %H:%M:%S UTC")
+        }
+    except requests.RequestException as e:
+        logger.error(f"Failed to fetch Bitcoin block data: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch Bitcoin block data")
 
 def create_warrant_canary_message(attestations: List[str], note: str):
@@ -99,7 +100,7 @@ def sign_with_gpg(message: str, gpg_key_id: str, passphrase: str):
         with open(TEMP_CANARY_FILE, "w", newline='\n') as f:
             f.write(message)
         cmd = ["gpg", "--batch", "--yes", "--passphrase", passphrase, "--clearsign", "--default-key", gpg_key_id, TEMP_CANARY_FILE]
-        subprocess.run(cmd, check=True)
+        subprocess.run(cmd, check=True, capture_output=True, text=True)
         with open(f"{TEMP_CANARY_FILE}.asc", "r") as f:
             signed_message = f.read()
         os.remove(TEMP_CANARY_FILE)
@@ -110,7 +111,11 @@ def sign_with_gpg(message: str, gpg_key_id: str, passphrase: str):
             lines.pop(signature_idx + 1)
         return "\n".join(lines)
     except subprocess.CalledProcessError as e:
-        raise HTTPException(status_code=500, detail=f"GPG signing failed: {e}")
+        logger.error(f"GPG signing failed: {e.stderr}")
+        raise HTTPException(status_code=500, detail=f"GPG signing failed: {e.stderr}")
+    except Exception as e:
+        logger.error(f"Error during GPG signing: {e}")
+        raise HTTPException(status_code=500, detail=f"Error during GPG signing: {e}")
 
 async def post_to_matrix(signed_message: str):
     try:
@@ -132,36 +137,62 @@ async def post_to_matrix(signed_message: str):
                 f"<pre>{signed_message}</pre>"
             )
         }
-        await client.room_send(config['matrix_admin']['room'], "m.room.message", content)
+        await client.room_send(config['canary']['room'], "m.room.message", content)
         await client.logout()
         await client.close()
+        logger.info("Warrant canary posted to Matrix successfully")
         return True
     except Exception as e:
         logger.error(f"Error posting to Matrix: {e}")
         return False
 
 @router.get("/", response_class=HTMLResponse)
-async def warrant_canary_form(request: Request):
+async def warrant_canary_form(request: Request, auth_token: str = Depends(verify_admin_auth)):
     attestations = load_attestations()
-    return templates.TemplateResponse("canary_form.html", {
+    return templates.TemplateResponse("canary.html", {
         "request": request,
         "attestations": attestations,
         "organization": config["canary"]["organization"]
     })
 
 @router.post("/preview", response_class=HTMLResponse)
-async def warrant_canary_preview(request: Request, attestations: List[str] = Form(...), note: str = Form(default="")):
-    message = create_warrant_canary_message(attestations, note)
-    return templates.TemplateResponse("canary_preview.html", {"request": request, "message": message})
+async def warrant_canary_preview(
+    request: Request,
+    selected_attestations: List[str] = Form(...),
+    note: str = Form(default=""),
+    auth_token: str = Depends(verify_admin_auth)
+):
+    message = create_warrant_canary_message(selected_attestations, note)
+    return templates.TemplateResponse("canary_preview.html", {
+        "request": request,
+        "message": message,
+        "selected_attestations": selected_attestations,
+        "note": note
+    })
 
 @router.post("/sign", response_class=HTMLResponse)
-async def warrant_canary_sign(request: Request, message: str = Form(...), passphrase: str = Form(...)):
+async def warrant_canary_sign(
+    request: Request,
+    message: str = Form(...),
+    passphrase: str = Form(...),
+    auth_token: str = Depends(verify_admin_auth)
+):
     signed_message = sign_with_gpg(message, config["canary"]["gpg_key_id"], passphrase)
     with open(CANARY_OUTPUT_FILE, "w") as f:
         f.write(signed_message)
-    return templates.TemplateResponse("canary_success.html", {"request": request, "signed_message": signed_message})
+    logger.info(f"Warrant canary saved to {CANARY_OUTPUT_FILE}")
+    return templates.TemplateResponse("canary_success.html", {
+        "request": request,
+        "signed_message": signed_message
+    })
 
 @router.post("/post", response_class=JSONResponse)
-async def warrant_canary_post(signed_message: str = Form(...)):
+async def warrant_canary_post(
+    signed_message: str = Form(...),
+    auth_token: str = Depends(verify_admin_auth)
+):
     success = await post_to_matrix(signed_message)
-    return JSONResponse({"message": "Posted to Matrix" if success else "Failed to post to Matrix"})
+    return JSONResponse({
+        "message": "Posted to Matrix successfully" if success else "Failed to post to Matrix",
+        "success": success
+    })
