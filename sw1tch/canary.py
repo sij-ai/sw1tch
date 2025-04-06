@@ -13,8 +13,8 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 # File paths
-CONFIG_FILE = "config.yaml"
-OUTPUT_FILE = "canary.txt"
+CONFIG_FILE = "config/config.yaml"
+OUTPUT_FILE = "data/canary.txt"
 TEMP_MESSAGE_FILE = "temp_canary_message.txt"
 
 def load_config():
