@@ -8,7 +8,7 @@ import os
 import hashlib
 
 from sw1tch import BASE_DIR, config, logger, load_registrations, save_registrations, verify_admin_auth
-from sw1tch.utilities.matrix import get_matrix_users, deactivate_user
+from sw1tch.utilities.matrix import get_matrix_users, deactivate_user, get_matrix_rooms, get_room_members, check_banned_room_name
 
 router = APIRouter(prefix="/_admin")
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
@@ -192,3 +192,39 @@ async def retroactively_document_users(auth_token: str = Depends(verify_admin_au
         "message": f"Retroactively documented {added_count} user(s)",
         "added_count": added_count
     })
+
+@router.get("/moderate_rooms", response_class=JSONResponse)
+async def moderate_rooms(auth_token: str = Depends(verify_admin_auth)):
+    all_rooms = []
+    banned_rooms = []
+    page = 1
+    while True:
+        rooms = await get_matrix_rooms(page)
+        if not rooms:
+            break
+        # Stop if all rooms on this page have fewer than 3 members
+        if all(room["members"] < 3 for room in rooms):
+            break
+        for room in rooms:
+            # Add every room to all_rooms, even those with < 3 members, for debugging
+            all_rooms.append({
+                "room_id": room["room_id"],
+                "room_name": room["name"],
+                "total_members": room["members"]
+            })
+            if room["members"] < 3:
+                continue  # Skip rooms with fewer than 3 members for banned_rooms
+            if check_banned_room_name(room["name"]):
+                # Get local members for banned rooms
+                members_info = await get_room_members(room["room_id"], local_only=True)
+                banned_rooms.append({
+                    "room_id": room["room_id"],
+                    "room_name": room["name"],
+                    "total_members": room["members"],
+                    "local_users": [
+                        {"user_id": member["user_id"], "display_name": member["display_name"]}
+                        for member in members_info["local_members"]
+                    ]
+                })
+        page += 1
+    return JSONResponse({"all_rooms": all_rooms, "banned_rooms": banned_rooms})
