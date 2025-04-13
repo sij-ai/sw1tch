@@ -6,7 +6,7 @@ python3 sw1tch/canary.py
 # Check if the canary.txt was generated successfully
 if [ $? -eq 0 ] && [ -f sw1tch/data/canary.txt ]; then
     # Stage all changes, commit, and push
-    git add sw1tch/data/canary.txt
+    git add -A .
     git commit -m "Update warrant canary - $(date +%Y-%m-%d)"
     git push origin main
     echo "Warrant canary updated and pushed to repository."
