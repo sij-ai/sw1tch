@@ -1,22 +1,22 @@
 #!/bin/bash
 
-# File paths for sw1tch and conduwuit integration
+# File paths for sw1tch and tuwunel integration
 BASE_PATH="/home/sij/hand_of_morpheus/sw1tch"        # Base directory for sw1tch package
 TOKEN_FILE="$BASE_PATH/data/.registration_token"     # File storing the current registration token
 LOG_FILE="$BASE_PATH/logs/token_refresh.log"         # Log file for token refresh and script actions
-BACKUP_PATH="/home/sij/conduwuit_backup"             # Directory for conduwuit backups
-ENV_FILE="$BASE_PATH/config/conduwuit.env"           # Environment file for conduwuit settings
-REPO_PATH="$HOME/workshop/conduwuit"                 # Path to conduwuit source repository
+BACKUP_PATH="/home/sij/tuwunel_backup"             # Directory for tuwunel backups
+ENV_FILE="$BASE_PATH/config/tuwunel.env"             # Environment file for tuwunel settings
+REPO_PATH="$HOME/workshop/tuwunel"                   # Path to tuwunel source repository
 CONFIG_FILE="$BASE_PATH/config/config.yaml"          # sw1tch configuration file
 
-# Static container settings for conduwuit
-CONTAINER_NAME="conduwuit"                           # Name of the conduwuit Docker container
-CONTAINER_IMAGE="conduwuit:custom"                   # Custom Docker image tag for conduwuit
+# Static container settings for tuwunel
+CONTAINER_NAME="tuwunel"                             # Name of the tuwunel Docker container
+CONTAINER_IMAGE="tuwunel:custom"                     # Custom Docker image tag for tuwunel
 
 # Flags to control script behavior (default to false)
 REFRESH_TOKEN=false  # --refresh-token: Generates a new registration token
 SUPER_ADMIN=false    # --super-admin: Sets an emergency password for @conduit user
-UPDATE=false         # --update: Pulls and rebuilds the conduwuit Docker image
+UPDATE=false         # --update: Pulls and rebuilds the tuwunel Docker image
 FORCE_RESTART=false  # --force-restart: Forces a restart of the sw1tch service
 
 # Function to log messages with a timestamp to both file and terminal
@@ -39,11 +39,11 @@ refresh_token() {
     log "Generated new registration token: $NEW_TOKEN"
 }
 
-# Function to update the conduwuit Docker image
+# Function to update the tuwunel Docker image
 # Triggered by --update flag
-# Pulls latest conduwuit source, builds it with Nix, and tags the Docker image
+# Pulls latest tuwunel source, builds it with Nix, and tags the Docker image
 update_docker_image() {
-    log "Updating Conduwuit Docker image..."
+    log "Updating tuwunel Docker image..."
     cd "$REPO_PATH" || {
         log "ERROR: Failed to cd into $REPO_PATH"
         exit 1
@@ -69,7 +69,7 @@ update_docker_image() {
     log "Docker image tagged as $CONTAINER_IMAGE"
 }
 
-# Function to restart the conduwuit container
+# Function to restart the tuwunel container
 # Always runs unless script exits earlier
 # Stops and removes the existing container, then starts a new one with updated settings
 restart_container() {
@@ -78,7 +78,7 @@ restart_container() {
 
     # Base Docker command with volume mounts and network settings
     DOCKER_CMD=(docker run -d
-        -v "db:/var/lib/conduwuit/"            # Persistent conduwuit data
+        -v "db:/var/lib/conduwuit/"            # Persistent tuwunel data
         -v "${TOKEN_FILE}:/.registration_token:ro"  # Mount token file read-only
         -v "${BACKUP_PATH}:/backup"            # Backup directory
         --network host                         # Use host networking
@@ -86,7 +86,7 @@ restart_container() {
         --restart unless-stopped               # Restart policy
     )
 
-    # Load environment variables from conduwuit.env
+    # Load environment variables from tuwunel.env
     if [ -f "$ENV_FILE" ]; then
         while IFS='=' read -r key value; do
             [[ -z "$key" || "$key" =~ ^# ]] && continue
@@ -201,12 +201,12 @@ while [[ $# -gt 0 ]]; do
         # Use: When you need a new token (e.g., daily via cron or after a security concern)
         --refresh-token) REFRESH_TOKEN=true; shift;;
         
-        # --super-admin: Set an emergency password for @conduit user in conduwuit
+        # --super-admin: Set an emergency password for @conduit user in tuwunel
         # Use: For initial setup or if admin access is lost; logs credentials for manual login
         --super-admin) SUPER_ADMIN=true; shift;;
         
-        # --update: Update the conduwuit Docker image from source
-        # Use: To apply the latest conduwuit changes (e.g., weekly via cron)
+        # --update: Update the tuwunel Docker image from source
+        # Use: To apply the latest tuwunel changes (e.g., weekly via cron)
         --update) UPDATE=true; shift;;
         
         # --force-restart: Forcefully restart the sw1tch service, killing any existing process
