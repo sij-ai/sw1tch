@@ -4,7 +4,7 @@
 BASE_PATH="/home/sij/hand_of_morpheus/sw1tch"        # Base directory for sw1tch package
 TOKEN_FILE="$BASE_PATH/data/.registration_token"     # File storing the current registration token
 LOG_FILE="$BASE_PATH/logs/token_refresh.log"         # Log file for token refresh and script actions
-BACKUP_PATH="/home/sij/tuwunel_backup"             # Directory for tuwunel backups
+BACKUP_PATH="/home/sij/tuwunel_backup"               # Directory for tuwunel backups
 ENV_FILE="$BASE_PATH/config/tuwunel.env"             # Environment file for tuwunel settings
 REPO_PATH="$HOME/workshop/tuwunel"                   # Path to tuwunel source repository
 CONFIG_FILE="$BASE_PATH/config/config.yaml"          # sw1tch configuration file
@@ -16,7 +16,8 @@ CONTAINER_IMAGE="tuwunel:custom"                     # Custom Docker image tag f
 # Flags to control script behavior (default to false)
 REFRESH_TOKEN=false  # --refresh-token: Generates a new registration token
 SUPER_ADMIN=false    # --super-admin: Sets an emergency password for @conduit user
-UPDATE=false         # --update: Pulls and rebuilds the tuwunel Docker image
+UPDATE=false         # --update: Pulls the latest tuwunel source
+REBUILD=false        # --rebuild: Rebuilds the tuwunel Docker image
 FORCE_RESTART=false  # --force-restart: Forces a restart of the sw1tch service
 
 # Function to log messages with a timestamp to both file and terminal
@@ -27,8 +28,6 @@ log() {
 }
 
 # Function to refresh the registration token
-# Triggered by --refresh-token flag
-# Generates a new 6-character hex token and writes it to TOKEN_FILE
 refresh_token() {
     NEW_TOKEN=$(openssl rand -hex 3)  # Short token for simplicity
     echo -n "$NEW_TOKEN" > "$TOKEN_FILE"
@@ -39,17 +38,24 @@ refresh_token() {
     log "Generated new registration token: $NEW_TOKEN"
 }
 
-# Function to update the tuwunel Docker image
-# Triggered by --update flag
-# Pulls latest tuwunel source, builds it with Nix, and tags the Docker image
-update_docker_image() {
-    log "Updating tuwunel Docker image..."
+# Function to pull the latest tuwunel source
+update_repo() {
+    log "Pulling latest tuwunel source..."
     cd "$REPO_PATH" || {
         log "ERROR: Failed to cd into $REPO_PATH"
         exit 1
     }
     git pull origin main || {
         log "ERROR: git pull failed"
+        exit 1
+    }
+}
+
+# Function to rebuild the tuwunel Docker image
+rebuild_docker_image() {
+    log "Rebuilding tuwunel Docker image..."
+    cd "$REPO_PATH" || {
+        log "ERROR: Failed to cd into $REPO_PATH"
         exit 1
     }
     nix build -L --extra-experimental-features "nix-command flakes" .#oci-image-x86_64-linux-musl-all-features || {
@@ -70,8 +76,6 @@ update_docker_image() {
 }
 
 # Function to restart the tuwunel container
-# Always runs unless script exits earlier
-# Stops and removes the existing container, then starts a new one with updated settings
 restart_container() {
     docker stop "$CONTAINER_NAME" 2>/dev/null  # Silently stop if running
     docker rm "$CONTAINER_NAME" 2>/dev/null    # Silently remove if exists
@@ -134,8 +138,6 @@ restart_container() {
 }
 
 # Function to ensure the sw1tch registration service is running
-# Always runs unless script exits earlier
-# Checks port, restarts if --force-restart is set, or starts if not running
 ensure_registration_service() {
     local pid_file="$BASE_PATH/data/registration.pid"
     local log_file="$BASE_PATH/logs/registration.log"
@@ -197,28 +199,18 @@ ensure_registration_service() {
 # Parse command-line flags to determine script actions
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        # --refresh-token: Regenerate the registration token
-        # Use: When you need a new token (e.g., daily via cron or after a security concern)
         --refresh-token) REFRESH_TOKEN=true; shift;;
-        
-        # --super-admin: Set an emergency password for @conduit user in tuwunel
-        # Use: For initial setup or if admin access is lost; logs credentials for manual login
         --super-admin) SUPER_ADMIN=true; shift;;
-        
-        # --update: Update the tuwunel Docker image from source
-        # Use: To apply the latest tuwunel changes (e.g., weekly via cron)
         --update) UPDATE=true; shift;;
-        
-        # --force-restart: Forcefully restart the sw1tch service, killing any existing process
-        # Use: After updates, config changes, or if the service is unresponsive
+        --rebuild) REBUILD=true; shift;;
         --force-restart) FORCE_RESTART=true; shift;;
-        
-        *) log "ERROR: Unknown option: $1"; echo "Usage: $0 [--refresh-token] [--super-admin] [--update] [--force-restart]"; exit 1;;
+        *) log "ERROR: Unknown option: $1"; echo "Usage: $0 [--refresh-token] [--super-admin] [--update] [--rebuild] [--force-restart]"; exit 1;;
     esac
 done
 
-# Execute functions based on flags (order matters: update image before restarting)
-if [ "$UPDATE" = true ]; then update_docker_image; fi
+# Execute functions based on flags
+if [ "$UPDATE" = true ]; then update_repo; fi
+if [ "$REBUILD" = true ]; then rebuild_docker_image; fi
 if [ "$REFRESH_TOKEN" = true ]; then refresh_token; fi
 restart_container  # Always restart container to apply token or image changes
 ensure_registration_service  # Always ensure sw1tch is running
