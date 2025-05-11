@@ -535,15 +535,6 @@ def main():
         print("Failed to sign message with GPG.")
         sys.exit(1) # Exit if signing failed
 
-    # --- Explicitly add blank line before signature if missing ---
-    sig_marker = "\n-----BEGIN PGP SIGNATURE-----"
-    if sig_marker in signed_message:
-         # Check if it's NOT already double-spaced (i.e., \n\n-----BEGIN...)
-         if f"\n\n{sig_marker[1:]}" not in signed_message:
-              print("Forcing extra newline before PGP signature block...")
-              signed_message = signed_message.replace(sig_marker, f"\n{sig_marker}")
-    # --- End newline fix ---
-
     # Save the signed message (potentially modified)
     if not save_warrant_canary(signed_message):
         print("Failed to save warrant canary file.")
