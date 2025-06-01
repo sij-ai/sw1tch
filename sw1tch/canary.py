@@ -93,7 +93,6 @@ def get_nist_time():
     session.mount("https://", adapter)
     session.mount("http://", adapter)
     endpoints = [
-        "http://worldclockapi.com/api/json/utc/now",  # Use HTTP due to HTTPS cert issue
         "https://timeapi.io/api/Time/current/zone?timeZone=UTC",
         "https://worldtimeapi.org/api/timezone/UTC"
     ]
@@ -180,8 +179,8 @@ def get_rss_headline(config):
     try:
         # Safely get RSS config, providing defaults
         rss_config = config.get('canary', {}).get('rss', {})
-        rss_url = rss_config.get('url', 'https://www.democracynow.org/democracynow.rss') # Default feed
-        rss_name = rss_config.get('name', 'Democracy Now!') # Use specific default name
+        rss_url = rss_config.get('url', 'https://www.theguardian.com/world/rss')
+        rss_name = rss_config.get('name', 'The Guardian')
         print(f"Fetching {rss_name} headline from {rss_url}...")
         feed = feedparser.parse(rss_url)
         if feed.entries:
@@ -340,13 +339,13 @@ def create_warrant_canary_message(config, is_interactive):
         message += f"\nNOTE: {note}\n"
 
     message += "\nDatestamp Proof:\n"
-    message += f"  Daily News:  \"{rss_data['title']}\"\n"
-    message += f"  Source URL:  {rss_data['link']}\n"
-    message += f"  XMR block:   #{monero_block['height']}, {monero_block['time']}\n"
-    message += f"  Block hash:  {monero_block['hash']}\n" # Ensure this line ends with newline for GPG
+    message += f"  News headline: {rss_data['title']}\n"
+    message += f"  News URL:      {rss_data['link']}\n"
+    message += f"  XMR block:     #{monero_block['height']}, {monero_block['time']}\n"
+    message += f"  Block hash:    {monero_block['hash']}\n\n" # Ensure this line ends with newline for GPG
 
     # Ensure single trailing newline before signing
-    return message.rstrip() + "\n"
+    return message #.rstrip() + "\n"
 
 def sign_with_gpg(message, gpg_key_id):
     """Signs the message using GPG clearsign with the specified key ID."""
