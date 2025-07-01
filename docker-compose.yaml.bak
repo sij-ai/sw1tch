@@ -1,0 +1,29 @@
+services:
+  tuwunel:
+    image: ghcr.io/matrix-construct/tuwunel:main
+    container_name: tuwunel
+    network_mode: host
+    restart: unless-stopped
+    
+    volumes:
+      - db:/var/lib/conduwuit/
+      - ./sw1tch/data/.registration_token:/.registration_token:ro
+      - /home/sij/tuwunel_backup:/backup
+      - ./sw1tch/config/tuwunel.toml:/etc/tuwunel/tuwunel.toml:ro
+    
+    environment:
+      - RUST_LOG=tuwunel=warn,reqwest=error
+    
+    command: ["--config", "/etc/tuwunel/tuwunel.toml"]
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+        reservations:
+          memory: 1G
+
+volumes:
+  db:
+    external: true 

@@ -8,17 +8,16 @@ BACKUP_PATH="/home/sij/tuwunel_backup"               # Directory for tuwunel bac
 ENV_FILE="$BASE_PATH/config/tuwunel.env"             # Environment file for tuwunel settings
 REPO_PATH="$HOME/workshop/tuwunel"                   # Path to tuwunel source repository
 CONFIG_FILE="$BASE_PATH/config/config.yaml"          # sw1tch configuration file
-COMPOSE_FILE="docker-compose.yaml"                   # Docker Compose file path
 
 # Static container settings for tuwunel
 CONTAINER_NAME="tuwunel"                             # Name of the tuwunel Docker container
-CONTAINER_IMAGE="ghcr.io/matrix-construct/tuwunel:main"  # Use GHCR tuwunel image
+CONTAINER_IMAGE="jevolk/tuwunel:latest"             # Use pre-built tuwunel image
 
 # Flags to control script behavior (default to false)
 REFRESH_TOKEN=false  # --refresh-token: Generates a new registration token
 SUPER_ADMIN=false    # --super-admin: Sets an emergency password for @conduit user
-UPDATE=false         # --update: Pulls the latest tuwunel source code
-PULL=false           # --pull: Pulls the latest tuwunel Docker image
+UPDATE=false         # --update: Pulls the latest tuwunel source
+REBUILD=false        # --rebuild: Rebuilds the tuwunel Docker image
 FORCE_RESTART=false  # --force-restart: Forces a restart of the sw1tch service
 
 # Function to log messages with a timestamp to both file and terminal
@@ -52,75 +51,102 @@ update_repo() {
     }
 }
 
-# Function to pull the latest tuwunel Docker image
-pull_docker_image() {
+# Function to rebuild the tuwunel Docker image
+rebuild_docker_image() {
     log "Pulling latest tuwunel Docker image..."
-    docker compose pull || {
-        log "ERROR: Failed to pull Docker image via compose"
-        exit 1
-    }
-    log "Successfully pulled latest image"
+    if [[ "$CONTAINER_IMAGE" == "jevolk/tuwunel:latest" ]]; then
+        docker pull "$CONTAINER_IMAGE" || {
+            log "ERROR: Failed to pull Docker image"
+            exit 1
+        }
+        log "Successfully pulled $CONTAINER_IMAGE"
+    else
+        # Original build from source logic for custom images
+        log "Building tuwunel Docker image from source..."
+        cd "$REPO_PATH" || {
+            log "ERROR: Failed to cd into $REPO_PATH"
+            exit 1
+        }
+        nix build -L --extra-experimental-features "nix-command flakes" .#oci-image-x86_64-linux-musl-all-features || {
+            log "ERROR: nix build failed"
+            exit 1
+        }
+        IMAGE_TAR_PATH=$(readlink -f result)
+        if [ ! -f "$IMAGE_TAR_PATH" ]; then
+            log "ERROR: No image tarball found at $IMAGE_TAR_PATH"
+            exit 1
+        fi
+        docker load < "$IMAGE_TAR_PATH" | awk '/Loaded image:/ { print $3 }' | xargs -I {} docker tag {} "$CONTAINER_IMAGE"
+        if [ $? -ne 0 ]; then
+            log "ERROR: Failed to load and tag Docker image"
+            exit 1
+        fi
+        log "Docker image tagged as $CONTAINER_IMAGE"
+    fi
 }
 
-# Function to restart the tuwunel container using Docker Compose
+# Function to restart the tuwunel container
 restart_container() {
-    # Handle --super-admin flag by creating/updating environment file
-    if [ "$SUPER_ADMIN" = true ]; then
-        EMERGENCY_PASSWORD=$(openssl rand -hex 8)  # 16-character hex password
-        log "Setting emergency password to: $EMERGENCY_PASSWORD"
-        
-        # Create or update the environment file for compose
-        cat > "$ENV_FILE" << EOF
-RUST_LOG=tuwunel=warn,reqwest=error
-CONDUWUIT_EMERGENCY_PASSWORD=$EMERGENCY_PASSWORD
-EOF
-        log "Updated environment file with emergency password"
-    else
-        # Create environment file without emergency password
-        cat > "$ENV_FILE" << EOF
-RUST_LOG=tuwunel=warn,reqwest=error
-EOF
-    fi
+    docker stop "$CONTAINER_NAME" 2>/dev/null  # Silently stop if running
+    docker rm "$CONTAINER_NAME" 2>/dev/null    # Silently remove if exists
 
-    # Update docker-compose.yaml to use env_file if --super-admin is set
-    if [ "$SUPER_ADMIN" = true ]; then
-        # Create a temporary compose file with env_file
-        cat > "docker-compose.override.yaml" << EOF
-services:
-  tuwunel:
-    env_file:
-      - $ENV_FILE
-EOF
-        log "Created compose override for environment variables"
-    else
-        # Remove override file if it exists
-        rm -f "docker-compose.override.yaml"
-    fi
+    # Base Docker command with volume mounts, network settings, and AGGRESSIVE RESOURCE LIMITS
+    DOCKER_CMD=(docker run -d
+        -v "db:/var/lib/conduwuit/"            # Persistent tuwunel data
+        -v "${TOKEN_FILE}:/.registration_token:ro"  # Mount token file read-only
+        -v "${BACKUP_PATH}:/backup"            # Backup directory
+        -v "${BASE_PATH}/config/tuwunel.toml:/etc/tuwunel/tuwunel.toml:ro"  # Mount config file
+        --network host                         # Use host networking
+        --name "$CONTAINER_NAME"               # Container name
+        --restart unless-stopped               # Restart policy
+        --cpus="1.0"                          # THROTTLE: Limit to 1 CPU core max (reduced from 2)
+        --cpu-shares=512                      # THROTTLE: Low CPU priority (default is 1024)
+        --memory="1g"                         # THROTTLE: Limit to 1GB RAM max (reduced from 2GB)
+        --memory-swap="1g"                    # THROTTLE: No additional swap
+        --memory-reservation="512m"           # THROTTLE: Soft limit at 512MB
+        --pids-limit=500                      # THROTTLE: Limit process count (reduced from 1000)
+        --blkio-weight=100                    # THROTTLE: Lowest I/O priority (10-1000, default 500)
+        --device-read-bps="/dev/md3:10mb"     # THROTTLE: Limit read speed to 10MB/s
+        --device-write-bps="/dev/md3:10mb"    # THROTTLE: Limit write speed to 10MB/s
+        --device-read-iops="/dev/md3:100"     # THROTTLE: Limit read IOPS to 100/s
+        --device-write-iops="/dev/md3:100"    # THROTTLE: Limit write IOPS to 100/s
+    )
 
-    # Check if configuration file exists
-    TOML_CONFIG="$BASE_PATH/config/tuwunel.toml"
+    # Using TOML configuration file - check it exists
+    TOML_CONFIG="${BASE_PATH}/config/tuwunel.toml"
     if [ ! -f "$TOML_CONFIG" ]; then
         log "ERROR: Configuration file $TOML_CONFIG not found"
         exit 1
     fi
     log "Using configuration from $TOML_CONFIG"
 
-    # Stop and remove existing containers
-    log "Stopping existing containers..."
-    docker compose down 2>/dev/null || log "No existing containers to stop"
+    # THROTTLED: Set much less verbose logging to reduce I/O load
+    DOCKER_CMD+=(-e RUST_LOG="tuwunel=warn,reqwest=error")
 
-    # Start containers
-    log "Starting tuwunel container with Docker Compose..."
-    docker compose up -d
+    # If --super-admin is set, generate and apply an emergency password for @conduit
+    if [ "$SUPER_ADMIN" = true ]; then
+        EMERGENCY_PASSWORD=$(openssl rand -hex 8)  # 16-character hex password
+        log "Setting emergency password to: $EMERGENCY_PASSWORD"
+        DOCKER_CMD+=(-e CONDUWUIT_EMERGENCY_PASSWORD="$EMERGENCY_PASSWORD")
+    fi
+
+    DOCKER_CMD+=("$CONTAINER_IMAGE")  # Append the image name
+    DOCKER_CMD+=("--config" "/etc/tuwunel/tuwunel.toml")  # Specify config file path
+
+    log "Docker command: ${DOCKER_CMD[*]}"
+    "${DOCKER_CMD[@]}"
     if [ $? -ne 0 ]; then
-        log "ERROR: Failed to start containers with docker compose"
+        log "ERROR: Failed to create new conduwuit container"
         exit 1
     fi
 
-    log "Successfully started container \"$CONTAINER_NAME\" with image \"$CONTAINER_IMAGE\"."
+    log "Successfully recreated container \"$CONTAINER_NAME\" with image \"$CONTAINER_IMAGE\"."
     log " - Configuration loaded from $TOML_CONFIG"
-    log " - Using Docker Compose for container management"
-    log " - Resource limits defined in compose file"
+    log " - AGGRESSIVE THROTTLING: CPU limited to 1 core with low priority"
+    log " - AGGRESSIVE THROTTLING: RAM limited to 1GB (512MB soft limit)"
+    log " - AGGRESSIVE THROTTLING: I/O limited to 10MB/s and 100 IOPS"
+    log " - AGGRESSIVE THROTTLING: Lowest block I/O priority"
+    log " - Logging reduced to warn/error level"
     
     # Provide login instructions if --super-admin was used
     if [ "$SUPER_ADMIN" = true ]; then
@@ -196,15 +222,15 @@ while [[ $# -gt 0 ]]; do
         --refresh-token) REFRESH_TOKEN=true; shift;;
         --super-admin) SUPER_ADMIN=true; shift;;
         --update) UPDATE=true; shift;;
-        --pull) PULL=true; shift;;
+        --rebuild) REBUILD=true; shift;;
         --force-restart) FORCE_RESTART=true; shift;;
-        *) log "ERROR: Unknown option: $1"; echo "Usage: $0 [--refresh-token] [--super-admin] [--update] [--pull] [--force-restart]"; exit 1;;
+        *) log "ERROR: Unknown option: $1"; echo "Usage: $0 [--refresh-token] [--super-admin] [--update] [--rebuild] [--force-restart]"; exit 1;;
     esac
 done
 
 # Execute functions based on flags
 if [ "$UPDATE" = true ]; then update_repo; fi
-if [ "$PULL" = true ]; then pull_docker_image; fi
+if [ "$REBUILD" = true ]; then rebuild_docker_image; fi
 if [ "$REFRESH_TOKEN" = true ]; then refresh_token; fi
 restart_container  # Always restart container to apply token or image changes
 ensure_registration_service  # Always ensure sw1tch is running
