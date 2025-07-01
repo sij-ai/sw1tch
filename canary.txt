@@ -1,0 +1,32 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+We2.ee Warrant Canary · 2025-06-29 07:04:15 UTC
+
+I, 〄, the server administrator of We2.ee, state this 29th day of June, 2025:
+  1. We2.ee has not received any National Security Letters or FISA court orders.
+  2. We2.ee has not been subject to any searches or seizures of our servers.
+  3. We2.ee has not been required to modify our systems to facilitate surveillance.
+  4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
+
+Datestamp Proof:
+  News headline: ‘We won’t let them get away with this’: activists to sue Tanzania’s government over ‘sexual torture’
+  News URL:      https://www.theguardian.com/world/2025/jun/29/activists-boniface-mwangi-agather-atuhaire-tanzania
+  XMR block:     #3444451, 2025-06-29 07:03:43 UTC
+  Block hash:    4e88fe3d5050ea188bbfb73278c50f6d039ee5d0d4723b7fdbc72795505aa2c5
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmhg5XQACgkQU1smWu2+
+W0RA2w//UBWR9nqGUUzRUJuHn6NqMZpcy+nUhJl/UH8gb1wPzUHYlZoeQk1oap2C
+QtZuOxo5ExnARSkBLRu3qx7gvKzwviq2xyoweQIplXaKDetKaWtiEiNbAtpefvt8
+4smXLgDGh+e8/LD2wKgysvvI62UtQ9DoaRMQLo1yT7R7+79FKBb0F5uCOZIPUmP5
+e7AKjZvndolNVNsXewKaf1FeYghlG+Fp1da4oZ+xNPq+MhLrPKPtO1BQAwEV+pHk
+bIkQV2Jlaybpg9rzk/4RzrD7gVyVv7WT9uVZOQTWmHIbqajY3fTSFjWy1mEJ4azN
+S3qsT4EGji1i96glMdPLEdF97dgaPmIOfZ44hkCu3fOFfO483OceMA2gXpCfOXJx
+vAHD8Gknt2Vy4NE+6K0/hyWeBXXIZk1LjmeMa145hcTqSMrl52zrIyNx0PMVdA0S
+WGPzw1Ir/rbdczngFK1X5dNDtYrD/+MHVyz6KK4NFXGoHW51nVgcHIyti+XiaP53
+t3427RS3SWnBB5ncIA4Raym9xDMrNVmBZw2C6pqk67+oDXycTylOKluQtxx2tMvC
+s84C9zG515HdD+Eps8j6DuuOnA7Zh/DZs1nb3v3+jF4tD8gFaP2iImhDO6iKmh2P
++8H8zZD8Ln9P4B6t++CQjr9g2414gFndQKZRbGhOjs9wBkPOLfk=
+=w/k+
+-----END PGP SIGNATURE-----
