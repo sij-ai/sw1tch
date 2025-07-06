@@ -15,10 +15,12 @@ from datetime import timezone # For timezone-aware datetime objects
 
 # --- Configuration ---
 # File paths relative to the script's parent directory (sw1tch/)
+TOP_DIR = Path(__file__).parent.parent
 BASE_DIR = Path(__file__).parent
 CONFIG_FILE = BASE_DIR / "config" / "config.yaml"
 ATTESTATIONS_FILE = BASE_DIR / "config" / "attestations.txt"
-OUTPUT_FILE = BASE_DIR / "data" / "canary.txt"
+OUTPUT_FILE = TOP_DIR / "canary.txt"
+# OUTPUT_FILE = BASE_DIR / "data" / "canary.txt"
 TEMP_MESSAGE_FILE = BASE_DIR / "data" / "temp_canary_message.txt" # For GPG signing
 
 # --- Core Functions ---

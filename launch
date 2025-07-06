@@ -12,7 +12,9 @@ COMPOSE_FILE="docker-compose.yaml"                   # Docker Compose file path
 
 # Static container settings for tuwunel
 CONTAINER_NAME="tuwunel"                             # Name of the tuwunel Docker container
-CONTAINER_IMAGE="ghcr.io/matrix-construct/tuwunel:main"  # Use GHCR tuwunel image
+# CONTAINER_IMAGE="ghcr.io/matrix-construct/tuwunel:main"  # Use GHCR tuwunel image
+CONTAINER_IMAGE="ghcr.io/matrix-construct/tuwunel:v1.1.0-release-all-x86_64-linux-gnu"
+
 
 # Flags to control script behavior (default to false)
 REFRESH_TOKEN=false  # --refresh-token: Generates a new registration token

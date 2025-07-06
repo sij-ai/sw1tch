@@ -1,10 +1,17 @@
 services:
   tuwunel:
-    image: ghcr.io/matrix-construct/tuwunel:main
+    image: ghcr.io/matrix-construct/tuwunel:v1.1.0-release-all-x86_64-linux-gnu
     container_name: tuwunel
-    network_mode: host
     restart: unless-stopped
     
+    ports:
+      - "8008:8008"
+      
+    dns: 1.1.1.1
+    
+    networks:
+      - matrix_net
+      
     volumes:
       - db:/var/lib/conduwuit/
       - ./sw1tch/data/.registration_token:/.registration_token:ro
@@ -19,11 +26,20 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.5'
-          memory: 2G
+          cpus: '4.0'
+          memory: 16G
         reservations:
-          memory: 1G
+          cpus: '2.0' # Guaranteeing 2 CPUs
+          memory: 4G
 
 volumes:
   db:
-    external: true 
+    external: true
+
+networks:
+  matrix_net:
+#    driver: bridge
+    ipam:
+#      driver: default
+      config:
+        - subnet: 172.68.0.0/16

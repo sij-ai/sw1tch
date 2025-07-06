@@ -1,4 +1,0 @@
-services:
-  tuwunel:
-    env_file:
-      - /home/sij/hand_of_morpheus/sw1tch/config/tuwunel.env
