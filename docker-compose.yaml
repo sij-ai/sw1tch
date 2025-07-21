@@ -1,33 +1,12 @@
 services:
-  unbound:
-    image: mvance/unbound:latest
-    container_name: unbound
-    restart: unless-stopped
-    networks:
-      matrix_net:
-        ipv4_address: 172.68.0.10
-    volumes:
-      - ./unbound.conf:/opt/unbound/etc/unbound/unbound.conf:ro
-    healthcheck:
-      test: ["CMD", "drill", "@127.0.0.1", "google.com"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 15s
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 512M
-
   tuwunel:
-    image: ghcr.io/matrix-construct/tuwunel:v1.1.0-release-all-x86_64-linux-gnu
+    image: jevolk/tuwunel:latest
     container_name: tuwunel
     restart: unless-stopped
     ports:
       - "8008:8008"
-    dns:
-      - 172.68.0.10
+    env_file:
+      - ./sw1tch/config/tuwunel.env
     networks:
       - matrix_net
     volumes:
@@ -35,12 +14,7 @@ services:
       - ./sw1tch/data/.registration_token:/.registration_token:ro
       - /home/sij/tuwunel_backup:/backup
       - ./sw1tch/config/tuwunel.toml:/etc/tuwunel/tuwunel.toml:ro
-    environment:
-      - RUST_LOG=tuwunel=warn,reqwest=error
     command: ["--config", "/etc/tuwunel/tuwunel.toml"]
-    depends_on:
-      unbound:
-        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -60,6 +34,14 @@ services:
       - /home/sij/mautrix/signal-bridge/docker:/data:z
     depends_on:
       - tuwunel
+
+  diagnostics:
+    image: nicolaka/netshoot
+    container_name: diagnostics
+    restart: unless-stopped
+    networks:
+      - matrix_net
+    command: ["sleep", "infinity"]
 
 volumes:
   db:

@@ -71,16 +71,16 @@ restart_container() {
         EMERGENCY_PASSWORD=$(openssl rand -hex 8)  # 16-character hex password
         log "Setting emergency password to: $EMERGENCY_PASSWORD"
         
-        # Create or update the environment file for compose
+        # Create or update the environment file for compose with DEBUG logging
         cat > "$ENV_FILE" << EOF
-RUST_LOG=tuwunel=warn,reqwest=error
+RUST_LOG=tuwunel=debug,tuwunel_service::sending=error,reqwest=error
 CONDUWUIT_EMERGENCY_PASSWORD=$EMERGENCY_PASSWORD
 EOF
-        log "Updated environment file with emergency password"
+        log "Updated environment file with emergency password and DEBUG logging"
     else
-        # Create environment file without emergency password
+        # Create environment file without emergency password, but WITH DEBUG logging
         cat > "$ENV_FILE" << EOF
-RUST_LOG=tuwunel=warn,reqwest=error
+RUST_LOG=tuwunel=debug,tuwunel_service::sending=error,reqwest=error
 EOF
     fi
 
