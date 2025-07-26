@@ -8,6 +8,7 @@ import subprocess
 import os
 import sys
 import asyncio
+import ntplib
 from pathlib import Path
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -89,46 +90,37 @@ def load_attestations():
         sys.exit(1)
 
 def get_nist_time():
-    session = requests.Session()
-    retry_strategy = Retry(total=5, backoff_factor=2, status_forcelist=[429, 500, 502, 503, 504], allowed_methods=["GET"], raise_on_redirect=True, connect=3, read=3)
-    adapter = HTTPAdapter(max_retries=retry_strategy)
-    session.mount("https://", adapter)
-    session.mount("http://", adapter)
-    endpoints = [
-        "https://timeapi.io/api/Time/current/zone?timeZone=UTC",
-        "https://worldtimeapi.org/api/timezone/UTC"
+    """Fetches the current UTC time from NTP servers with fallback to system time."""
+    # List of reliable NTP servers to try
+    ntp_servers = [
+        'pool.ntp.org',
+        'time.nist.gov',
+        'time.google.com',
+        '0.pool.ntp.org',
+        '1.pool.ntp.org'
     ]
-    for url in endpoints:
+    
+    for server in ntp_servers:
         try:
-            print(f"Fetching time from {url}...")
-            response = session.get(url, timeout=10)
-            response.raise_for_status()
-            data = response.json()
-
-            if "currentDateTime" in data:
-                dt_str = data["currentDateTime"]
-            elif "dateTime" in data:
-                dt_str = data["dateTime"]
-            elif "utc_datetime" in data:
-                dt_str = data["utc_datetime"]
-            else:
-                print(f"Warning: Unexpected response format from {url}")
-                continue
-
-            time_part = dt_str.split('.')[0].replace('T', ' ').replace('Z', '')
-            if '+' not in time_part and '-' not in time_part.split(' ')[-1]:
-                return f"{time_part} UTC"
-            parts = time_part.split(' ')
-            if '+' in parts[-1] or '-' in parts[-1]:
-                return f"{' '.join(parts[:-1])} UTC"
-            return f"{time_part} UTC"
-
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching NIST time from {url}: {e}")
+            print(f"Fetching time from NTP server {server}...")
+            ntp_client = ntplib.NTPClient()
+            response = ntp_client.request(server, version=3, timeout=10)
+            
+            # Convert NTP timestamp to UTC datetime
+            # NTP epoch is 1900-01-01, Unix epoch is 1970-01-01
+            # response.tx_time is seconds since NTP epoch
+            utc_time = datetime.datetime.fromtimestamp(response.tx_time, timezone.utc)
+            formatted_time = utc_time.strftime("%Y-%m-%d %H:%M:%S UTC")
+            
+            print(f"Successfully fetched NTP time: {formatted_time}")
+            return formatted_time
+            
+        except ntplib.NTPException as e:
+            print(f"NTP error from {server}: {e}")
         except Exception as e:
-            print(f"Error processing time from {url}: {e}")
-
-    print("Error: Could not fetch time from any source. Falling back to system time.")
+            print(f"Error fetching time from NTP server {server}: {e}")
+    
+    print("Error: Could not fetch time from any NTP source. Falling back to system time.")
     return datetime.datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
 def old_get_nist_time():
