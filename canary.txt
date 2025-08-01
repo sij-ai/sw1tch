@@ -1,34 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-07-26 20:38:06 UTC
+We2.ee Warrant Canary · 2025-08-01 19:50:00 UTC
 
-I, 〄, the server administrator of We2.ee, state this 26th day of July, 2025:
+I, 〄, the server administrator of We2.ee, state this 01st day of August, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
-NOTE: Switched to NTP servers for timestamps moving forward
-
 Datestamp Proof:
-  News headline: Eswatini opposition attacks US deal as ‘human trafficking disguised as deportation’
-  News URL:      https://www.theguardian.com/world/2025/jul/23/eswatini-petition-us-deportees
-  XMR block:     #3464287, 2025-07-26 20:37:37 UTC
-  Block hash:    82c7746ffb2183aee017ce7e8af73a86424617c4aaee0df8a473c545d5f71b15
+  News headline: Kemi Badenoch says she no longer sees herself as Nigerian despite upbringing
+  News URL:      https://www.theguardian.com/politics/2025/aug/01/kemi-badenoch-says-she-no-longer-sees-herself-as-nigerian-despite-upbringing
+  XMR block:     #3468517, 2025-08-01 19:48:59 UTC
+  Block hash:    e4e7fa8b98257195deb8e7bffd07f753f9e845363aa9deca8815eea7850cdf0b
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmiFPOgACgkQU1smWu2+
-W0QEshAAhwmCTXCZYDRXe/Tpl1EbK/yJrAP1V3bps1xuNqq79Jd1KTXyLgq7j0fJ
-q8iCdN5eitJiugy1SD/IOcqeA4N6CtShLP8USdKLt1vUvR73ZnLDC3dXrveSoRAv
-529in0IO6vg7GeBcisoSR3Kq7vm7l4ls1GhBNlsYSeq5/vpaOqcMCaK5Jypf5kyO
-A1RfHgnEFh7CYaobZTnDK8iaRUIlbNUrOQGMuy+z8/Fv6Y5kv14T62ZXkHj4kjcD
-M/sV5XffUUO0khFOJknPr41KzQCnenGx+DjBeuqg3Sk650V1NMQAZkeMY/Sbwbkr
-mrcsIyFUgJ86c9nKWb7/5dnECQyfxSOnjHWUNxJBh/740HTVv1PrgoAVUXEQn6T7
-y8OqiYwcKHtDEzWPCq1CACtAOEDUzX7XOIGZXV8yPerTt9imwXYzfkqNY9FE3Az2
-qVPGzHP6zN6nNoCHszh+cOJr5iMAXRXc13TkCLSlBTh8bE5/qLCh/AzmHRgiOFYj
-gDU1dH35T+EI/Fb71oxu6/VyshcWKLkQfegPTgzYrzQadFJd0hH9MuNlPod1W0Pc
-DWMKHNBg3MwYuw8NNypxg5FjQ5pJbzYVmgWnUWwNAcyFZT3+QTHtWCvKwBRj2MLJ
-CTOPoXGWgYYrW09WKD1qCIoTvIgg4st7Pm1+Sua36/SPiuQJooI=
-=qEYQ
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmiNGnUACgkQU1smWu2+
+W0TbhA//WgonwvHeO606BVTRPVF/LPhoVVpd7bvwT8XP6OFgczlBSGIEAqMnoYqO
+XoX4dRVgq26VI6moUWOxGLdYHd2rdUcxDXzaJ+dhiHr37BP3Op/RHh//d+1/3mGZ
+JFcrJ3llNLBpKZBOwZEtlTHn1WjBZQJCQkUhmfkShfgrIBSVuiwhvKimlTbP6cZl
+pwGxW5hcMH8eCHb1DVlQ9C38ZuxMoY4Bs17lXAQZjnk0jmjJE5jjyd6G2U40Qb0m
+1spEJ8X40dsq6MS79JQN4iFASNLPv7Cw9TNIpTRO6CjVH2hi4h9fV6KvuJ/LFvTT
+B6wCt6NAL9oq6V7oDBbzE8KTjsDiKZzEQ6DOsJIv1XpqvSqICvHzOlNwS0fnmn16
+hHh6DsGZKMjZaevypFE08PGf4HcqEczvLoxJqJoQGaRMAGqPdFYmNBLcz1hHOqN8
+oMMTjOz5+st5F2XrHL9ib3hBxb3SdkkuBMifKORcwp07HC6NYUOQweLHBBJgwjZO
+uXHWJl6z/eBX2sXYBTK2Kekq7bEYEPaYbn0xUcaW7fvgCT9a7uOWm3grUoJhe5IO
+Sz2CmNkiQMGDxZLJ7hEZbzDTwa61wbCVP6SMt0lBPw2C7M//LxWH7dIWcCJrf4sC
+o6+kHBUuTZkVnCKj9Gxtoy7ykWTjTMRmNpXMBkqY9SbsRqka5lc=
+=q/M+
 -----END PGP SIGNATURE-----
