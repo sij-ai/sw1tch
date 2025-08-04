@@ -163,7 +163,7 @@ ensure_registration_service() {
         if ps -p "$NEW_PID" > /dev/null; then
             echo "$NEW_PID" > "$pid_file"
             log "Started registration service with PID $NEW_PID"
-            sudo lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
+            lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
         else
             log "ERROR: Process $NEW_PID did not start or exited immediately"
             cat "$log_file" >> "$LOG_FILE"  # Append service logs for debugging
@@ -183,7 +183,7 @@ ensure_registration_service() {
             if ps -p "$NEW_PID" > /dev/null; then
                 echo "$NEW_PID" > "$pid_file"
                 log "Started registration service with PID $NEW_PID"
-                sudo lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
+                lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
             else
                 log "ERROR: Process $NEW_PID did not start or exited immediately"
                 cat "$log_file" >> "$LOG_FILE"
