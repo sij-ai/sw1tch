@@ -1,4 +1,20 @@
 services:
+  unbound-resolver:
+    image: mvance/unbound:latest
+    container_name: unbound-resolver
+    restart: unless-stopped
+    volumes:
+      - ./unbound.conf:/etc/unbound/unbound.conf:ro
+    networks:
+      matrix_net:
+        # Assign a static IP address to our DNS resolver
+        ipv4_address: 172.27.0.53
+    healthcheck:
+      test: ["CMD-SHELL", "unbound-checkconf"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   tuwunel:
     image: jevolk/tuwunel:latest
     container_name: tuwunel
@@ -15,6 +31,14 @@ services:
       - /home/sij/tuwunel_backup:/backup
       - ./sw1tch/config/tuwunel.toml:/etc/tuwunel/tuwunel.toml:ro
     command: ["--config", "/etc/tuwunel/tuwunel.toml"]
+    dns:
+      # Use the static IP of our Unbound container
+      - 172.27.0.53
+      # Add a public fallback for resilience
+      - 1.1.1.1
+    depends_on:
+      unbound-resolver:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -32,8 +56,13 @@ services:
       - matrix_net
     volumes:
       - /home/sij/mautrix/signal-bridge/docker:/data:z
+    dns:
+      # Use the static IP of our Unbound container
+      - 172.27.0.53
+      - 1.1.1.1
     depends_on:
       - tuwunel
+      - unbound-resolver
 
   diagnostics:
     image: nicolaka/netshoot
@@ -52,4 +81,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.68.0.0/16
+        - subnet: 172.27.0.0/16

@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-08-11 17:42:46 UTC
+We2.ee Warrant Canary · 2025-08-17 04:16:45 UTC
 
-I, 〄, the server administrator of We2.ee, state this 11th day of August, 2025:
+I, 〄, the server administrator of We2.ee, state this 17th day of August, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: Growing pains: can rice production in Africa keep up with demand?
-  News URL:      https://www.theguardian.com/world/2025/aug/11/can-rice-production-in-africa-keep-up-with-demand
-  XMR block:     #3475671, 2025-08-11 17:40:11 UTC
-  Block hash:    1be6d58b881a24ee1bedf55c0bf1458dfc983688b674cc38c67f29058b8e4cb0
+  News headline: African Union joins calls to end use of Mercator map that shrinks continent’s size
+  News URL:      https://www.theguardian.com/world/2025/aug/15/african-union-true-size-world-map-replace-mercator-version
+  XMR block:     #3479556, 2025-08-17 04:11:44 UTC
+  Block hash:    938555969cc41f880f23801098011d1751d4ede7f3e0a07d2aca35a65d0da8bf
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmiaK6YACgkQU1smWu2+
-W0SiJw//fuIf24O5URfpTy3cZGnhgV1lQgcchaa/qb2632uVtMHBL98QPHYfaM1L
-oK+mAWaNbcT6U2cm/JKNhMdivE3Nkq4j3ZSxrsrffxrYLYi8nu0taIkSlKwmkxXN
-/ZAm6SuUi0h58gD/BB6c9DVV2T1H97ogFU5vzDPcqqjhV3618V+qDkCQROWzgk/3
-knnTZCSnZ+CoORqLrLFHDnf+T76w5b8LcyHxNen0dikDsv9+z5tneseeAS9C6Au8
-7BstB7coqSmUZLdNnOlgfZBV8nwwt/svnEuEBewSKJlPZTMbNTsnZIh/BR6eob6V
-2PXbpd2h3EkGsLST8zqePJbnun3P94v4RELBjCvLQDoDi4I2aap/T9qldsDcHC79
-enEDWf6D4eIN8grSyFiF51zAPkLKKyPAR0tmUsvb3OYvRpfKCQnDu3U1fZotNao5
-II8WV6ov0+tfZArT0swV46WfwcMr0eQw3fI58UZmBLHuo2OqwXrZXeCyDcx9fLz3
-iC0EyWtq7gWcb9skv6Y81BDF1nh1Cv7DKWKTqLBxRDlAnvjLK21I3T6BY2TE4E55
-4/r7KEWX64rLzNzumWcJxKLdiGds1bCdikAeSVrlMa2A9EX6Ox1yjSJ7mX0gaSGz
-BogCDHYXdkkiHG0iWMrylPejRBlMnJ+EOE0pYC416gje13S+dFo=
-=kpj0
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmihV8YACgkQU1smWu2+
+W0Q5KhAAqX1zz6j052rog77SIGAj98D/TKmOzTDIqTaodiUnFw/J452Eg1+cAQdu
+03ytoPpqmtZ+bVQK+8LARLuWzSAW3EDqMVHSmwcRJwpgqoIMy/wIQ9lgh4n6BqEa
+r0kOBpb9zQEfQx1EQeJhBo3wzvZEVmEuNLi2dzbmMrp8pWrSXs6+y67+BA77idal
+TKhwNAnX8jYm+DTuHBlaKa6ArAarWeDEAhxcG8Fn3GkoXN3PSwnjGM3v+o5kHzp+
+XdQiNPaY7QO4I5mdJzmx+xo7cOToSdLxsnQoxq/qKo8eqg/Lfe4Zii4q/7OFLSNA
+KV5BMLV+HsjVdCsqnkUttjMsgjoiZsT2bMODwW7hjIlpvKEaYyu1ATpwZmqHj5Il
+lpv836pR4cW4wbAshDlw4PEYinOToWyyd0O50iixUCUhPVWU8AHoVfVfP/U5TK0f
+Gf3Y8raHQYm6bzb17cY+VRKMLvWd5Cr8lNiXuZFGelquMHNWcLUSgFKp56I8dgMq
+PDeaLGeHAgU+6HDYCYMvq6TKRQ8Sq7iWkYsB+apC8myHZJxc7TrUwC9rrC+NhlTP
+mPti4evpZwGoVEly6Knpt9Q+W7F2GuaknICVVpfQ4POL7+3FqUClPuWu6F3OUtTy
+e2S92Ql3UNEjqCxpZPQyJIzY9RGeRQAfahiPDV4FA2jRdLWVnHM=
+=D8xt
 -----END PGP SIGNATURE-----
