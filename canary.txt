@@ -1,7 +1,7 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-08-24 00:23:32 UTC
+We2.ee Warrant Canary · 2025-08-24 02:54:32 UTC
 
 I, 〄, the server administrator of We2.ee, state this 24th day of August, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
@@ -9,24 +9,26 @@ I, 〄, the server administrator of We2.ee, state this 24th day of August, 2025:
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
+NOTE: Updated canary script to not always choose The Guardian - Africa regional news
+
 Datestamp Proof:
-  News headline: Eswatini government faces court challenge over men deported by US
-  News URL:      https://www.theguardian.com/world/2025/aug/22/court-case-challenging-eswatini-us-immigrant-deportation-deal-postponed
-  XMR block:     #3484479, 2025-08-24 00:21:46 UTC
-  Block hash:    cf38a9d54e46c397039a305111de41d101d4b4534f7bc667e1de8c5bf98f6c0d
+  News headline: Hundreds of thousands expected at pro-Palestine protests across Australia after Gaza famine declaration
+  News URL:      https://www.theguardian.com/world/2025/aug/24/hundreds-of-thousands-expected-at-pro-palestine-protests-across-australia-after-gaza-famine-declaration
+  XMR block:     #3484574, 2025-08-24 02:50:33 UTC
+  Block hash:    428ecd191421baa616ddf399c6b4681e5268642d17d9070eb18c6bfec58d0aab
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmiqW5cACgkQU1smWu2+
-W0QMxw/8CGqxwKti5cIdwSAYFmr0C4ePT7PH5Vau+e9zDyOwSZ3Zpx24XVAg+NDF
-CczQQZXQU3IK+mxTLZkhWlX4hjkvug1RrQdwcLB1XNBBaA9m00ycZuDY9B+gFpFf
-hreixbwGSVIMOmhJUlLllJWGeJaiM+zbhBxZiG8p0GllxJmrAsHsOsSQzipZNSkU
-2jlfdM1IEgn3bNKnGuNRJCGnWYYMXRcqg2gcfcPN3MrSpg1/yR/qQDt8SE/mXomH
-vJ/O8f5PZNkwY4IslfCVYmngwCd5D7Vek1eju0beTKUX8duhFyGSLfXWCHf3TU/4
-oTeazrpB1qQn8s6OtyjDQ/5GJnreDOb9GYSZaEjjiwY+QY3wxUnlQPbRFb59xogc
-AoGcgRyU6j3ETonfD3PkUgqOnDLNi2gvxCNTCf6NXDs1T7xiPREa+P5NIo6/Fm3w
-Y86MebmkZ3sWKVFU4fDrL2KKSKNRdYlAuTpJ47DeF/U6x8BdZll009UjR69+xZwp
-56yIidDQiZ5sGBKJ8YWMFO31a6A997Ct1MhFOrzbBysbJfMvN/3J2mSPlVlCZsC9
-304o+3rOG7g6dmb91WWtbDG2+cADk3tcuNxXWk8XF2lf/Vn79a/trruniF4wOW8n
-Ql4s7OYQL5vDw5heY0tmds9o14t49HoY2d1m9qs9jjKef0fI3hk=
-=aPI1
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmiqfwAACgkQU1smWu2+
+W0RifQ/+P3HIM3zON4max6IQ3cptC2v2187WJQ1LHyyeI6Sqnn6yzLqqfsIIpcQV
+D/kLBI52eQvAGf5ifN1KDxffUCBHrTz9Nr9IFpMaTmU5AEFchmDfuBPo/OnPFogO
+CfFYGVs0SJ4xy93BL9ajM4c47V2WjoA++M9NSm5GL3tMm2JBa//0Yp8qzki0JC1O
+hF2KqtX3BGA7nK5qx58/ZKw+vyGo/5cNS0qJfaRjrLzISF0l14R/k+fy4DZ+Gq9X
+OODy1Ofhk/C5Kz18FTPl5OuEP5qeHD7JAqapHtgywq1p3dzmYPGAiFt+SF6KAouy
+XKOgzqIHmW+HWdrybtPaQNongwmhekfJhXGTWVKdpvGaM8r+VYKTCuFeKQK5+QP6
+h7vdR/eDQf3xJ1NKI/WS6fFins4IkZj2g+g3XWAawK6t47A/7RiQf+Aht2ysW7SQ
+HRe4F2EzdLn6nx0w7+ucK/gwwu82Ty+IPtW3ozeIvsA/AG1ossOrkR14VO1gE98e
+a7w0DVVgh1j5mycwKLLoanG1mFwm6k0Y4KVxeppq1IX9UQJgfbjNUr5EN+3Cuizt
+N8mGavbvzVxoGkVjQb6s8cLiIbdizQSZgx0Y5xcEJJvsMImMYZp6N1qI/pyrbt0i
+Cp+/Ki3cVTlaWcR7qlCnWoSkN904uUcqu1AjaQ0YXWsZoFWw98w=
+=Y/JD
 -----END PGP SIGNATURE-----

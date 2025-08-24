@@ -9,6 +9,9 @@ import os
 import sys
 import asyncio
 import ntplib
+import calendar
+import time
+import email.utils
 from pathlib import Path
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -123,66 +126,85 @@ def get_nist_time():
     print("Error: Could not fetch time from any NTP source. Falling back to system time.")
     return datetime.datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-def old_get_nist_time():
-    """Fetches the current UTC time from public time APIs with retries."""
-    session = requests.Session()
-    # Retry strategy for network issues
-    retry_strategy = Retry(total=3, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
-    adapter = HTTPAdapter(max_retries=retry_strategy)
-    session.mount("https://", adapter)
-    endpoints = [
-        "https://timeapi.io/api/Time/current/zone?timeZone=UTC",
-        "https://worldtimeapi.org/api/timezone/UTC",
-    ]
-    for url in endpoints:
+def get_entry_date(entry):
+    """Extract the best available date from an RSS entry, returning Unix timestamp or None."""
+    # Try normalized struct_time fields first (UTC-safe)
+    for field in ('published_parsed', 'updated_parsed', 'issued_parsed', 'created_parsed'):
+        parsed_time = entry.get(field)
+        if parsed_time:
+            try:
+                return calendar.timegm(parsed_time)  # UTC-safe conversion
+            except (TypeError, ValueError):
+                continue
+    
+    # Fall back to date strings
+    for field in ('published', 'updated', 'issued', 'created', 'dc_date', 'pubDate'):
+        date_str = entry.get(field)
+        if not date_str:
+            continue
+            
+        # Try RFC 2822 format (e.g., "Fri, 22 Aug 2025 18:02:17 GMT")
         try:
-            print(f"Fetching time from {url}...")
-            response = session.get(url, timeout=10)
-            response.raise_for_status()
-            data = response.json()
-
-            if "dateTime" in data: dt_str = data["dateTime"]
-            elif "utc_datetime" in data: dt_str = data["utc_datetime"]
-            else:
-                 print(f"Warning: Unexpected response format from {url}")
-                 continue
-
-            # Standardize format (YYYY-MM-DD HH:MM:SS UTC), remove microseconds/timezone info
-            time_part = dt_str.split('.')[0].replace('T', ' ').replace('Z', '')
-            # Add UTC if not already present from offset/Z
-            if '+' not in time_part and '-' not in time_part.split(' ')[-1]:
-                return f"{time_part} UTC"
-            else: # Handle potential offsets, though UTC is requested
-                 # Basic cleaning assuming offset is present
-                 parts = time_part.split(' ')
-                 if '+' in parts[-1] or '-' in parts[-1]:
-                      return f"{' '.join(parts[:-1])} UTC"
-                 else:
-                      return f"{time_part} UTC"
-
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching NIST time from {url}: {e}")
-        except Exception as e:
-            print(f"Error processing time from {url}: {e}")
-
-    print("Error: Could not fetch time from any source.")
+            dt = email.utils.parsedate_to_datetime(date_str)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt.timestamp()
+        except (ValueError, TypeError):
+            pass
+            
+        # Try ISO 8601 format (e.g., "2025-08-22T18:02:17Z")
+        try:
+            # Handle Z suffix and other common variations
+            normalized = date_str.replace('Z', '+00:00')
+            dt = datetime.datetime.fromisoformat(normalized)
+            return dt.timestamp()
+        except (ValueError, TypeError):
+            pass
+    
     return None
 
 def get_rss_headline(config):
-    """Fetches the latest headline and link from the configured RSS feed."""
+    """Fetches the most recent headline and link from the configured RSS feed."""
     try:
         # Safely get RSS config, providing defaults
         rss_config = config.get('canary', {}).get('rss', {})
         rss_url = rss_config.get('url', 'https://www.theguardian.com/world/rss')
         rss_name = rss_config.get('name', 'The Guardian')
         print(f"Fetching {rss_name} headline from {rss_url}...")
+        
         feed = feedparser.parse(rss_url)
-        if feed.entries:
-            entry = feed.entries[0]
-            return {"title": entry.title, "link": entry.link}
+        if not feed.entries:
+            print(f"No entries found in RSS feed: {rss_url}")
+            return None
+
+        # Try to find the most recent entry by date
+        entries_with_dates = []
+        entries_without_dates = []
+        
+        for entry in feed.entries:
+            entry_date = get_entry_date(entry)
+            if entry_date is not None:
+                entries_with_dates.append((entry, entry_date))
+            else:
+                entries_without_dates.append(entry)
+        
+        # Choose the most recent entry if we have dated entries
+        if entries_with_dates:
+            # Sort by timestamp (most recent first) and take the first
+            entries_with_dates.sort(key=lambda x: x[1], reverse=True)
+            selected_entry = entries_with_dates[0][0]
+            selected_date = datetime.datetime.fromtimestamp(entries_with_dates[0][1], timezone.utc)
+            print(f"Selected most recent entry from {selected_date.strftime('%Y-%m-%d %H:%M:%S UTC')}")
         else:
-             print(f"No entries found in RSS feed: {rss_url}")
-             return None
+            # Fall back to first entry in feed order
+            selected_entry = feed.entries[0]
+            print(f"No parseable dates found, using first entry in feed order")
+        
+        return {
+            "title": selected_entry.get("title", "Untitled"),
+            "link": selected_entry.get("link", "")
+        }
+        
     except Exception as e:
         print(f"Error fetching RSS headline: {e}")
         return None
@@ -283,12 +305,10 @@ def collect_attestations(config, is_interactive):
              print("Non-interactive mode: Including all attestations from file.")
         return selected_attestations
 
-# --- Added back the missing function ---
 def get_optional_note():
     """Prompts user (if interactive) for an optional note."""
     note = input("\nAdd an optional note (press Enter to skip): ").strip()
     return note if note else None
-# --- End of added function ---
 
 def create_warrant_canary_message(config, is_interactive):
     """Constructs the main body of the warrant canary message."""
@@ -336,10 +356,9 @@ def create_warrant_canary_message(config, is_interactive):
     message += f"  News headline: {rss_data['title']}\n"
     message += f"  News URL:      {rss_data['link']}\n"
     message += f"  XMR block:     #{monero_block['height']}, {monero_block['time']}\n"
-    message += f"  Block hash:    {monero_block['hash']}\n\n" # Ensure this line ends with newline for GPG
+    message += f"  Block hash:    {monero_block['hash']}\n\n"
 
-    # Ensure single trailing newline before signing
-    return message #.rstrip() + "\n"
+    return message
 
 def sign_with_gpg(message, gpg_key_id):
     """Signs the message using GPG clearsign with the specified key ID."""
