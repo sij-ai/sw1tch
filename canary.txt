@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-08-29 19:48:56 UTC
+We2.ee Warrant Canary · 2025-09-08 06:34:04 UTC
 
-I, 〄, the server administrator of We2.ee, state this 29th day of August, 2025:
+I, 〄, the server administrator of We2.ee, state this 08th day of September, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: Republican senator Joni Ernst of Iowa will not run for re-election
-  News URL:      https://www.theguardian.com/us-news/2025/aug/29/republican-iowa-senator-joni-ernst
-  XMR block:     #3488584, 2025-08-29 19:46:41 UTC
-  Block hash:    f70c2c47ed567ea3eaf13d8892b2d20a239fa13bd65743c09b1eabc183fe63c0
+  News headline: News live: Adam Bandt named CEO of Australian Conservation Foundation; tagged great white shark detected off Sydney’s Manly beach
+  News URL:      https://www.theguardian.com/australia-news/live/2025/sep/08/australia-news-live-erin-patterson-mushroom-murders-trial-sentencing-blood-moon-pictures-shark-net-beach-ntwnfb
+  XMR block:     #3495367, 2025-09-08 06:32:29 UTC
+  Block hash:    0731c2f5c758e420625e57cec6b8a46f991c054d22e5af661aa10c2fe8ebc405
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmiyBDgACgkQU1smWu2+
-W0R+sBAApKwyQteKhmaBmRN8wFtAm+oQg65QSetheHkp9ehwE5EzMQEvqiGW/aNw
-UaYAKCs+VNhHWNLi8xOCNBsMnqXDv0Y5B7k+E/EbsuS66j5WSglKo9jcB492aLSZ
-lMxulwMFhVrQPof6Lji1udUzYFKsRrFa7XGod/4lHpHH+BS1AEic0qRRPvPj0cIh
-NAq57S9XMFv/Kh9eBWNFyJs7+2wTSP2M2E7LMzICRFCUcuvqQqrRZREQ4ykUHevA
-QnJFidZAfNW5nyk6XRCvYEhELEfhwHjdaip/YnccclTr7CXXXhYk/P3/nQuKCoWy
-HoqS7vaiSc1p5vv7gzggLu+m9Q8zIzQjNlmQlRkJGzXrsAlavu6YJkZE99rEmOOk
-mKgrbqYhcnMkgiOjstIGxpeK3ghVsAnTDiEzxbG3cBjETOzs3kSd3vC4JaMvB/JR
-A+TRTbbVEDOt5IgsU2eHA2gBKhA30FYTUSlq02+/lJU7EpQIzHmZ90hJsyzbZlqS
-/gShoVKvD1gXvLIyNm6ltujZHFzLXYo7zDLKEy6v//eWThJNsluRutn0tY7Ogp62
-NAUwDKJLzgSNu8HTiH5cUmsmOiezLnz22BL3NTXDbGSORaZ2VSGxVAPfazBWKEcD
-D4piw+zqfR/+X7UH9myX+KSzxjneV6FyPXjF7QCywtrhYNwos4U=
-=vZLd
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmi+eOUACgkQU1smWu2+
+W0TBpQ/8Dr1FZEYtQI8PCCBCZFJZjkvpiF/wtSpIYMsSbhFx7sQnBhPYhdHkdXS8
+WGPi3pZgKPJcykCHSItlO+7CWS3wotkfB/ohj/b2b1ebC+Pmk01CLKChFdCVkodU
+P/SFc91wYHipGxR16ylbfNT2zhvIcaSvsrNVW9V0exQyl4cNCXU1dLX6Y0fTnhme
+6u77jroRDfGPSP/MQjgImgOusvnXgLc1qPDxfpkbXJIqUEJbKU+La9CyQ0LzDwLO
+CP0AFv/kFTxGOgt1sK9K2o2NJ6HKKCIpA+9LNH3T+aBYToTXlXdGInsW2v53PUdZ
+aGHhEJZKRsPmM/hM5fNjHUPX8JwXL4HEV4n5VSC5h29OG6Bbw8IHlsRj0yuiMe61
+L0tFVOSpuuYi8Y7bN7moqgV4YTXALib+fgJMgdXCvXmRHS9uCpDlyiZlKV/DeOsr
+u+7cogPeYZG0r8iwNwGrmeg7wo0b3EbF7d+oX+jodYPgEmVMD/j+/j1Axu/VNTc/
+EvNQP5Xqwd+YXw2g3t68o5hKKCHKU6notbktxSBPVOAsxuqY3S/lBqE19jH5FGAS
+HoTLLH7j7XkDeDTT8Ma0Z/udXY67YclZPBu8QVDS+Fdngzy2t2JC7JMHeTN1rlQW
+efBuTbm66puq+rtqVGCXBeOaYvXkFWf99YsKMJi2CkOijQwLW8A=
+=OTYu
 -----END PGP SIGNATURE-----
