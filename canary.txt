@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-09-08 06:34:04 UTC
+We2.ee Warrant Canary · 2025-09-15 01:20:57 UTC
 
-I, 〄, the server administrator of We2.ee, state this 08th day of September, 2025:
+I, 〄, the server administrator of We2.ee, state this 15th day of September, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: News live: Adam Bandt named CEO of Australian Conservation Foundation; tagged great white shark detected off Sydney’s Manly beach
-  News URL:      https://www.theguardian.com/australia-news/live/2025/sep/08/australia-news-live-erin-patterson-mushroom-murders-trial-sentencing-blood-moon-pictures-shark-net-beach-ntwnfb
-  XMR block:     #3495367, 2025-09-08 06:32:29 UTC
-  Block hash:    0731c2f5c758e420625e57cec6b8a46f991c054d22e5af661aa10c2fe8ebc405
+  News headline: News live: Bowen says ‘every Australian’ at risk from climate crisis; rooftop solar rises to 13% of energy mix
+  News URL:      https://www.theguardian.com/australia-news/live/2025/sep/15/australia-news-live-updates-albanese-png-climate-crisis-defence-rooftop-solar-power-energy-politics-ntwnfb
+  XMR block:     #3500215, 2025-09-15 01:20:45 UTC
+  Block hash:    3f900e8a9557373ecc96546e61ff8dc3ef651a2f432a1b0c3c9774fefe8821bb
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmi+eOUACgkQU1smWu2+
-W0TBpQ/8Dr1FZEYtQI8PCCBCZFJZjkvpiF/wtSpIYMsSbhFx7sQnBhPYhdHkdXS8
-WGPi3pZgKPJcykCHSItlO+7CWS3wotkfB/ohj/b2b1ebC+Pmk01CLKChFdCVkodU
-P/SFc91wYHipGxR16ylbfNT2zhvIcaSvsrNVW9V0exQyl4cNCXU1dLX6Y0fTnhme
-6u77jroRDfGPSP/MQjgImgOusvnXgLc1qPDxfpkbXJIqUEJbKU+La9CyQ0LzDwLO
-CP0AFv/kFTxGOgt1sK9K2o2NJ6HKKCIpA+9LNH3T+aBYToTXlXdGInsW2v53PUdZ
-aGHhEJZKRsPmM/hM5fNjHUPX8JwXL4HEV4n5VSC5h29OG6Bbw8IHlsRj0yuiMe61
-L0tFVOSpuuYi8Y7bN7moqgV4YTXALib+fgJMgdXCvXmRHS9uCpDlyiZlKV/DeOsr
-u+7cogPeYZG0r8iwNwGrmeg7wo0b3EbF7d+oX+jodYPgEmVMD/j+/j1Axu/VNTc/
-EvNQP5Xqwd+YXw2g3t68o5hKKCHKU6notbktxSBPVOAsxuqY3S/lBqE19jH5FGAS
-HoTLLH7j7XkDeDTT8Ma0Z/udXY67YclZPBu8QVDS+Fdngzy2t2JC7JMHeTN1rlQW
-efBuTbm66puq+rtqVGCXBeOaYvXkFWf99YsKMJi2CkOijQwLW8A=
-=OTYu
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmjHagYACgkQU1smWu2+
+W0ToBw/9FElZamw4ubuZ1EfLdo67d6inJZjmgR6uONxYb0Y4y6YVi3GdbVFpLj3t
+PWcS9sX936WBjKYNhFj2IEISHyhU/HfekIAbwbPeK8mAG/Q1d9rzRTXwvdWnpNMf
+hRWVa32NJry/DQnMn6/M58YDGxOj32RGB3Sp5tPvszKTSWiG6dtEZYzRYo7VtMNr
+4OB1UQlszQhSkDeZASx7noX2lMuAuUqeMyWbDQ85NgVMfGeII/R2urIkjcFDtNrF
+x/YszijIuqiZhnlqm7bqWeB5n8SgFPKuld1lepz+155XX//1zaa2BliMS20O5NCH
+Kzhg3sT0EiJeRdPUgCQIcccslWUCcUPtwZH3vs+UqG1+NHFrcdxCjJMKodMC7524
+bdL34g/l5PXyI2SqCr1c3g8mnS9NRgNni3Q1ZEjrCrnaKMbFbVcKffo+0PubRkpf
+LrVogeqOw24kawEBOOKiuViw6HV5CoNezh0auSReKVejuje+vpME0A9SUmQwse2I
+eNNfANqnOrJ623AvFFYELeiIu20jk9qz9tzbB7m5fs3WyHWOg2AzAJ2DTdKnQ2nh
+JhqqObNAf4L1nhCTw4Setxy7kqZERTIsx0egwru74fv2D3hUvk4LnbL742hvGuQ4
+LF1l9JNINgmceIU/eQlG4iIooOJB1QOz2DF2St/MKkdzxqZM8u4=
+=Djfb
 -----END PGP SIGNATURE-----
