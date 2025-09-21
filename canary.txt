@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-09-15 01:20:57 UTC
+We2.ee Warrant Canary · 2025-09-21 15:11:45 UTC
 
-I, 〄, the server administrator of We2.ee, state this 15th day of September, 2025:
+I, 〄, the server administrator of We2.ee, state this 21st day of September, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: News live: Bowen says ‘every Australian’ at risk from climate crisis; rooftop solar rises to 13% of energy mix
-  News URL:      https://www.theguardian.com/australia-news/live/2025/sep/15/australia-news-live-updates-albanese-png-climate-crisis-defence-rooftop-solar-power-energy-politics-ntwnfb
-  XMR block:     #3500215, 2025-09-15 01:20:45 UTC
-  Block hash:    3f900e8a9557373ecc96546e61ff8dc3ef651a2f432a1b0c3c9774fefe8821bb
+  News headline: Charlie Kirk memorial: Trump and Vance to join tens of thousands of people at service for rightwing activist – US politics live
+  News URL:      https://www.theguardian.com/us-news/live/2025/sep/21/charlie-kirk-funeral-memorial-time-updates-arizona
+  XMR block:     #3505043, 2025-09-21 15:08:39 UTC
+  Block hash:    1d8162a8552fb753ddf6afd932b9bdc81024550899f79a481bb833a5f146423a
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmjHagYACgkQU1smWu2+
-W0ToBw/9FElZamw4ubuZ1EfLdo67d6inJZjmgR6uONxYb0Y4y6YVi3GdbVFpLj3t
-PWcS9sX936WBjKYNhFj2IEISHyhU/HfekIAbwbPeK8mAG/Q1d9rzRTXwvdWnpNMf
-hRWVa32NJry/DQnMn6/M58YDGxOj32RGB3Sp5tPvszKTSWiG6dtEZYzRYo7VtMNr
-4OB1UQlszQhSkDeZASx7noX2lMuAuUqeMyWbDQ85NgVMfGeII/R2urIkjcFDtNrF
-x/YszijIuqiZhnlqm7bqWeB5n8SgFPKuld1lepz+155XX//1zaa2BliMS20O5NCH
-Kzhg3sT0EiJeRdPUgCQIcccslWUCcUPtwZH3vs+UqG1+NHFrcdxCjJMKodMC7524
-bdL34g/l5PXyI2SqCr1c3g8mnS9NRgNni3Q1ZEjrCrnaKMbFbVcKffo+0PubRkpf
-LrVogeqOw24kawEBOOKiuViw6HV5CoNezh0auSReKVejuje+vpME0A9SUmQwse2I
-eNNfANqnOrJ623AvFFYELeiIu20jk9qz9tzbB7m5fs3WyHWOg2AzAJ2DTdKnQ2nh
-JhqqObNAf4L1nhCTw4Setxy7kqZERTIsx0egwru74fv2D3hUvk4LnbL742hvGuQ4
-LF1l9JNINgmceIU/eQlG4iIooOJB1QOz2DF2St/MKkdzxqZM8u4=
-=Djfb
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmjQFbkACgkQU1smWu2+
+W0SF6hAAjC7nwFrzinFJiEWnBJD6MQOyA4mJJkZK3grbgEqOY7msiZVcgJBrISyr
+w0DxfZdM7YGLXKdYv19Ix7B+cTpltcRxIF+Ofd5Q8E9dAn9oglhk7MhqNeGFi6jQ
+cD5PALB4FxEzXQ1JTu50qV1wFKZSMx1tSdzE2VB8tmpgzgHQvK0a07qHBrKLJmjT
+lwumACvha/SBSJk6syul1J9JOiBsLUUCUvf8hv7zxdl+yHf1nQuqrWOJ9uUYkrKU
+zYLckNfHizAPxHPo199k6HmI1kmmooCCCRgH+/s7wK9rACy/sFJtY+JcXr6bEChO
+lCuyDQAOzEujXfuiruUviYTKxLQRk88Bb5w0tmsgc9qwx2ApaqyAPA8kTaQ1G7ly
+xpL9BHDQHwvFaSkVueTkxXzQc5HixP5XsA3ObE9VyNfv1xlWqAMtyznp52F9xMKg
+tw9sFrFXAHXhT9wZQUImRp0o7rP3EyU+vToAY9j/uzXdiUQ3lRohKK91R3gG4dLA
+PyWAQ19hO6/xJ1lr6FgADJx7Gk3I2nuZMmOrctEmw/yY0jjQ7xSGArElkRu4e+Kz
+buJZ8WNic51toE+prsnIMvjP6xjtYzBT45UJIYIHcA3ePNuB/cjDLPH1MmgGPBxV
+GUjet5XV91LamTcqWpkQRUSYlDWVl0GVSO8mxEFMkTFhUMw8F1E=
+=Boug
 -----END PGP SIGNATURE-----
