@@ -18,6 +18,6 @@ if __name__ == "__main__":
         "sw1tch.__main__:app",  # import string format required for reload
         host="0.0.0.0",
         port=config["port"],
-        reload=True,
+#        reload=True,
         access_log=False
     )
