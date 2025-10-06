@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-09-27 00:55:54 UTC
+We2.ee Warrant Canary · 2025-10-06 02:20:12 UTC
 
-I, 〄, the server administrator of We2.ee, state this 27th day of September, 2025:
+I, 〄, the server administrator of We2.ee, state this 06th day of October, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: Trump urges Microsoft to fire lawyer who ran investigation into attempt to overturn 2020 US election – live
-  News URL:      https://www.theguardian.com/us-news/live/2025/sep/26/james-comey-fbi-indictment-donald-trump-executive-orders-tariffs-us-politics-live
-  XMR block:     #3508860, 2025-09-27 00:54:47 UTC
-  Block hash:    e6e656cfcad38e897e34b41a47f77df5ebf60cffc00dd0f61c96423a3a6dbfb0
+  News headline: News live: Australia and PNG sign defence treaty; Allan says Melbourne’s Metro line to open this year
+  News URL:      https://www.theguardian.com/australia-news/live/2025/oct/06/australia-news-live-queensland-bushfire-danger-warnings-moreton-island-croydon-park-shooting-sydney-anthony-albanese-sussan-ley-andrew-hastie-labor-liberal-ntwnfb
+  XMR block:     #3515347, 2025-10-06 02:15:09 UTC
+  Block hash:    24427f379bd4ac2eaaba6561e741735554f5f9513f622e0698c048775a1f33f5
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmjXNiEACgkQU1smWu2+
-W0QxuRAAo8yIySlfb1w0SGx7FSNlc3ruE0yspTDSJpRzrKhcL4M7Jjmj3hrr5BRn
-8FTbV8DQBlz4hlxn57UNp6zBukBhagBsxkrE8hT9+CMchrC4Y1InJMwdhwwGDk82
-p0OHFUhiBbVkH33IXkp/G5w0yMOLsKOpaudqatV8Vi7VuD73HFgwTVrL1gJiOCMM
-IdRuDpWltKwazyJaGFWQ85nUv06NI6A+3JGwGCf2+WaR9twv42iAvC7+LEa3JGqw
-rq5iXBYFR2KpNkDLj2UvDjMMzlCjK7LfT7RMUM3GulyUTm0SsWA0P0lZObpPGadZ
-yBl037+e9ERBYP88kC/xjTudToKLq0QmbRJMofkofZHeYS/ascIIGbT1+5NpN8IB
-eEQvDqY5d5J1ES26mTfPMsdniWfX93u3ulC5kYxm0KXscFritfoVVFEHlIaok6NU
-HdJbBivqoOvG6IMhr+zhoIxo1XWmtBbRTAnnXL62Me5tkuk79ZZC85XQ8qjUTeIx
-PJkK3kddFXIWj+oErw0iaI1+igHd6HOZI3I4NElJbX/bwMieJmrdfuSZI7WToUc5
-MLlMAAxKyGPH1ewtndcu3TI4Y9kaXh21Jx/cOzHerUy/Gg2XTWfnBRdbeVIAY8y5
-Up1D35yLeDxTkO8nlv1X5353WUye64jAzKiEYYSkxt9DiedsdMU=
-=+PL4
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmjjJ2YACgkQU1smWu2+
+W0R9ZRAAk9Ii1R8f7DCGdTslBjMaffUgAJKKe4L+Qpr+gME0+xT3S2xvhAtWbD/A
+mGh+iRq3W07Q/n3tOTgsJ7ZrwcgRr2o5iHbGRWJsxrktlbpNp5pCJckO5k4z9uI3
+Gq+wYaErVYqc5YYFALU1azuZtpq5egSu39y9FtAIyo0jmsgwRrc+HHeYBMfJNoFb
+IYfwvymsa3is4mrcPYiXCNfKDY2qo0yqJnN5SjwECsR+mF0h1xzr1OBINuiyjTXh
+GKlrSLeGkDesbj16P7ZQ6OeBNuy5coI0Iw8TCcCsBJ8iircxvdWN7yHpkbXnFGBQ
+8OefDlisDVinnPDrgaoX44wgxihWN8rbm5E/RU3Degmpthrs0INHBr5cmBjbmXPF
+zvosJAtOXQsMvBDxn6u9/ecTR7KP21/El8ZmyP0BNq01ptWHaIdCT/RzjAj+niSg
+jN8AnTAr07ZO/OeCK0HJua6I3dUdFSwrSs19qHhV3ssJAyIEZZ4fQCm9K6FdZ8GO
+GouL9/Lg9u6OQrMgOY+mxBW6iqHVrV/NM2swGPfc9IcR6n1JfszlwcGvF2+G0F8u
+OHNPxcqfFCLGzeZS+j9GlFTXJodbP7Qz8pUJrTDvBpmaxhUfANF5BuANgg1TpG9S
+nrg3/DpTH34ItUK2u4yN1FFdom6tu8qNt9aKGj9Ml9xXH3sL/wY=
+=yZ/6
 -----END PGP SIGNATURE-----
