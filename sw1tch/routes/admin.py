@@ -1,14 +1,24 @@
 from fastapi import APIRouter, Form, Depends, Request, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from datetime import datetime, timedelta
 import httpx
 import re
 import os
 import hashlib
+import json
+import asyncio
 
 from sw1tch import BASE_DIR, config, logger, load_registrations, save_registrations, verify_admin_auth
-from sw1tch.utilities.matrix import get_matrix_users, deactivate_user, get_matrix_rooms, get_room_members, check_banned_room_name
+from sw1tch.utilities.matrix import (
+    get_matrix_users, 
+    deactivate_user, 
+    get_matrix_rooms, 
+    get_room_members, 
+    check_banned_room_name,
+    get_matched_pattern,
+    matrix_bot
+)
 
 router = APIRouter(prefix="/_admin")
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
@@ -193,6 +203,7 @@ async def retroactively_document_users(auth_token: str = Depends(verify_admin_au
         "added_count": added_count
     })
 
+# Old endpoint - kept for backwards compatibility but will timeout
 @router.get("/moderate_rooms", response_class=JSONResponse)
 async def moderate_rooms(auth_token: str = Depends(verify_admin_auth)):
     all_rooms = []
@@ -202,20 +213,17 @@ async def moderate_rooms(auth_token: str = Depends(verify_admin_auth)):
         rooms = await get_matrix_rooms(page)
         if not rooms:
             break
-        # Stop if all rooms on this page have fewer than 3 members
         if all(room["members"] < 3 for room in rooms):
             break
         for room in rooms:
-            # Add every room to all_rooms, even those with < 3 members, for debugging
             all_rooms.append({
                 "room_id": room["room_id"],
                 "room_name": room["name"],
                 "total_members": room["members"]
             })
             if room["members"] < 3:
-                continue  # Skip rooms with fewer than 3 members for banned_rooms
+                continue
             if check_banned_room_name(room["name"]):
-                # Get local members for banned rooms
                 members_info = await get_room_members(room["room_id"], local_only=True)
                 banned_rooms.append({
                     "room_id": room["room_id"],
@@ -228,3 +236,172 @@ async def moderate_rooms(auth_token: str = Depends(verify_admin_auth)):
                 })
         page += 1
     return JSONResponse({"all_rooms": all_rooms, "banned_rooms": banned_rooms})
+
+# Helper functions for streaming endpoint
+def parse_rooms_response(response: str) -> list:
+    """Parse rooms from admin bot response."""
+    room_pattern = r"(!\S+)\s+Members: (\d+)\s+Name: (.*)"
+    rooms = []
+    for line in response.split('\n'):
+        match = re.match(room_pattern, line)
+        if match:
+            rooms.append({
+                'room_id': match.group(1),
+                'members': int(match.group(2)),
+                'name': match.group(3).strip()
+            })
+    return rooms
+
+def parse_members_response(response: str) -> list:
+    """Parse members from admin bot response."""
+    member_pattern = r"(@\S+)\s*\|\s*(\S+)"
+    members = []
+    for line in response.split('\n'):
+        match = re.match(member_pattern, line)
+        if match:
+            members.append({
+                'user_id': match.group(1),
+                'display_name': match.group(2)
+            })
+    return members
+
+# New streaming endpoint
+@router.get("/moderate_rooms_stream")
+async def moderate_rooms_stream(auth_token: str = Depends(verify_admin_auth)):
+    """Stream room moderation results as they're discovered."""
+    
+    async def event_generator():
+        try:
+            yield f"data: {json.dumps({'status': 'starting', 'message': 'Connecting to Matrix...'})}\n\n"
+            
+            await matrix_bot.ensure_connected()
+            yield f"data: {json.dumps({'status': 'connected', 'message': 'Fetching rooms...'})}\n\n"
+            
+            page = 1
+            total_rooms = 0
+            total_banned = 0
+            
+            while True:
+                yield f"data: {json.dumps({'status': 'progress', 'page': page, 'message': f'Checking page {page}...'})}\n\n"
+                
+                try:
+                    command = f"!admin rooms list-rooms {page} --exclude-banned --exclude-disabled"
+                    response = await matrix_bot.send_admin_command(command)
+                    rooms = parse_rooms_response(response)
+                    
+                    if not rooms:
+                        break
+                    
+                    if all(room["members"] < 3 for room in rooms):
+                        yield f"data: {json.dumps({'status': 'info', 'message': 'Reached DMs/small rooms, stopping'})}\n\n"
+                        break
+                    
+                    total_rooms += len(rooms)
+                    
+                    for room in rooms:
+                        if room["members"] < 3:
+                            continue
+                        
+                        if check_banned_room_name(room["name"]):
+                            total_banned += 1
+                            matched_pattern = get_matched_pattern(room["name"])
+                            
+                            yield f"data: {json.dumps({
+                                'type': 'banned_room_found',
+                                'room': {
+                                    'room_id': room['room_id'],
+                                    'room_name': room['name'],
+                                    'total_members': room['members'],
+                                    'matched_pattern': matched_pattern,
+                                    'timestamp': datetime.utcnow().isoformat()
+                                },
+                                'total_found': total_banned
+                            })}\n\n"
+                            
+                            try:
+                                command = f"!admin rooms info list-joined-members {room['room_id']} --local-only"
+                                members_response = await matrix_bot.send_admin_command(command)
+                                members = parse_members_response(members_response)
+                                
+                                yield f"data: {json.dumps({
+                                    'type': 'room_members',
+                                    'room_id': room['room_id'],
+                                    'local_users': members
+                                })}\n\n"
+                            except Exception as e:
+                                logger.error(f"Error fetching members: {e}")
+                                yield f"data: {json.dumps({
+                                    'type': 'error',
+                                    'message': f'Could not fetch members for {room[\"name\"]}'
+                                })}\n\n"
+                    
+                    page += 1
+                    
+                except Exception as e:
+                    logger.error(f"Error on page {page}: {e}")
+                    yield f"data: {json.dumps({'type': 'error', 'message': str(e)})}\n\n"
+                    break
+            
+            yield f"data: {json.dumps({
+                'status': 'complete',
+                'message': f'Scan complete. Checked {total_rooms} rooms, found {total_banned} with banned names.'
+            })}\n\n"
+            
+        except Exception as e:
+            logger.error(f"Fatal error in moderation stream: {e}")
+            yield f"data: {json.dumps({'status': 'error', 'message': str(e)})}\n\n"
+    
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+        }
+    )
+
+# Admin command helper
+async def send_matrix_admin_command(command: str) -> dict:
+    """Send admin command and return result."""
+    try:
+        await matrix_bot.ensure_connected()
+        response = await matrix_bot.send_admin_command(command)
+        return {"success": True, "response": response}
+    except Exception as e:
+        logger.error(f"Admin command failed: {e}")
+        return {"success": False, "error": str(e)}
+
+@router.post("/ban_room")
+async def ban_room(
+    room_id: str = Form(...),
+    auth_token: str = Depends(verify_admin_auth)
+):
+    """Ban a specific room."""
+    command = f"!admin rooms moderation ban-room {room_id}"
+    result = await send_matrix_admin_command(command)
+    logger.info(f"Ban room {room_id}: {result}")
+    return JSONResponse(result)
+
+@router.post("/ban_user")
+async def ban_user(
+    user_id: str = Form(...),
+    auth_token: str = Depends(verify_admin_auth)
+):
+    """Deactivate a specific user."""
+    command = f"!admin users deactivate {user_id}"
+    result = await send_matrix_admin_command(command)
+    logger.info(f"Ban user {user_id}: {result}")
+    return JSONResponse(result)
+
+@router.post("/ban_users_bulk")
+async def ban_users_bulk(
+    user_ids: str = Form(...),
+    auth_token: str = Depends(verify_admin_auth)
+):
+    """Deactivate multiple users at once."""
+    users = json.loads(user_ids)
+    users_formatted = "\n".join(users)
+    command = f"!admin users deactivate-all\n```\n{users_formatted}\n```"
+    result = await send_matrix_admin_command(command)
+    logger.info(f"Bulk ban {len(users)} users: {result}")
+    return JSONResponse(result)

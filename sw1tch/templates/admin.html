@@ -24,7 +24,257 @@
         .results-container {
             width: 80%;
             margin: 0 auto 2rem auto;
-            max-height: none; /* Allow height to adjust to content */
+            max-height: none;
+        }
+        
+        /* Room Moderation Styles */
+        .section-divider {
+            border-top: 2px solid var(--border-color);
+            margin: 2rem 0;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .room-card {
+            border: 2px solid var(--error-color);
+            background: rgba(255, 0, 0, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .room-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            cursor: pointer;
+            user-select: none;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .room-header:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .expand-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            transition: transform 0.2s;
+        }
+        
+        .expand-icon.expanded {
+            transform: rotate(90deg);
+        }
+        
+        .room-info {
+            flex: 1;
+        }
+        
+        .room-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .room-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .badge-users {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .badge-pattern {
+            background: var(--warning-color);
+            color: white;
+            font-family: monospace;
+        }
+        
+        .room-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-danger {
+            background: var(--error-color);
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background: darkred;
+        }
+        
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background: darkorange;
+        }
+        
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .room-details {
+            display: none;
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .room-details.expanded {
+            display: block;
+        }
+        
+        .user-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-display-name {
+            font-weight: bold;
+        }
+        
+        .user-id {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+        
+        .copy-btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: flex-end;
+        }
+        
+        .action-feedback {
+            display: inline-block;
+            margin-left: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .loading {
+            color: var(--warning-color);
+        }
+        
+        .success {
+            color: var(--success-color);
+        }
+        
+        .error {
+            color: var(--error-color);
         }
     </style>
 </head>
@@ -45,6 +295,9 @@
             {% endif %}
         </div>
         {% else %}
+        
+        <!-- Existing Registration Management -->
+        <h2 class="section-title">Registration Management</h2>
         <div class="grid-container">
             <button onclick="viewUnfulfilled('{{ request.query_params.auth_token }}')" class="admin-button">View Unfulfilled Registrations</button>
             <button onclick="viewUndocumented('{{ request.query_params.auth_token }}')" class="admin-button">View Undocumented Users</button>
@@ -54,11 +307,57 @@
             <button onclick="purgeUnfulfilled('{{ request.query_params.auth_token }}')" class="admin-button">Purge Unfulfilled Registrations</button>
             <button onclick="deactivateUndocumented('{{ request.query_params.auth_token }}')" class="admin-button">Deactivate Undocumented Users</button>
         </div>
+        
+        <!-- Section Divider -->
+        <div class="section-divider"></div>
+        
+        <!-- New Room Moderation -->
+        <h2 class="section-title">Room Moderation</h2>
+        <div class="grid-container">
+            <button onclick="startRoomModeration('{{ request.query_params.auth_token }}')" class="admin-button" id="start-btn">
+                🔍 Scan Rooms for Banned Names
+            </button>
+            <button onclick="stopRoomModeration()" class="admin-button" id="stop-btn" style="display: none; background: var(--error-color);">
+                ⏹️ Stop Scan
+            </button>
+        </div>
+
+        <div id="stats-container" style="display: none;" class="stats-bar">
+            <div class="stat">
+                <div class="stat-value" id="stat-scanned">0</div>
+                <div class="stat-label">Rooms Scanned</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="stat-found">0</div>
+                <div class="stat-label">Problematic Rooms</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="stat-banned">0</div>
+                <div class="stat-label">Actions Taken</div>
+            </div>
+        </div>
+
+        <div id="scan-status" class="status-message" style="display: none;"></div>
+        <div id="scan-results" class="results-container"></div>
+        
         <p class="info-text">Logged in as admin</p>
         {% endif %}
     </div>
 
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirm Action</h3>
+            <p id="modal-message"></p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-danger" id="modal-confirm" onclick="confirmAction()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Existing functionality
         async function viewUnfulfilled(auth_token) {
             const response = await fetch(`/_admin/view_unfulfilled?auth_token=${auth_token}`);
             const html = await response.text();
@@ -74,7 +373,7 @@
                 });
                 const result = await response.json();
                 alert(`Cleanup complete:\nKept existing: ${result.kept_existing}\nKept recent: ${result.kept_recent}\nRemoved: ${result.removed}`);
-                viewUnfulfilled(auth_token); // Refresh the list
+                viewUnfulfilled(auth_token);
             }
         }
 
@@ -91,9 +390,392 @@
                 });
                 const result = await response.json();
                 alert(`${result.message}\nFailed deactivations: ${result.failed_deactivations || 'None'}`);
-                viewUndocumented(auth_token); // Refresh the list
+                viewUndocumented(auth_token);
             }
         }
+
+        // Room Moderation functionality
+        let eventSource = null;
+        let authToken = '{{ request.query_params.auth_token }}';
+        let roomsData = {};
+        let stats = { scanned: 0, found: 0, banned: 0 };
+        let pendingAction = null;
+
+        function startRoomModeration(token) {
+            authToken = token;
+            document.getElementById('scan-results').innerHTML = '';
+            document.getElementById('scan-status').style.display = 'block';
+            document.getElementById('stats-container').style.display = 'flex';
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('stop-btn').style.display = 'block';
+            
+            stats = { scanned: 0, found: 0, banned: 0 };
+            updateStats();
+            
+            eventSource = new EventSource(`/_admin/moderate_rooms_stream?auth_token=${authToken}`);
+            
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                
+                switch(data.type) {
+                    case 'banned_room_found':
+                        addBannedRoom(data.room, data.total_found);
+                        stats.found++;
+                        updateStats();
+                        break;
+                    
+                    case 'room_members':
+                        addRoomMembers(data.room_id, data.local_users);
+                        break;
+                    
+                    case 'error':
+                        showStatus(`⚠️ Error: ${data.message}`, 'error');
+                        break;
+                    
+                    default:
+                        if (data.status) {
+                            showStatus(data.message, data.status);
+                            
+                            if (data.page) {
+                                stats.scanned = data.page * 20;
+                                updateStats();
+                            }
+                            
+                            if (data.status === 'complete') {
+                                document.getElementById('stop-btn').style.display = 'none';
+                                document.getElementById('start-btn').style.display = 'block';
+                                eventSource.close();
+                            }
+                        }
+                }
+            };
+            
+            eventSource.onerror = function() {
+                showStatus('✅ Scan complete or connection closed', 'complete');
+                document.getElementById('stop-btn').style.display = 'none';
+                document.getElementById('start-btn').style.display = 'block';
+                if (eventSource) eventSource.close();
+            };
+        }
+
+        function stopRoomModeration() {
+            if (eventSource) {
+                eventSource.close();
+                showStatus('⏹️ Scan stopped by user', 'info');
+                document.getElementById('stop-btn').style.display = 'none';
+                document.getElementById('start-btn').style.display = 'block';
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('stat-scanned').textContent = stats.scanned;
+            document.getElementById('stat-found').textContent = stats.found;
+            document.getElementById('stat-banned').textContent = stats.banned;
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('scan-status');
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+        }
+
+        function addBannedRoom(room, totalFound) {
+            const resultsDiv = document.getElementById('scan-results');
+            const roomKey = room.room_id.replace(/[^a-zA-Z0-9]/g, '_');
+            
+            const roomCard = document.createElement('div');
+            roomCard.className = 'room-card';
+            roomCard.id = `room-${roomKey}`;
+            roomCard.innerHTML = `
+                <div class="room-header" onclick="toggleRoom('${roomKey}')">
+                    <span class="expand-icon" id="icon-${roomKey}">▶</span>
+                    <div class="room-info">
+                        <div class="room-name">${escapeHtml(room.room_name)}</div>
+                        <div class="room-meta">
+                            <span class="badge badge-users" id="user-count-${roomKey}">Loading users...</span>
+                            ${room.matched_pattern ? `<span class="badge badge-pattern">${escapeHtml(room.matched_pattern)}</span>` : ''}
+                            <span style="font-size: 0.75rem;">${new Date(room.timestamp).toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                    <div class="room-actions" onclick="event.stopPropagation()">
+                        <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('${escapeHtml(room.room_id)}')" title="Copy Room ID">
+                            📋
+                        </button>
+                        <button class="btn btn-warning" onclick="confirmBanRoom('${escapeHtml(room.room_id)}', '${roomKey}')" id="ban-room-${roomKey}">
+                            🚫 Ban Room
+                        </button>
+                        <button class="btn btn-danger" onclick="confirmBanAllUsers('${roomKey}')" id="ban-all-${roomKey}" disabled>
+                            ⛔ Ban All Users
+                        </button>
+                    </div>
+                </div>
+                <div class="room-details" id="details-${roomKey}">
+                    <h4>Local Users in This Room:</h4>
+                    <ul class="user-list" id="users-${roomKey}">
+                        <li style="padding: 1rem; text-align: center; color: var(--text-secondary);">Loading...</li>
+                    </ul>
+                </div>
+            `;
+            
+            resultsDiv.appendChild(roomCard);
+            roomsData[roomKey] = { ...room, users: [] };
+            
+            roomCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function addRoomMembers(roomId, users) {
+            const roomKey = roomId.replace(/[^a-zA-Z0-9]/g, '_');
+            const usersDiv = document.getElementById(`users-${roomKey}`);
+            const userCountBadge = document.getElementById(`user-count-${roomKey}`);
+            const banAllBtn = document.getElementById(`ban-all-${roomKey}`);
+            
+            if (!usersDiv) return;
+            
+            roomsData[roomKey].users = users;
+            
+            userCountBadge.textContent = `${users.length} local user${users.length !== 1 ? 's' : ''}`;
+            
+            if (users.length > 0) {
+                banAllBtn.disabled = false;
+            }
+            
+            if (users.length === 0) {
+                usersDiv.innerHTML = '<li style="padding: 1rem; text-align: center; color: var(--text-secondary);"><em>No local users in this room</em></li>';
+            } else {
+                usersDiv.innerHTML = users.map(user => `
+                    <li class="user-item">
+                        <div class="user-info">
+                            <div class="user-display-name">${escapeHtml(user.display_name)}</div>
+                            <div class="user-id">${escapeHtml(user.user_id)}</div>
+                        </div>
+                        <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('${escapeHtml(user.user_id)}')" title="Copy User ID">
+                            📋
+                        </button>
+                        <button class="btn btn-danger" onclick="confirmBanUser('${escapeHtml(user.user_id)}', '${roomKey}')" id="ban-user-${escapeHtml(user.user_id).replace(/[^a-zA-Z0-9]/g, '_')}">
+                            🚫 Ban User
+                        </button>
+                        <span class="action-feedback" id="feedback-${escapeHtml(user.user_id).replace(/[^a-zA-Z0-9]/g, '_')}"></span>
+                    </li>
+                `).join('');
+            }
+        }
+
+        function toggleRoom(roomKey) {
+            const details = document.getElementById(`details-${roomKey}`);
+            const icon = document.getElementById(`icon-${roomKey}`);
+            
+            details.classList.toggle('expanded');
+            icon.classList.toggle('expanded');
+        }
+
+        function confirmBanRoom(roomId, roomKey) {
+            pendingAction = {
+                type: 'ban_room',
+                roomId: roomId,
+                roomKey: roomKey
+            };
+            
+            document.getElementById('modal-title').textContent = '🚫 Ban Room?';
+            document.getElementById('modal-message').innerHTML = `
+                Are you sure you want to ban this room?<br><br>
+                <strong>Room ID:</strong> ${escapeHtml(roomId)}<br><br>
+                This action cannot be undone.
+            `;
+            document.getElementById('confirm-modal').classList.add('show');
+        }
+
+        function confirmBanUser(userId, roomKey) {
+            pendingAction = {
+                type: 'ban_user',
+                userId: userId,
+                roomKey: roomKey
+            };
+            
+            document.getElementById('modal-title').textContent = '🚫 Ban User?';
+            document.getElementById('modal-message').innerHTML = `
+                Are you sure you want to deactivate this user?<br><br>
+                <strong>User:</strong> ${escapeHtml(userId)}<br><br>
+                This action cannot be undone.
+            `;
+            document.getElementById('confirm-modal').classList.add('show');
+        }
+
+        function confirmBanAllUsers(roomKey) {
+            const room = roomsData[roomKey];
+            if (!room || room.users.length === 0) return;
+            
+            pendingAction = {
+                type: 'ban_all_users',
+                roomKey: roomKey,
+                users: room.users.map(u => u.user_id)
+            };
+            
+            document.getElementById('modal-title').textContent = '⛔ Ban All Users?';
+            document.getElementById('modal-message').innerHTML = `
+                Are you sure you want to deactivate <strong>all ${room.users.length} local users</strong> in this room?<br><br>
+                Users:<br>
+                ${room.users.map(u => `• ${escapeHtml(u.display_name)} (${escapeHtml(u.user_id)})`).join('<br>')}<br><br>
+                <strong>This action cannot be undone.</strong>
+            `;
+            document.getElementById('confirm-modal').classList.add('show');
+        }
+
+        async function confirmAction() {
+            if (!pendingAction) return;
+            
+            closeModal();
+            
+            switch(pendingAction.type) {
+                case 'ban_room':
+                    await executeBanRoom(pendingAction.roomId, pendingAction.roomKey);
+                    break;
+                case 'ban_user':
+                    await executeBanUser(pendingAction.userId, pendingAction.roomKey);
+                    break;
+                case 'ban_all_users':
+                    await executeBanAllUsers(pendingAction.roomKey, pendingAction.users);
+                    break;
+            }
+            
+            pendingAction = null;
+        }
+
+        async function executeBanRoom(roomId, roomKey) {
+            const btn = document.getElementById(`ban-room-${roomKey}`);
+            btn.disabled = true;
+            btn.textContent = '⏳ Banning...';
+            
+            const formData = new FormData();
+            formData.append('room_id', roomId);
+            
+            try {
+                const response = await fetch(`/_admin/ban_room?auth_token=${authToken}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    btn.textContent = '✅ Banned';
+                    btn.className = 'btn btn-success';
+                    stats.banned++;
+                    updateStats();
+                } else {
+                    btn.textContent = '❌ Failed';
+                    btn.className = 'btn btn-error';
+                    alert(`Failed to ban room: ${result.error}`);
+                }
+            } catch (error) {
+                btn.textContent = '❌ Error';
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function executeBanUser(userId, roomKey) {
+            const userKey = userId.replace(/[^a-zA-Z0-9]/g, '_');
+            const btn = document.getElementById(`ban-user-${userKey}`);
+            const feedback = document.getElementById(`feedback-${userKey}`);
+            
+            btn.disabled = true;
+            feedback.innerHTML = '<span class="loading">⏳ Banning...</span>';
+            
+            const formData = new FormData();
+            formData.append('user_id', userId);
+            
+            try {
+                const response = await fetch(`/_admin/ban_user?auth_token=${authToken}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    btn.textContent = '✅ Banned';
+                    btn.className = 'btn btn-success';
+                    feedback.innerHTML = '<span class="success">✅ Deactivated</span>';
+                    stats.banned++;
+                    updateStats();
+                } else {
+                    feedback.innerHTML = `<span class="error">❌ Failed</span>`;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                feedback.innerHTML = `<span class="error">❌ Error</span>`;
+                btn.disabled = false;
+            }
+        }
+
+        async function executeBanAllUsers(roomKey, userIds) {
+            const btn = document.getElementById(`ban-all-${roomKey}`);
+            btn.disabled = true;
+            btn.textContent = '⏳ Banning...';
+            
+            const formData = new FormData();
+            formData.append('user_ids', JSON.stringify(userIds));
+            
+            try {
+                const response = await fetch(`/_admin/ban_users_bulk?auth_token=${authToken}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    btn.textContent = '✅ All Banned';
+                    btn.className = 'btn btn-success';
+                    stats.banned += userIds.length;
+                    updateStats();
+                    
+                    userIds.forEach(userId => {
+                        const userKey = userId.replace(/[^a-zA-Z0-9]/g, '_');
+                        const userBtn = document.getElementById(`ban-user-${userKey}`);
+                        const userFeedback = document.getElementById(`feedback-${userKey}`);
+                        if (userBtn) {
+                            userBtn.textContent = '✅ Banned';
+                            userBtn.className = 'btn btn-success';
+                            userBtn.disabled = true;
+                        }
+                        if (userFeedback) {
+                            userFeedback.innerHTML = '<span class="success">✅ Deactivated</span>';
+                        }
+                    });
+                } else {
+                    btn.textContent = '❌ Failed';
+                    alert(`Failed to ban users: ${result.error}`);
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                btn.textContent = '❌ Error';
+                alert(`Error: ${error.message}`);
+                btn.disabled = false;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('confirm-modal').classList.remove('show');
+            pendingAction = null;
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showStatus(`📋 Copied: ${text}`, 'info');
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        document.getElementById('confirm-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
