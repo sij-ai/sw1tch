@@ -286,7 +286,7 @@ async def moderate_rooms_stream(auth_token: str = Depends(verify_admin_auth)):
                 
                 try:
                     command = f"!admin rooms list-rooms {page} --exclude-banned --exclude-disabled"
-                    response = await matrix_bot.send_admin_command(command)
+                    response = await matrix_bot.send_admin_command(command, timeout=20)
                     rooms = parse_rooms_response(response)
                     
                     if not rooms:
@@ -320,7 +320,7 @@ async def moderate_rooms_stream(auth_token: str = Depends(verify_admin_auth)):
                             
                             try:
                                 command = f"!admin rooms info list-joined-members {room['room_id']} --local-only"
-                                members_response = await matrix_bot.send_admin_command(command)
+                                members_response = await matrix_bot.send_admin_command(command, timeout=30)
                                 members = parse_members_response(members_response)
                                 
                                 yield f"data: {json.dumps({
@@ -328,11 +328,17 @@ async def moderate_rooms_stream(auth_token: str = Depends(verify_admin_auth)):
                                     'room_id': room['room_id'],
                                     'local_users': members
                                 })}\n\n"
+                            except TimeoutError as e:
+                                logger.error(f"Timeout fetching members for {room['room_id']}: {e}")
+                                yield f"data: {json.dumps({
+                                    'type': 'error',
+                                    'message': f"Timeout fetching members for {room['name']}"
+                                })}\n\n"
                             except Exception as e:
                                 logger.error(f"Error fetching members: {e}")
                                 yield f"data: {json.dumps({
                                     'type': 'error',
-                                    'message': f'Could not fetch members for {room[\"name\"]}'
+                                    'message': f"Could not fetch members for {room['name']}: {str(e)}"
                                 })}\n\n"
                     
                     page += 1
@@ -360,13 +366,17 @@ async def moderate_rooms_stream(auth_token: str = Depends(verify_admin_auth)):
         }
     )
 
-# Admin command helper
-async def send_matrix_admin_command(command: str) -> dict:
+# Admin command helper - uses persistent bot with proper response checking
+async def send_matrix_admin_command(command: str, expected_pattern: str = None) -> dict:
     """Send admin command and return result."""
     try:
-        await matrix_bot.ensure_connected()
-        response = await matrix_bot.send_admin_command(command)
+        logger.info(f"Executing admin command: {command}")
+        response = await matrix_bot.send_admin_command(command, timeout=30, expected_response_pattern=expected_pattern)
+        logger.info(f"Command successful: {response[:200]}")
         return {"success": True, "response": response}
+    except TimeoutError as e:
+        logger.error(f"Timeout executing command: {e}")
+        return {"success": False, "error": f"Command timed out: {str(e)}"}
     except Exception as e:
         logger.error(f"Admin command failed: {e}")
         return {"success": False, "error": str(e)}
@@ -378,7 +388,8 @@ async def ban_room(
 ):
     """Ban a specific room."""
     command = f"!admin rooms moderation ban-room {room_id}"
-    result = await send_matrix_admin_command(command)
+    # Look for success message (adjust based on what your bot actually returns)
+    result = await send_matrix_admin_command(command, expected_pattern=r"(banned|successfully)")
     logger.info(f"Ban room {room_id}: {result}")
     return JSONResponse(result)
 
@@ -389,7 +400,8 @@ async def ban_user(
 ):
     """Deactivate a specific user."""
     command = f"!admin users deactivate {user_id}"
-    result = await send_matrix_admin_command(command)
+    # Look for "has been deactivated" in response
+    result = await send_matrix_admin_command(command, expected_pattern=r"has been deactivated")
     logger.info(f"Ban user {user_id}: {result}")
     return JSONResponse(result)
 
@@ -402,6 +414,7 @@ async def ban_users_bulk(
     users = json.loads(user_ids)
     users_formatted = "\n".join(users)
     command = f"!admin users deactivate-all\n```\n{users_formatted}\n```"
-    result = await send_matrix_admin_command(command)
+    # Look for deactivation confirmation
+    result = await send_matrix_admin_command(command, expected_pattern=r"deactivated")
     logger.info(f"Bulk ban {len(users)} users: {result}")
     return JSONResponse(result)

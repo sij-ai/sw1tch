@@ -8,23 +8,20 @@ services:
     env_file:
       - ./sw1tch/config/tuwunel.env
     networks:
-      - matrix_net
+      matrix_net:
+        ipv4_address: 172.27.0.2
     volumes:
       - db:/var/lib/conduwuit/
       - ./sw1tch/data/.registration_token:/.registration_token:ro
       - /home/sij/tuwunel_backup:/backup
       - ./sw1tch/config/tuwunel.toml:/etc/tuwunel/tuwunel.toml:ro
     command: ["--config", "/etc/tuwunel/tuwunel.toml"]
-#    dns:  # Direct to host's DNS (bypasses Docker forwarder for externals)
-#      - 172.17.0.1  # Gateway to host's 127.0.0.1
-#      - 1.1.1.1     # Fallback public
-#      - 8.8.8.8
-#    dns_opt:  # Improve resolution (force TCP for large responses, shorter timeout)
-#      - use-vc
-#      - timeout:2
-#    extra_hosts:  # Preserve internal resolution post-bypass
-#      - "mautrix-signal:172.27.0.3"  # Use actual IP from `docker inspect mautrix-signal`
-#      - "diagnostics:172.27.0.4"     # Adjust IPs as needed
+    dns:
+      - 172.17.0.1      # Host's Unbound on Docker bridge
+      - 1.1.1.1         # Fallback public
+    extra_hosts:
+      - "mautrix-signal:172.27.0.3"
+      - "diagnostics:172.27.0.4"
     deploy:
       resources:
         limits:
@@ -39,7 +36,8 @@ services:
     container_name: mautrix-signal
     restart: unless-stopped
     networks:
-      - matrix_net
+      matrix_net:
+        ipv4_address: 172.27.0.3
     volumes:
       - /home/sij/mautrix/signal-bridge/docker:/data:z
     depends_on:
@@ -50,7 +48,8 @@ services:
     container_name: diagnostics
     restart: unless-stopped
     networks:
-      - matrix_net
+      matrix_net:
+        ipv4_address: 172.27.0.4
     command: ["sleep", "infinity"]
 
 volumes:
@@ -63,3 +62,4 @@ networks:
     ipam:
       config:
         - subnet: 172.27.0.0/16
+          gateway: 172.27.0.1
