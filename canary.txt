@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-10-06 02:20:12 UTC
+We2.ee Warrant Canary · 2025-10-11 22:08:35 UTC
 
-I, 〄, the server administrator of We2.ee, state this 06th day of October, 2025:
+I, 〄, the server administrator of We2.ee, state this 11th day of October, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: News live: Australia and PNG sign defence treaty; Allan says Melbourne’s Metro line to open this year
-  News URL:      https://www.theguardian.com/australia-news/live/2025/oct/06/australia-news-live-queensland-bushfire-danger-warnings-moreton-island-croydon-park-shooting-sydney-anthony-albanese-sussan-ley-andrew-hastie-labor-liberal-ntwnfb
-  XMR block:     #3515347, 2025-10-06 02:15:09 UTC
-  Block hash:    24427f379bd4ac2eaaba6561e741735554f5f9513f622e0698c048775a1f33f5
+  News headline: Egypt confirms international leaders’ summit on Monday to discuss Gaza ceasefire - live
+  News URL:      https://www.theguardian.com/world/live/2025/oct/11/israel-gaza-ceasefire-hamas-hostages-netanyahu-trump-middle-east-latest-news-updates
+  XMR block:     #3516463, 2025-10-07 16:09:20 UTC
+  Block hash:    b8b035cdfa37ead52eebe880b9981f2fd7b77e37512ef607794af8f4e1c6cd95
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmjjJ2YACgkQU1smWu2+
-W0R9ZRAAk9Ii1R8f7DCGdTslBjMaffUgAJKKe4L+Qpr+gME0+xT3S2xvhAtWbD/A
-mGh+iRq3W07Q/n3tOTgsJ7ZrwcgRr2o5iHbGRWJsxrktlbpNp5pCJckO5k4z9uI3
-Gq+wYaErVYqc5YYFALU1azuZtpq5egSu39y9FtAIyo0jmsgwRrc+HHeYBMfJNoFb
-IYfwvymsa3is4mrcPYiXCNfKDY2qo0yqJnN5SjwECsR+mF0h1xzr1OBINuiyjTXh
-GKlrSLeGkDesbj16P7ZQ6OeBNuy5coI0Iw8TCcCsBJ8iircxvdWN7yHpkbXnFGBQ
-8OefDlisDVinnPDrgaoX44wgxihWN8rbm5E/RU3Degmpthrs0INHBr5cmBjbmXPF
-zvosJAtOXQsMvBDxn6u9/ecTR7KP21/El8ZmyP0BNq01ptWHaIdCT/RzjAj+niSg
-jN8AnTAr07ZO/OeCK0HJua6I3dUdFSwrSs19qHhV3ssJAyIEZZ4fQCm9K6FdZ8GO
-GouL9/Lg9u6OQrMgOY+mxBW6iqHVrV/NM2swGPfc9IcR6n1JfszlwcGvF2+G0F8u
-OHNPxcqfFCLGzeZS+j9GlFTXJodbP7Qz8pUJrTDvBpmaxhUfANF5BuANgg1TpG9S
-nrg3/DpTH34ItUK2u4yN1FFdom6tu8qNt9aKGj9Ml9xXH3sL/wY=
-=yZ/6
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmjq1XEACgkQU1smWu2+
+W0TMBhAAlnoKvgJSBJphJe73CjC/SAV+MGC6XDqVcPSFfT7S+Oqe2bh9iImTdgbt
+7AQgCG6s7Pfp4nrlE/Z/2vTeWj+5QP4axHa3q6HX+dh+0hjfBcd22z7rdn81ae1q
+xycqJ4qzybNUebvrLhjlSQ5C8Ig2O4KcAIr4hI8wDzOEKUhThEuZL9mzrxBzKE9z
+7U1Z+rQKype0xgRtfEfcQIHHswm94TrdG/sndDR10DJGVRae5o4kj5gSuoraeL7i
+sTv5Lvk819Gud51Gx462gBHsN6gYoj3yDWKix6yVxcTE1IM7LC67DoVytFz8F+T4
+akp+ghFnlJ3Qd0YKg6lilN6SRGiaztSaqW2D6V+UgHJGH5/e40ekF6ghZJs1HtkO
+UVROYqpAiaMmvrbzYE8sRUA+jr8iOFRtnLSP1uyXgmNUulnMb+zsLUvURYxpCGyO
+btQsurw+JssEvqcLy8yAz9A8qmujDjJDvifxErzFMLumNrr7u27olIboJUFIBI9h
+e1CvK6Th1y4AueDySTcb7gOfxSThM5XDSRYfLQqV97qfcKcAmycfQAlJS88+4Xap
+e44OLprzEs2pe5mCYmNanUxd/iqzG+JDzbrkKMD5hdIy++PY52PVaxoxXUgjmJ50
+Uqw/iFBlXuWZzvDIs3OOCDzVgCMz7ZBhepC+B++i5LaCGNwoukY=
+=6kgD
 -----END PGP SIGNATURE-----
