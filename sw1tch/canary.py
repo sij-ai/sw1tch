@@ -210,67 +210,73 @@ def get_rss_headline(config):
         return None
 
 def get_monero_latest_block():
-    """Fetches the latest Monero block height, hash, and timestamp using public APIs."""
-    # Use reliable source for height/timestamp
-    stats_url = "https://localmonero.co/blocks/api/get_stats"
-    # Use reliable source for block header (incl. hash) by height
-    block_header_url_template = "https://moneroblocks.info/api/get_block_header/{}"
-
-    try:
-        # Step 1: Get latest height and timestamp
-        print(f"Fetching Monero stats from {stats_url}...")
-        stats_response = requests.get(stats_url, timeout=15)
-        stats_response.raise_for_status()
-        stats_data = stats_response.json()
-
-        if not stats_data or 'height' not in stats_data or 'last_timestamp' not in stats_data:
-            print(f"Error: Unexpected data format from Monero stats API ({stats_url})")
-            return None
-
-        height = stats_data['height']
-        timestamp = stats_data['last_timestamp']
-        # Use timezone-aware datetime object for UTC conversion
-        timestamp_utc = datetime.datetime.fromtimestamp(timestamp, timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-
-        # Step 2: Get block header (including hash) using the height
-        block_header_url = block_header_url_template.format(height)
-        print(f"Fetching Monero block header from {block_header_url}...")
-        header_response = requests.get(block_header_url, timeout=15)
-
-        # Handle cases where the latest block isn't indexed yet (common timing issue)
-        if header_response.status_code in [404, 500]:
-            print(f"Warning: Block height {height} lookup failed on {block_header_url} (Status: {header_response.status_code}). Trying previous block ({height-1}).")
-            height -= 1 # Fallback to previous block height
-            block_header_url = block_header_url_template.format(height)
-            print(f"Fetching Monero block header from {block_header_url}...")
-            header_response = requests.get(block_header_url, timeout=15)
-            header_response.raise_for_status() # Raise error if fallback also fails
-        elif not header_response.ok: # Raise other non-2xx errors
-             header_response.raise_for_status()
-
-        header_data = header_response.json()
-
-        # Validate expected structure from moneroblocks.info
-        if not header_data or 'block_header' not in header_data or 'hash' not in header_data['block_header']:
-            print(f"Error: Unexpected data format from Monero block header API ({block_header_url})")
-            return None
-
-        block_hash = header_data['block_header']['hash']
-
-        print(f"Successfully fetched Monero block: Height={height}, Hash={block_hash[:10]}...")
-        # Return potentially decremented height, the hash found, and the original latest timestamp
-        return {
-            "height": height,
-            "hash": block_hash,
-            "time": timestamp_utc
-        }
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching Monero block data: {e}")
-        return None
-    except Exception as e:
-        print(f"Error processing Monero block data: {e}")
-        return None
+    """Fetches the latest Monero block using public RPC nodes with fallback."""
+    # List of public Monero RPC nodes to try
+    rpc_nodes = [
+        "http://node.community.rino.io:18081/json_rpc",
+        "http://node.sethforprivacy.com:18089/json_rpc",
+        "http://xmr.fail:18081/json_rpc",
+        "http://nodes.hashvault.pro:18081/json_rpc"
+    ]
+    
+    rpc_payload = {
+        "jsonrpc": "2.0",
+        "id": "0",
+        "method": "get_last_block_header"
+    }
+    
+    for node_url in rpc_nodes:
+        try:
+            print(f"Fetching Monero block from {node_url}...")
+            response = requests.post(
+                node_url, 
+                json=rpc_payload,
+                headers={'Content-Type': 'application/json'},
+                timeout=15
+            )
+            response.raise_for_status()
+            data = response.json()
+            
+            # Validate response structure
+            if 'result' not in data or 'block_header' not in data['result']:
+                print(f"Warning: Unexpected response format from {node_url}")
+                continue
+            
+            block_header = data['result']['block_header']
+            
+            # Validate required fields
+            if not all(k in block_header for k in ['height', 'hash', 'timestamp']):
+                print(f"Warning: Missing required fields in block header from {node_url}")
+                continue
+            
+            height = block_header['height']
+            block_hash = block_header['hash']
+            timestamp = block_header['timestamp']
+            
+            # Convert timestamp to UTC string
+            timestamp_utc = datetime.datetime.fromtimestamp(
+                timestamp, 
+                timezone.utc
+            ).strftime("%Y-%m-%d %H:%M:%S UTC")
+            
+            print(f"Successfully fetched Monero block: Height={height}, Hash={block_hash[:10]}...")
+            
+            return {
+                "height": height,
+                "hash": block_hash,
+                "time": timestamp_utc
+            }
+            
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching from {node_url}: {e}")
+            continue
+        except (KeyError, ValueError) as e:
+            print(f"Error parsing response from {node_url}: {e}")
+            continue
+    
+    # If all nodes fail
+    print("Error: Could not fetch Monero block data from any RPC node")
+    return None
 
 def collect_attestations(config, is_interactive):
     """Loads attestations and confirms them with the user if interactive."""
