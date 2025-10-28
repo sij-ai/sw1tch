@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-10-21 02:36:27 UTC
+We2.ee Warrant Canary · 2025-10-28 23:52:47 UTC
 
-I, 〄, the server administrator of We2.ee, state this 21st day of October, 2025:
+I, 〄, the server administrator of We2.ee, state this 28th day of October, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: Australia news live: Marles hails Rudd’s role in White House meeting as Turnbull praises former PM for ‘delivering the goods’
-  News URL:      https://www.theguardian.com/australia-news/live/2025/oct/21/australia-news-live-michaelia-cash-china-jet-raaf-prime-minister-anthony-albanese-donald-trump-white-house-critical-minerals-deal-ntwnfb
-  XMR block:     #3526163, 2025-10-21 02:35:38 UTC
-  Block hash:    7cad0e5e5b9359ffacdfd2e077c91526db7687babd3304731a90fc702477400c
+  News headline: Australia politics live: NT land councils ‘dismayed’ at lack of consultation on nature law reforms; ‘crimefluencer’ networks hunting girls online, AFP warns
+  News URL:      https://www.theguardian.com/australia-news/live/2025/oct/29/federal-politics-parliament-victoria-queensland-bom-labor-coalition-anthony-albanese-sussan-ley-abs-inflation-apec-summit-afp-press-club-ntwnfb
+  XMR block:     #3531795, 2025-10-28 23:51:37 UTC
+  Block hash:    a480f6304d08480621550f48fa8f1179801d3fa80cca3720096ea50a1cb1f89d
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmj28dAACgkQU1smWu2+
-W0SA7g/+IxMe/Sdp8f3d/cVOubdqJsNMP4L6Ye3hhSFjxlDsZ2o0jqFI/J7RuV2J
-+tkaNy8fF5jm3WqbYZeNeRglpvsfn9bcOQEqsEErbBd3XA45ja5eU4vEMKuziX3l
-sB4J9IhZ3xnKFPukUGGKaS8FrJ1qM/uMIwMFsc4XPcLUo8ybnQZtrNWnnT11zxaG
-KC9IvLc+E1BkFV0CV6mGqhZVF8oEhWLOEF6LQj2Oo4OEvx/Fdskd2P7kuFLr7KhJ
-Pt0zhufX+lhJOV4IBrjrpbdYa/iCXYNRZ8Lbe3dm0l0UtT5l+wLDKPWYzRVN2wOU
-uNxRrF8dMYsfeIrRowNciT9q0FEKL8aGeytylWkSJ9SamfNLNslJlnfCVhUbYEhi
-vuDu8/hGTZYAVmDyzHfGiGqdWqBiuseqKj+yA0EunXKsa2Dd0FL8pmL6DFwSFYic
-W1La1cdEcqK09JuW5W1C+CVZ+KwYr6VaArVQrntrgSj0jeYuBgibS7BqXMMznhGE
-0ShsT11L8mJhnAOT5rjYVjrl2YFVTUJiFY+zjEpyUzzZUztpsG+xwFKWIS+Ond9/
-0nv2LEMv7RvgTtcUM1tRx+gLk+HGciQUABo573Y7mPj8Wq6f0c6YW7npEaQyLqtP
-Vcub2dHZZj+o4dGx0EmnXsXw94iaGpYxebPSs19WrVAJsoRVZrk=
-=L4S+
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmkBV2MACgkQU1smWu2+
+W0QrLBAAuMMeXLXYqvrLPEnTrheQv1TP4VRd3jzfWWth5YMbOuN14mvJo4vqfyLo
+NG/C7VcLG0wJFjl/hC7boOx4NDu0PMFXm6wWriIcsxpLtb+XfS+OMl4kwHoEhKda
+Gbc9/IDDZDEPDGRajkYXd8z6Ma8coSPNjfYKcytc8JdvpLmmDHfsul9oz+8XLSp+
+LikYGxTs2JFvA3wqDvXBgFanIGp88tHUy67KT1+99L8gyZ0LgkLYBXbQbvOlIfYB
+wyPTaSg03fRcgcbB25UF+TDj5BAsISvlhGz9BmC2R2UVu1mSvwVThygUvdj6A6YT
+QyU5JdABi2X6pOV6NidejwRRpRBfOuGHyb0RBL+4F93Zly+aCOXNMlApkGB2IeWD
+oVQfwvUpvNXqgO2tNma8ODuqYa6Rk3yFBPDo/UjEoXA7pQMbszKh+vZeEGCeVBHd
+x94eYpDvZvwpkcbY4q9ZZlJdNWdb+hdySjRNX1h6Ct7SoveOpWcIiZYQUMyadso9
+AAbz8xm3Ga72dvAQVXnvPI28OYLwQkv6ELd9Vo5D+CrywaeO0J6v5U4QQQImW056
+YSPjYP5Ro3FoP+e+8afLv3duY2wgT3VkTE2lAs6IX4vohqW3v4uiv6GjiFbX9Ztx
+5KLgGx1qwMINZa0ytqJ6Dt3iW/XPWUtsIQ5kaF1ncxffgaPx5tQ=
+=aM5m
 -----END PGP SIGNATURE-----
