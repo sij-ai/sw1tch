@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-11-09 19:26:11 UTC
+We2.ee Warrant Canary · 2025-11-16 16:39:08 UTC
 
-I, 〄, the server administrator of We2.ee, state this 09th day of November, 2025:
+I, 〄, the server administrator of We2.ee, state this 16th day of November, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: US private equity giant poised to take over online retailer The Very Group
-  News URL:      https://www.theguardian.com/business/2025/nov/09/us-private-equity-giant-poised-to-take-over-online-retailer-the-very-group
-  XMR block:     #3540347, 2025-11-09 19:25:25 UTC
-  Block hash:    b012f052530dc284317604c0121113af7208b99fb9ecf5998f7c42c2194a71eb
+  News headline: Arctic blast hits UK as Storm Claudia clean-up continues
+  News URL:      https://www.theguardian.com/uk-news/2025/nov/16/uk-weather-forecast-storm-claudia-clean-up-flood-warnings-cold-snow-ice
+  XMR block:     #3545317, 2025-11-16 16:31:50 UTC
+  Block hash:    d0f9787628437fb57d93f08b9c864533d94a3649e7fb10fc75535287e7b6e44a
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmkQ6t0ACgkQU1smWu2+
-W0RaOQ/9FdlFmpwOs6GbR7VfrnlqMbYyNnxYoeg/XD7qQN4ZKfn1dK9zcKFs3a8P
-g19h2J1ge64EFBdL5MFPlV7884D/cN308wn2AY1KF4FwIHyKM9mExB3pKIZxWPmd
-lHM3kc0zhmFO3GE09Uiot6lXbYVoqylR49nN/rofzSbM23TFK2RCvoapVJQuVEp9
-igB3S40HEAsDINV9UdBoV3+1wtiTK1tJxmzUneBADcLPtdfQloZ8CUFhsre+2FeQ
-+1LKdPAILlwT128439EfyaN1sRBEaucCtP8ja4G+yAhjyGLkHZ27QYKnyLucGQjN
-97RjrzlXdyor4CyCS4uAUcvNGsmyVIMykSMNjcHcSTL552cHPhte19N132mVDEJz
-ZscrTXl79ZjEADv0vAtk4e+6nsFkElUnJDHhTOnKVbTLCXwJ0bRmzITSuk/z3wNb
-BKlg22grS0v5iJxSJC8NBVKS/qIznD0nRO+0XzXl6hu/tR31BDt2144v1vyDH9+d
-QHz9q0ffnLXt+oiSBdyXtpbLtR49oApGJQCtmTkQuxDv/3eLbYuvF819zMftsW4N
-t83GcFiuEHZWJT8Mu6MXer8A3brz2ow1JfdLBXBveM/LJu+Ci42ryrvEXlYa21fW
-3fR6Pn0l3LL8/awWpqNm+gGS4GTcYRJSOxaiTJsLn28OYTLt5Qg=
-=cXE9
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmkZ/joACgkQU1smWu2+
+W0QbDg//dVLnkDOv1gOzv7fab80P1sHtS+DsohF5AOWhCU1zLLbud3fAcn+bSVFE
+bOB/msuc4kFg9Ltro59UZcpMGBGhCF1vtB7r2BGvcPCryvOWVWU3PXqAJJvV5mp7
+RAs9NZ/xSZ9NfWuLPgb7kyyiCtIehMu7Q3BQreQlXkVz8DQyHLKkafN1r8ol8H7Y
+wjel25SI9FJAWUmF3eFgRCt2Q/FeUokJNFQSx75i2g+HSx+ByHsLIVEV1cJ2hml1
+X3O7K/y+gcyHzNgz2hPnEI4XLDEayVWQHc74VES3Pi7iHbjl2qZn1UDPJRhy14Ia
+eqKCaSGtjqsLNPagNBf2FbTbWUgh7/nA5oDuXUnxKMI0RD8ZV/8gNO211EWFlsrX
+0zK2wey44pfRXcKLLMphUrX6V65Bk7GBT4DB3kWu03KO8eOCv6hvUlgT08u1gxhd
+8Ma9gZcmCYjGWef/rlNZOw35PeHGnDTxHn/0gusaKyYZlj6ka8nWcsvdmSG7zC28
+a0CmdoFqPGMGWeaAaJfJn3tyOwqPxkgyhqUrUhQHc3wSHyj4+D0o6ZYUpQbwl7xi
+B++lfrS41v0cZJOUxFXJGEFUE7rquJVjhT/9vnr10yg4Q/q6H6mX9CoIPX/B390X
+DaiqUTSBlAhqKr+35APSHvXPCbSd+fy3Zr8m6wvX8xVpHWhboZY=
+=v5qz
 -----END PGP SIGNATURE-----
