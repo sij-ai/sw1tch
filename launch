@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set full PATH for cron execution - ensures all commands are available
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 # File paths for sw1tch and tuwunel integration
 BASE_PATH="/home/sij/hand_of_morpheus/sw1tch"        # Base directory for sw1tch package
 TOKEN_FILE="$BASE_PATH/data/.registration_token"     # File storing the current registration token
@@ -12,9 +15,7 @@ COMPOSE_FILE="docker-compose.yaml"                   # Docker Compose file path
 
 # Static container settings for tuwunel
 CONTAINER_NAME="tuwunel"                             # Name of the tuwunel Docker container
-# CONTAINER_IMAGE="ghcr.io/matrix-construct/tuwunel:main"  # Use GHCR tuwunel image
 CONTAINER_IMAGE="ghcr.io/matrix-construct/tuwunel:v1.1.0-release-all-x86_64-linux-gnu"
-
 
 # Flags to control script behavior (default to false)
 REFRESH_TOKEN=false  # --refresh-token: Generates a new registration token
@@ -133,61 +134,54 @@ EOF
     fi
 }
 
-# Function to ensure the sw1tch registration service is running
+# Function to ensure the sw1tch registration service is running via systemd
 ensure_registration_service() {
-    local pid_file="$BASE_PATH/data/registration.pid"
-    local log_file="$BASE_PATH/logs/registration.log"
-
-    touch "$log_file" || { log "ERROR: Cannot write to $log_file"; exit 1; }
-    chmod 666 "$log_file"  # Ensure log file is writable by all (adjust as needed)
-
-    REG_PORT=$(python3 -c "import yaml, sys; print(yaml.safe_load(open('$CONFIG_FILE')).get('port', 8000))")
-    log "Registration service port from config: $REG_PORT"
-
+    local service_name="sw1tch"
+    
+    # Check if systemd service exists
+    if ! systemctl list-unit-files | grep -q "^${service_name}.service"; then
+        log "ERROR: systemd service ${service_name}.service not found!"
+        log "Please create it at: /etc/systemd/system/${service_name}.service"
+        log "Then run: sudo systemctl daemon-reload && sudo systemctl enable ${service_name}"
+        exit 1
+    fi
+    
     if [ "$FORCE_RESTART" = true ]; then
-        # --force-restart: Kills any process on the port and starts sw1tch anew
-        log "Force restart requested. Clearing any process listening on port $REG_PORT..."
-        PIDS=$(lsof -ti tcp:"$REG_PORT")
-        if [ -n "$PIDS" ]; then
-            kill -9 $PIDS && log "Killed processes: $PIDS" || log "Failed to kill process(es) on port $REG_PORT"
-        else
-            log "No process found running on port $REG_PORT"
+        log "Force restarting ${service_name} service via systemd..."
+        sudo systemctl restart "$service_name"
+        if [ $? -ne 0 ]; then
+            log "ERROR: Failed to restart ${service_name} service"
+            exit 1
         fi
-        rm -f "$pid_file"  # Clear old PID file
-        log "Force starting registration service..."
-        cd "$(dirname "$BASE_PATH")" || { log "ERROR: Cannot cd to $(dirname "$BASE_PATH")"; exit 1; }
-        log "Running: nohup python3 -m sw1tch >> $log_file 2>&1 &"
-        nohup python3 -m sw1tch >> "$log_file" 2>&1 &  # Run detached
-        NEW_PID=$!
-        sleep 2  # Wait for process to start
-        if ps -p "$NEW_PID" > /dev/null; then
-            echo "$NEW_PID" > "$pid_file"
-            log "Started registration service with PID $NEW_PID"
-            lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
-        else
-            log "ERROR: Process $NEW_PID did not start or exited immediately"
-            cat "$log_file" >> "$LOG_FILE"  # Append service logs for debugging
-        fi
+        log "Successfully restarted ${service_name} service"
     else
-        # Normal mode: Start sw1tch only if not already running
-        EXISTING_PIDS=$(lsof -ti tcp:"$REG_PORT")
-        if [ -n "$EXISTING_PIDS" ]; then
-            log "Registration service already running on port $REG_PORT with PID(s): $EXISTING_PIDS"
+        log "Ensuring ${service_name} service is running..."
+        sudo systemctl start "$service_name" 2>/dev/null || true
+        log "Started or verified ${service_name} service"
+    fi
+    
+    # Wait a moment for service to stabilize
+    sleep 2
+    
+    # Check service status and log it
+    log "Service status:"
+    sudo systemctl status "$service_name" --no-pager --lines=0 | tee -a "$LOG_FILE"
+    
+    # Verify the service is actually running
+    if ! systemctl is-active --quiet "$service_name"; then
+        log "WARNING: Service ${service_name} is not active after start/restart"
+        log "Check logs with: sudo journalctl -u ${service_name} -n 50"
+    else
+        # Get the port from config and verify it's listening
+        REG_PORT=$(python3 -c "import yaml, sys; print(yaml.safe_load(open('$CONFIG_FILE')).get('port', 8000))" 2>/dev/null || echo "8000")
+        log "Registration service should be listening on port $REG_PORT"
+        
+        # Verify port is listening (give it a moment)
+        sleep 1
+        if lsof -ti tcp:"$REG_PORT" > /dev/null 2>&1; then
+            log "Confirmed: Service is listening on port $REG_PORT"
         else
-            log "Registration service not running on port $REG_PORT, starting..."
-            cd "$(dirname "$BASE_PATH")" || { log "ERROR: Cannot cd to $(dirname "$BASE_PATH")"; exit 1; }
-            log "Running: nohup python3 -m sw1tch >> $log_file 2>&1 &"
-            nohup python3 -m sw1tch >> "$log_file" 2>&1 &
-            NEW_PID=$!
-            sleep 2
-            if ps -p "$NEW_PID" > /dev/null; then
-                echo "$NEW_PID" > "$pid_file"
-                log "Started registration service with PID $NEW_PID"
-                lsof -i :"$REG_PORT" || log "WARNING: No process on port $REG_PORT after start"
-            else
-                log "ERROR: Process $NEW_PID did not start or exited immediately"
-                cat "$log_file" >> "$LOG_FILE"
-            fi
+            log "WARNING: No process listening on port $REG_PORT yet"
         fi
     fi
 }
@@ -209,6 +203,6 @@ if [ "$UPDATE" = true ]; then update_repo; fi
 if [ "$PULL" = true ]; then pull_docker_image; fi
 if [ "$REFRESH_TOKEN" = true ]; then refresh_token; fi
 restart_container  # Always restart container to apply token or image changes
-ensure_registration_service  # Always ensure sw1tch is running
+ensure_registration_service  # Always ensure sw1tch is running via systemd
 
 exit 0
