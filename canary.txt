@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-11-23 18:11:58 UTC
+We2.ee Warrant Canary · 2025-11-29 20:12:20 UTC
 
-I, 〄, the server administrator of We2.ee, state this 23rd day of November, 2025:
+I, 〄, the server administrator of We2.ee, state this 29th day of November, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: Hezbollah chief of staff killed in Beirut airstrike, Israeli military says
-  News URL:      https://www.theguardian.com/world/2025/nov/23/israel-targets-hezbollah-chief-of-staff-in-strike-on-beirut
-  XMR block:     #3550354, 2025-11-23 18:11:18 UTC
-  Block hash:    d916f0ada9ff6c7adaa41de7615a4636937d21b94fcb0a6cdb75def5e8aa9750
+  News headline: Venezuela denounces ‘colonialist threat’ as Trump orders airspace closed
+  News URL:      https://www.theguardian.com/world/2025/nov/29/donald-trump-venezuela-airspace-closure
+  XMR block:     #3554772, 2025-11-29 20:10:48 UTC
+  Block hash:    69d24049de9fa7a1afed0753f113241b472b3ce693e79dc430750f4fe8a8cb3f
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmkjTnkACgkQU1smWu2+
-W0QP2BAAhJZq4SdjE75unp4PP2wWvP7/xpMEKYExEwNo7dWk0FjmgB/FPY34jgxM
-tkANxRWJNkRBfHjAjRe/hihyQSUlY/lXWEXL8aIo/nFRmEf2GdMgSrXWF5+UBxS3
-dB3Rv5jpalnxxNLGErDf1j7KUy9HrRewyLXGa90WmsIJcofcsjP2YL4BRvw6vWWe
-w61wAQJ9ei7O3KKE3iVdXGMk6purCHAZS+29ByUZT0snM3f3mIHH7Ux5ypPpdDzr
-fjOt2Q43RqfBZSuDP1mbPMnt/Uwd5/9PGk7aUFmHIX83xRL+6zyunagPzffWzcBB
-b+irG0PqDnIkvhwJyfPu6gQr9ZP7/VjmQ4jywC1QvOnObEwM0mDK0x4VUmDTx98h
-mGIQ/QLbmap7yySdJTifuO5RaFZjtggw3N1xyj2we22p+c4MEuhGDracBd7YNdXd
-J6deRohlnhBW4nzqMH3FnzDlmEyGvcD8mq7a4WghGyD5wfS9f36IoDs1vHO9vvtO
-UagXVo8VyfxDL/tkzEct6+5yfOWg9/06F6Is7RiN30fLtZYRQx2CmAayuoMtMB1o
-vXuTU4zzAf0kOpzWxh9yLWz5QcsC5VZB80xRUbUFJbgMgapX742Z3OtmnWoCgEMy
-hAgF8nCi+WX3JHIH/t669xTiy7cPXmj8hQ1gHALVwRUvQZQQU4Y=
-=nZql
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmkrU64ACgkQU1smWu2+
+W0QjzxAAr2LOiU/Xa0HuxPhIRsjjNwmeqcsuIz/4PXFRhzLdOGaibGhWM7+Hd8Iu
+FjuXl5FZtmW60XCoizB3fWoX2mwVrrKIvcvJ2mDS0evVL5BtIBt45Q9y+Lbh6VHh
+O+C2fuVlysX+8GhZPaaUH80CaBGtEvcVEo94qDF2CpjqMtc4CPNSviAFM0Yu5eRt
+KXK96TmrK3V/liSDNRoNgQejOJJptsPF2YTcc9rsmEPOKPJDKO63RZhwKm+9CRXs
+/1nQ4uwxuJkk0N9n+GjgWUZUpZvFYEXFkCftT6aPgtDRcb5yGWl6fjE9nTzg3IFb
++8qe+oQ4gf32GG0ul+fS+8xmk31T/dgZdmT4HStaS24aw0D/FzlSEf2NlNcjjj2V
+Fu3IIUhDq0svYBVQVdVudGoP7g0IkclVBPtjfFp2AkiEmgJdGzgmKyd74y5NnaeJ
+V9T/j9PQgM8O+zZCPMcLiSfhJ/R6sBWBS9BzCFTfqdMbtrmRF7TlN5cFoWnA4RKT
+kdjAEJOHkg4+m3++we7CyNpO0b3MkSTxWkATwNa/8y6OWKQUbpm4OVXhpOfBEbIf
+/532x6smgNxnrkAC9QPeCW8YOPjBcwhx2F3t0MsBhbiWgX8TwJmNAaRxWaKbvAQF
+ngR/DgKIC9mSyj8/dZlNsOQCaGbxTC2hcXpJE8eksqQsC0b+MIA=
+=wVD6
 -----END PGP SIGNATURE-----
