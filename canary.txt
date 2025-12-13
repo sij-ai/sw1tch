@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-12-07 18:06:34 UTC
+We2.ee Warrant Canary · 2025-12-13 21:36:49 UTC
 
-I, 〄, the server administrator of We2.ee, state this 07th day of December, 2025:
+I, 〄, the server administrator of We2.ee, state this 13th day of December, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: Water leak in the Louvre damages hundreds of works, museum says
-  News URL:      https://www.theguardian.com/world/2025/dec/07/water-leak-in-the-louvre-damages-hundreds-of-works-museum-says
-  XMR block:     #3560480, 2025-12-07 18:05:08 UTC
-  Block hash:    b5b2cd5d7406e43892642bce103c00ea69697b8deeee6d10cd3257e54b65e85c
+  News headline: Kansas Native American tribe in turmoil over deal to design ICE facilities
+  News URL:      https://www.theguardian.com/us-news/2025/dec/13/kansas-native-american-tribe-ice-facilities
+  XMR block:     #3564836, 2025-12-13 21:36:10 UTC
+  Block hash:    80a88c955827980d99cd195fda832a185dd71a7c99f7636913666f4c758643a0
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmk1wlgACgkQU1smWu2+
-W0TJYA/+NunzmHNXAVQlGmBOBO1fIuZvNdoQoXMV2tCvTpgb9cRR5lV3JNF+UABy
-IEBuEkQC/+yrSP4ozr7ebZ27hNuZHN1LXvJC2MAlTuLIFqnTA9tkHl7vvpxHE/lw
-UTirsQh+jRMd5XryTh7kmfIadYBm6gKAAAFAQ5Nm27TIwP9lEirLuhyIuqAAqRGv
-5/p8ymB5on2CXQ+5cGXPJBKqOy6Nrg6FO6QUShbqAmPKbTAVKhLs7gaYneCmzivW
-JRk876x+nNjzeYydnF/39d2fJmdjUtJ6cUJOaDmw0Y6kovGKcZIhExHR9AooMyU/
-zmdSJh4VzSEQ5qclP0tmf7olRZ6rG2krl8rfATioIDgyLxW+eDesIj+HDAtwHWqA
-uU+kh5c05XI0cD2bitoVHBqlCdGF4BY2I7rFcXWIkWSFUCseVS0x68t9KYhhODDI
-7x3LhU/1+IdQ+a9q2mOAh2HzFcrF/V/Z6shU1E+9h1cmP4Zr0Uv/F0l/smPpcOr7
-hUnAmNaMMe9rqUjCQQuTCFSmL1VonpR3k/PfcAFhvmrymNPrza4Nrilo/QDkqKpw
-+KH97ULPdhAJZkpHBLts3bv4bHuTuk54jtIJy3aSTJY+xKKsNMAmIS8bgnSy85x/
-+I9av9c/CdfpLRWskzoAchdBeY6kUixUvOl8DW8vjlHd2UZprws=
-=T5aB
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmk93HkACgkQU1smWu2+
+W0Q9aQ/8CAxOLazECpG7AksOmnTq/oiLvjGBA8YqYXy4nmlBpwG5Xb344r+cPxlG
+0hw6eob4cJ3Tuo69fTYi4G8O3bOAioYpIXLEXxxy8SqI6nTP8dtz9L6+UDjlXtcE
+QzQsNM17TFpuEzbapoLvNhRn98t7K+PU06x5i9RSv2vkOOK5qylpdBek7KPaWj6N
+9bZ6iB3DEBPEM60QvmObgf2N1Mjt1ZrdkF1LpjfyLBEnzlqxqz1ZUYnC4Aisr6cV
+VRkE/E8lkCvdjG6HjWpFZFosomfVDngzqli+ujhRCxwLHZohSZbq79gtVN1jrtb2
+W8jeMJA3BanPYp8/UsnEcU6MYEpZ989vno19PkvhLNwGPspX0+A6ofT2cxDMQkDR
+BGIQKvCByq6KahZJV3YEIO0G8/XjO+/irHssrT7qECtxt2iTSCNW2O3SKBbdsRDp
+r3xOit9NFMPcN8/5uIqStZziinBuQ4KgoI9cFJzu69DEhK7I2/WRJynEoSYxMbKv
+DMrHcL+6Hey99WJRSWzqF3qCEFteKiClQ5QcJPk4SBbU8jFDh03XZdi2+7ykKU1t
+QETdD4iXZprfXdk6xHhqaEzxBTbLi8iOHE3UXtPC3ypH0xJciDB8lfrnS7hIVo/h
+787BUC6pG0p4JGGPm6427fpWbRLUEiVLIY1Nark3u/bW8npg4HU=
+=Hk+H
 -----END PGP SIGNATURE-----
