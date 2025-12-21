@@ -1,32 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-12-13 21:36:49 UTC
+We2.ee Warrant Canary · 2025-12-21 02:16:49 UTC
 
-I, 〄, the server administrator of We2.ee, state this 13th day of December, 2025:
+I, 〄, the server administrator of We2.ee, state this 21st day of December, 2025:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
 Datestamp Proof:
-  News headline: Kansas Native American tribe in turmoil over deal to design ICE facilities
-  News URL:      https://www.theguardian.com/us-news/2025/dec/13/kansas-native-american-tribe-ice-facilities
-  XMR block:     #3564836, 2025-12-13 21:36:10 UTC
-  Block hash:    80a88c955827980d99cd195fda832a185dd71a7c99f7636913666f4c758643a0
+  News headline: Bondi terror attack updates: PM orders intelligence review, condemns planned anti-immigration rallies for ‘seeking to sow division’
+  News URL:      https://www.theguardian.com/australia-news/live/2025/dec/21/bondi-beach-terror-attack-one-week-anniversary-day-of-reflection-reactions-sydney-vigil-memorial-nsw-protest-laws-police-powers-anthony-albanese-labor-sussan-ley-coalition-ntwnfb
+  XMR block:     #3570076, 2025-12-21 02:16:13 UTC
+  Block hash:    e6ff8b6faf8fea9de97e1d3e1e2d206a9f561930056614737a6f0a82b2b3db44
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmk93HkACgkQU1smWu2+
-W0Q9aQ/8CAxOLazECpG7AksOmnTq/oiLvjGBA8YqYXy4nmlBpwG5Xb344r+cPxlG
-0hw6eob4cJ3Tuo69fTYi4G8O3bOAioYpIXLEXxxy8SqI6nTP8dtz9L6+UDjlXtcE
-QzQsNM17TFpuEzbapoLvNhRn98t7K+PU06x5i9RSv2vkOOK5qylpdBek7KPaWj6N
-9bZ6iB3DEBPEM60QvmObgf2N1Mjt1ZrdkF1LpjfyLBEnzlqxqz1ZUYnC4Aisr6cV
-VRkE/E8lkCvdjG6HjWpFZFosomfVDngzqli+ujhRCxwLHZohSZbq79gtVN1jrtb2
-W8jeMJA3BanPYp8/UsnEcU6MYEpZ989vno19PkvhLNwGPspX0+A6ofT2cxDMQkDR
-BGIQKvCByq6KahZJV3YEIO0G8/XjO+/irHssrT7qECtxt2iTSCNW2O3SKBbdsRDp
-r3xOit9NFMPcN8/5uIqStZziinBuQ4KgoI9cFJzu69DEhK7I2/WRJynEoSYxMbKv
-DMrHcL+6Hey99WJRSWzqF3qCEFteKiClQ5QcJPk4SBbU8jFDh03XZdi2+7ykKU1t
-QETdD4iXZprfXdk6xHhqaEzxBTbLi8iOHE3UXtPC3ypH0xJciDB8lfrnS7hIVo/h
-787BUC6pG0p4JGGPm6427fpWbRLUEiVLIY1Nark3u/bW8npg4HU=
-=Hk+H
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmlHWJ8ACgkQU1smWu2+
+W0RGpQ/9FY2Gv+7H5sM3JmfxQGScz20CcUKFOgPnlP9D12u4Gr5nWQvbUuT1+o0R
+gPu6xfci27/L9sEL7gCQqkNvcDy1QzaPjxPG+yxsQpy/ZLKP+GgiQDq/gGM1saZJ
+V1wNM0h9AuJNbePcvP1F8dirQzz+igxGEds5v81iBEBFIl3TR5rIND2D3z+fFTXr
+IphtDmAJFhAdQhnehyNY7zJclXCJZzoxMrOVO78ZIvtz313888dDhozsiKGx6PsF
+WUfwdzx/Bni3FRgOPeIN6rCQeFWBwRJS7Ie96kCJ/3j8zZdYFd4HCMjNTA+nHoeO
+f1xqztncsmBWoMMtlx7N5AoGr/Vw6vY1b8hmgWT51/EhL27hSDGolL0dwE+T9REX
+n3bWOoOfTC57/1M5kaRmCAaTRpjDmP9cv8Yr3pOkgg1gnpdwQN+sMfTMB1gpoWdf
+lxGsnmBbzT7Zhs5tF6wD2V0bH/QSJ0FDNctm4iNQWnDUYndP9o/zroEv40flupu5
+84PvWvbhcDxDmnvTg8HINiBBFJm/SNbn0nBef3e/veLwksxP3Ls8T3zHh2Ql19NX
+7sbc8Ms7A3mlmE5yVbk0EGiHAo/HE9IbUeHIjPi6K/JjwMm6TDkhf1JzZSb5kdjP
+X6umioYviR5bgEYVr13qWqGwMGHLFpjvUB3d1okJwiOLOQaF+FM=
+=wZcj
 -----END PGP SIGNATURE-----
