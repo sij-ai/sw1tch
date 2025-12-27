@@ -12,13 +12,13 @@
             <img src="/static/logo.png" alt="Logo" class="logo">
         </div>
         
-        <div id="registration-form">
-            <form action="/register" method="post">
-                <input type="text" name="requested_username" placeholder="Requested Username" required>
-                <input type="email" name="email" placeholder="Valid Email Address" required>
-                <button type="submit">Request Registration Token</button>
-            </form>
-        </div>
+<div class=\"card\" style=\"border: 1px solid var(--error-color);\">
+    <h2 style=\"color: var(--error-color); text-align: center;\">Server Sunsetting</h2>
+    <p class=\"message\">
+        The We2.ee homeserver will permanently shut down on <strong>January 22, 2026</strong>. 
+        Registration is closed. Please migrate your data immediately.
+    </p>
+</div>
 
         <div id="registration-closed" class="registration-closed" style="display: none;">
             Registration is currently closed

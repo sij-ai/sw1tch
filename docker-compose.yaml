@@ -1,6 +1,6 @@
 services:
   tuwunel:
-    image: jevolk/tuwunel:latest
+    image: jevolk/tuwunel:v1.4.8
     container_name: tuwunel
     restart: unless-stopped
     ports:
