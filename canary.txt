@@ -1,34 +1,32 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2025-12-27 22:00:37 UTC
+We2.ee Warrant Canary · 2026-01-04 05:15:31 UTC
 
-I, 〄, the server administrator of We2.ee, state this 27th day of December, 2025:
+I, 〄, the server administrator of We2.ee, state this 04th day of January, 2026:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
-NOTE: A reminder that We2.ee is shutting down on January 22, 2026.
-
 Datestamp Proof:
-  News headline: Bayeux tapestry to be insured for £800m for British Museum exhibition
-  News URL:      https://www.theguardian.com/world/2025/dec/27/bayeux-tapestry-to-be-insured-for-800m-for-british-museum-exhibition
-  XMR block:     #3574966, 2025-12-27 22:00:29 UTC
-  Block hash:    eeb49928943f0590a989e4a0f9cca43b18cc4b1a33bb206cb96692a2ee06819d
+  News headline: Venezuelan leader Maduro lands in New York after capture by US troops – live
+  News URL:      https://www.theguardian.com/world/live/2026/jan/03/caracas-explosions-venezuela-maduro-latest-news-updates-live
+  XMR block:     #3580224, 2026-01-04 05:12:57 UTC
+  Block hash:    f87ebb822d5afe2c76f4444f5bbf84e4f4e98d5da7929e062e5b52581828dd29
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmlQVy4ACgkQU1smWu2+
-W0QkPRAAlEuHlqDyUhl7Q1HQLxxJKtV3nLsBTnkdW8f1njrY6tYPWt9rsGY3qz+8
-DvcvnHuvzQ0ylFO06sBnBSTTbowl9JK6dxVQDCWsMym00HBPNrRtZczAeXBwyyLe
-ZLGIL8Dv8Wjj7VAc3iy1byF8Pmj7Jn6fM0+4FtzGbMUXoKnmy+4RTmpFyJJzmC3y
-T0x5uZ3+7YJSF+xm/ehr4AnuAheNvYPiixGb3Nezc/bktq6fPKhP9br7RqaMsm8F
-59qwWHCVFJy98wvu0LWiZhJxJDXbl66YgQtIM1ULFGuFLwqes/ZVtIAn8jKKx9WJ
-oODkK4KCb7XItWNotqH0oFCide2AwX4sgE+IKsZNA/WgtAQIwYzn9Huuh8FdRE0+
-3zrE7n/+ptLJ24zEGE9jUZnchHQCCu4HWlc0lZqFGxZZAoaogZ0pDlc8l6nVWKRw
-aH4RoXoiJjpoZNClON7S2a6PVNPXiglSomt+JtOYA0/4l+K/C5swmcNDmTyT3SZu
-+L3ein+lPPTWPCO0yaLmC9eGxHWbwmMCDE+Kmcj20F4kSqtABZKTMvi8thYhUTr9
-q8Ye9wCVqFz4g3SrdDdFhZmHOh3+bvNN845OJ3gchpMgwVhhDJ/C31Rc7BzTtQ75
-gygkkK7QFunTlYuXkyipj58+HGqBxZYRDEYrR9uaGUB/tlQpZmE=
-=WzR4
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmlZ93wACgkQU1smWu2+
+W0QmBw//VjCkOlLY9TjdYnoTdH0FXo4/kCiq/7PIHxEotw8Rqy1fbyyaGwIAVY3+
+jPJk2Irfmb99GqqQCYqTe4kQLmU4imd+Wh2A1lChcU213qOGdsSPkH2WXGnXToXY
+7kZxou+TW9kOU2BglBKifMaz0DFhxhKz6Tp2Y8lhcHnWa5snVfwPmboxCAOBlFfl
+Q4o5sCx6+Wb1LkfYnuWHiKm4VvDO48ohasQYAXCGJ8BlkvWm+ebBCpDSy7r197UJ
+pVY8NTR+K9d1dYq7JJdCaTGQLwG7dFOfTy2elAbvpa4lQnZROxBos+slnz3nAbJK
+XVmRdS2NFn9L4V/U76D6KZAeH+Ou62g/+x60svuFMZ67ug/kGaGGQdPZ3dqlHtAV
+8laK0Xusf03rfdhgFdV2YPHLNFU3PezVTwXAypCIrWg4z6KS4I0PklZJz5kQIG2B
+b7Nk8CCUbN1ALawK4pmv9YIei8eP9S6WZVrfMAttiVa5MpATOyowCOhK1w0KcFOv
+Lrv8Vok0sP5z4hDAbo7QRYUZXDy3DqxTcWn+pprxOqOmA70uizHKJWBjTZBOq2YN
+naLDEahIxbDOM9y+Xz7Be3Wn7waU2uzfEEg0Z+6K2TtmnEurVAAOF1+MGCCodnph
+6cUmRXwTfgFFpSZdb86BetMvxRKufIA/BibdXe9C/DmvkeFgBkI=
+=vfjP
 -----END PGP SIGNATURE-----
