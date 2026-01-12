@@ -1,32 +1,34 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-We2.ee Warrant Canary · 2026-01-04 05:15:31 UTC
+We2.ee Warrant Canary · 2026-01-12 03:31:28 UTC
 
-I, 〄, the server administrator of We2.ee, state this 04th day of January, 2026:
+I, 〄, the server administrator of We2.ee, state this 12th day of January, 2026:
   1. We2.ee has not received any National Security Letters or FISA court orders.
   2. We2.ee has not been subject to any searches or seizures of our servers.
   3. We2.ee has not been required to modify our systems to facilitate surveillance.
   4. We2.ee has not received any gag order that restrain our ability to make these declarations truthfully.
 
+NOTE: REMINDER: We2.ee is shutting down on January 22.
+
 Datestamp Proof:
-  News headline: Venezuelan leader Maduro lands in New York after capture by US troops – live
-  News URL:      https://www.theguardian.com/world/live/2026/jan/03/caracas-explosions-venezuela-maduro-latest-news-updates-live
-  XMR block:     #3580224, 2026-01-04 05:12:57 UTC
-  Block hash:    f87ebb822d5afe2c76f4444f5bbf84e4f4e98d5da7929e062e5b52581828dd29
+  News headline: Australia news live: PM says parliament will be recalled next Monday in wake of Bondi terror attack; more than 350 structures lost in Victoria fires
+  News URL:      https://www.theguardian.com/australia-news/live/2026/jan/12/victoria-bushfires-adelaide-festival-writers-week-board-chair-resigns-anthony-albanese-labor-sussan-ley-coalition-ntwnfb
+  XMR block:     #3585904, 2026-01-12 03:29:33 UTC
+  Block hash:    857f4d8fd5f0417e764d090d9844805280fcfd6e10311fc03cea5940249faf2b
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmlZ93wACgkQU1smWu2+
-W0QmBw//VjCkOlLY9TjdYnoTdH0FXo4/kCiq/7PIHxEotw8Rqy1fbyyaGwIAVY3+
-jPJk2Irfmb99GqqQCYqTe4kQLmU4imd+Wh2A1lChcU213qOGdsSPkH2WXGnXToXY
-7kZxou+TW9kOU2BglBKifMaz0DFhxhKz6Tp2Y8lhcHnWa5snVfwPmboxCAOBlFfl
-Q4o5sCx6+Wb1LkfYnuWHiKm4VvDO48ohasQYAXCGJ8BlkvWm+ebBCpDSy7r197UJ
-pVY8NTR+K9d1dYq7JJdCaTGQLwG7dFOfTy2elAbvpa4lQnZROxBos+slnz3nAbJK
-XVmRdS2NFn9L4V/U76D6KZAeH+Ou62g/+x60svuFMZ67ug/kGaGGQdPZ3dqlHtAV
-8laK0Xusf03rfdhgFdV2YPHLNFU3PezVTwXAypCIrWg4z6KS4I0PklZJz5kQIG2B
-b7Nk8CCUbN1ALawK4pmv9YIei8eP9S6WZVrfMAttiVa5MpATOyowCOhK1w0KcFOv
-Lrv8Vok0sP5z4hDAbo7QRYUZXDy3DqxTcWn+pprxOqOmA70uizHKJWBjTZBOq2YN
-naLDEahIxbDOM9y+Xz7Be3Wn7waU2uzfEEg0Z+6K2TtmnEurVAAOF1+MGCCodnph
-6cUmRXwTfgFFpSZdb86BetMvxRKufIA/BibdXe9C/DmvkeFgBkI=
-=vfjP
+iQIzBAEBCgAdFiEEMjqKLEezdiJLNhO3U1smWu2+W0QFAmlka0MACgkQU1smWu2+
+W0SKxA//abXJH1d4xvhVc+lOIsgqnu6LCY2aEQGByhaqygiREzIN6Wb8dQprNXZe
+7T40DMZmIR+AJEqs36sYpfx+1VlCf4xEvQmh25enxMe7SxseBzRBnV+4dkNyfmBn
+LFJnufBAlgQM6OPEuVu1DX0ki56VMH59WYwnXBF89ZPlfeQcBDrVHBRzjq9pKaLj
+IrGbYuJ4HixU+4oR0t1mOLvUEd9llB++qa4n3ObcMvk5xgY0TnqhDx+HzhhvsgId
+S6ZRgxrOL8rKzTEQn1u9J5uDsgZt5OqhNnwGEnabE5mXo9g7DhLOXsP6tdF+yHV4
+oewRG7aD8b8hucWIzXjc4kjkprOyGR+FKcD8qf3pd8yaRcV9nlsql4EwU2lXcb7G
+W3q+t27tld5ui9/6o0NWaP5BzZYgFPTqYnsxc8hPrrXf6P0gpVWroXBLKxF5vt7h
+e1Kj4coW6kbtWYXjVNhDtRdaYM50d91PpHbOr83FG/IKrsF9075P3Tgi0sLSJ7Vm
+XOTolK9BU0YViO/YigO44OPLSZXzk1zAsYtssYYwoWnJ0FezKW+kDpPHfp2AOF/x
+Ym2+w5CtlRI8wfsiUOBxB982Nx2AXtUxrIDTktVcwFnNdqwwRobvnpcBXigH+kEz
+OK9DuuIQ1QSO6ZEIxY/6rCFEWjnVg/ztGHk/ZUJF7egBxo15+7E=
+=yAds
 -----END PGP SIGNATURE-----
